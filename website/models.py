@@ -4,7 +4,7 @@ from sqlalchemy.sql import func
 
 # All database tables + attributes are created here
 
-class User(db.Model, UserMixin): # Initialization of Database table's attributes
+class Account(db.Model, UserMixin): # Initialization of Database table's attributes
     id = db.Column(db.Integer, primary_key=True)
     userType = db.Column(db.String(12), nullable=False)
     fullName = db.Column(db.String(50), nullable=False)
