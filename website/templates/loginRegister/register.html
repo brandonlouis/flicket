@@ -1,4 +1,6 @@
-{% extends "loginRegister.html" %}
+{% extends "loginRegister/baseLoginRegister.html" %}
+
+{% block title %}Register{% endblock %}
 
 {% block content %}
     <form method="POST">
@@ -17,31 +19,31 @@
 
             <div class="input-group mt-4">
                 <span class="input-group-text">
-                    <i class="bi bi-person d-flex"></i>
+                    <i class="bi bi-person"></i>
                 </span>
                 <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name" required>
             </div>
             <div class="input-group mt-3">
                 <span class="input-group-text">
-                    <i class="bi bi-envelope d-flex"></i>
+                    <i class="bi bi-envelope"></i>
                 </span>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
             </div>
             <div class="input-group mt-3">
                 <span class="input-group-text">
-                    <i class="bi bi-phone d-flex"></i>
+                    <i class="bi bi-phone"></i>
                 </span>
                 <input type="tel" class="form-control" id="phoneNo" name="phoneNo" placeholder="Phone" pattern="(6|8|9)\d{7}" required>
             </div>
             <div class="input-group mt-3">
                 <span class="input-group-text">
-                    <i class="bi bi-lock d-flex"></i>
+                    <i class="bi bi-lock"></i>
                 </span>
                 <input type="password" class="form-control" id="password1" name="password1" placeholder="Password" required>
             </div>
             <div class="input-group mb-2 mt-3">
                 <span class="input-group-text">
-                    <i class="bi bi-lock-fill d-flex"></i>
+                    <i class="bi bi-lock-fill"></i>
                 </span>
                 <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm Password" required>
             </div>
