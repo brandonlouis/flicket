@@ -9,7 +9,7 @@ DB_NAME = "database.db"
 
 def create_app():
     app = Flask(__name__, template_folder='templates', static_folder='static')
-    app.config['SECRET_KEY'] = 'csit314sv' # Secret key for session management
+    app.config['SECRET_KEY'] = 'csit314flicket' # Secret key for session management
     basedir = os.path.abspath(os.path.dirname(__file__))
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, DB_NAME)
 
@@ -24,7 +24,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
 
     # Importing the database models
-    from .models import User
+    from .models import Account
 
     with app.app_context():
         db.create_all()
@@ -35,6 +35,6 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(id):
-        return User.query.get(int(id))
+        return Account.query.get(int(id))
 
     return app

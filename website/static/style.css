@@ -9,7 +9,7 @@ body {
 }
 
 
-/* PRESETS PRESETS PRESETS PRESETS PRESETS PRESETS */
+/* GLOBAL PRESETS GLOBAL PRESETS GLOBAL PRESETS GLOBAL PRESETS GLOBAL PRESETS GLOBAL PRESETS */
 .active {
     color: #d74545 !important;
 }
@@ -22,9 +22,34 @@ a {
     color: skyblue;
 }
 
+.modal-content {
+    background-color: #333;
+}
+
+.bi {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item {
+    --bs-dropdown-link-active-bg: #d74545;
+}
+
+.table {
+    --bs-table-hover-color: lightgray;
+    table-layout: fixed;
+}
+
+.table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
 /* NAVBAR NAVBAR NAVBAR NAVBAR NAVBAR NAVBAR NAVBAR */
 .navbar {
-    margin: 30px 10%;
+    margin: 35px 10%;
     padding: 0;
 }
 #navLogo {
@@ -70,9 +95,6 @@ a {
 
 /* FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER */
 footer {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
     background-color: #292929;
 }
 
