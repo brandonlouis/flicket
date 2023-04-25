@@ -13,8 +13,8 @@ def create_app():
     basedir = os.path.abspath(os.path.dirname(__file__))
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, DB_NAME)
 
+    
     db.init_app(app)
-
     # Importing the routes
     from .views import views
     from .auth import auth
@@ -25,7 +25,7 @@ def create_app():
 
     # Importing the database models
     from .models import Account
-
+    
     with app.app_context():
         db.create_all()
 

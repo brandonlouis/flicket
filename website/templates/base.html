@@ -60,7 +60,7 @@
                         <li><a class="dropdown-item" href="/profile">Profile</a></li>
                         <li><a class="dropdown-item" href="/manageAccounts">Manage Accounts</a></li>
                         <li><a class="dropdown-item" href="/manageProfiles">Manage Profiles</a></li>
-                        {% elif user.userType == "cinemaOwner" %}
+                        {% elif account.userType == "cinemaOwner" %}
                         <li><a class="dropdown-item" href="/manageMovies">Manage Movies</a></li>
                         {% else %}
                         <li><a class="dropdown-item" href="/profile">Profile</a></li>
