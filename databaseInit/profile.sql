@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2023 at 03:59 PM
+-- Generation Time: Apr 30, 2023 at 02:03 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -29,18 +29,19 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `profile` (
   `userType` varchar(15) NOT NULL,
-  `description` varchar(150) NOT NULL
+  `description` varchar(150) NOT NULL,
+  `accessType` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `profile`
 --
 
-INSERT INTO `profile` (`userType`, `description`) VALUES
-('cinemaManager', 'Movie and F&B management'),
-('cinemaOwner', 'Generation of reports'),
-('customer', 'Purchases tickets and F&B items'),
-('userAdmin', 'Account management');
+INSERT INTO `profile` (`userType`, `description`, `accessType`) VALUES
+('cinemaManager', 'Movie and F&B management', 'internal'),
+('cinemaOwner', 'Generation of reports', 'internal'),
+('customer', 'Purchases tickets and F&B items', 'external'),
+('userAdmin', 'Account management', 'internal');
 
 --
 -- Indexes for dumped tables

@@ -8,7 +8,7 @@ if(!isset($_POST["submit"])) {
     $password2 = $_POST["password2"];
 
     include "../classes/dbh_classes.php";
-    include "../classes/register_contr.php";
+    include "../controllers/register_contr.php";
     include "../classes/register_classes.php";
     
     $rc = new RegisterContr();

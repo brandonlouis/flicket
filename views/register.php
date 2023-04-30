@@ -1,5 +1,9 @@
 <?php
     session_start();
+    if (isset($_SESSION['email'])) { // Check if logged in
+        header('Location: ../index.php');
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>

@@ -34,8 +34,8 @@
                             <img class="btn btn-link dropdown-toggle p-0" src="/flicket/img/avatar.png" width="40px" alt="dropdown image" id="dropdownMenuButton1" data-bs-toggle="dropdown">
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="/">Profile</a></li>
-                                <li><a class="dropdown-item" href="/flicket/views/manageAccounts.php">Manage Accounts</a></li>
-                                <li><a class="dropdown-item" href="">Manage Profiles</a></li>
+                                <li><a class="dropdown-item" href="/flicket/views/account/manageAccounts.php">Manage Accounts</a></li>
+                                <li><a class="dropdown-item" href="/flicket/views/profile/manageProfiles.php">Manage Profiles</a></li>
                                 <li><a class="dropdown-item" href="/flicket/includes/logout_inc.php">Logout</a></li>
                             </ul>
                         </div>';

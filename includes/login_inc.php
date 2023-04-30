@@ -5,7 +5,7 @@ if(!isset($_POST["submit"])) {
     $password = $_POST["loginPassword"];
 
     include "../classes/dbh_classes.php";
-    include "../classes/login_contr.php";
+    include "../controllers/login_contr.php";
     include "../classes/login_classes.php";
     
     $lc = new LoginContr();
