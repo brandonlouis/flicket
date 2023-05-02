@@ -20,7 +20,7 @@
                 <a class="nav-item nav-link <?php if ($_SERVER['REQUEST_URI'] == '/flicket/index.php') echo 'active'; ?>" id="home" href="/flicket/index.php">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link <?php if ($_SERVER['REQUEST_URI'] == '/flicket/views/movies.php') echo 'active'; ?>" id="movies" href="/movies">Movies</a>
+                <a class="nav-item nav-link <?php if ($_SERVER['REQUEST_URI'] == '/flicket/views/movies.php') echo 'active'; ?>" id="movies" href="/flicket/views/movies.php">Movies</a>
             </li>
             <li class="nav-item">
                 <a class="nav-item nav-link <?php if ($_SERVER['REQUEST_URI'] == '/flicket/views/foodDrinks.php') echo 'active'; ?>" id="foodDrinks" href="/foodDrinks">Food & Drinks</a>
@@ -36,6 +36,17 @@
                                 <li><a class="dropdown-item" href="/">Profile</a></li>
                                 <li><a class="dropdown-item" href="/flicket/views/account/manageAccounts.php">Manage Accounts</a></li>
                                 <li><a class="dropdown-item" href="/flicket/views/profile/manageProfiles.php">Manage Profiles</a></li>
+                                <li><a class="dropdown-item" href="/flicket/includes/logout_inc.php">Logout</a></li>
+                            </ul>
+                        </div>';
+                } else if ($_SESSION['userType'] == "cinemaManager") {
+                    echo '<div class="dropdown">
+                            <img class="btn btn-link dropdown-toggle p-0" src="/flicket/img/avatar.png" width="40px" alt="dropdown image" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="/">Profile</a></li>
+                                <li><a class="dropdown-item" href="/flicket/views/cinemaRoom/manageCinemaRooms.php">Manage Cinema Rooms</a></li>
+                                <li><a class="dropdown-item" href="/flicket/views/seats/manageSeats.php">Manage Seats</a></li>
+                                <li><a class="dropdown-item" href="/flicket/views/movieSessions/manageMovieSessions.php">Manage Movie Sessions</a></li>
                                 <li><a class="dropdown-item" href="/flicket/includes/logout_inc.php">Logout</a></li>
                             </ul>
                         </div>';

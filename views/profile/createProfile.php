@@ -29,7 +29,7 @@
         <div class="content">
             <h1>Profile Details</h1>
             <form method="POST" action="../../includes/profileMgmt_inc.php" class="w-50">
-            <div class="input-group mt-4">
+                <div class="input-group mt-4">
                     <span class="input-group-text">
                         <i class="bi bi-person-lines-fill"></i>
                     </span>
@@ -39,7 +39,10 @@
                     <span class="input-group-text">
                         <i class="bi bi-card-text"></i>
                     </span>
-                    <input type="text" class="form-control" id="description" name="description" placeholder="Description" required>
+                    <div class="form-floating">
+                        <textarea class="form-control" style="height: 100px" placeholder="Description" id="description" name="description" required></textarea>
+                        <label class="text-secondary" for="description">Description</label>
+                    </div>
                 </div>
                 <div class="input-group mt-3">
                     <span class="input-group-text">

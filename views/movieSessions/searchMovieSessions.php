@@ -1,15 +1,9 @@
 <?php
     session_start();
-    if (!isset($_SESSION['email']) || $_SESSION['userType'] !== 'userAdmin') { // Check if logged in and if user is admin
+    if (!isset($_SESSION['email']) || $_SESSION['userType'] !== 'cinemaManager') { // Check if logged in and if user is admin
         header('Location: ../../index.php');
         exit;
     }
-
-    include "../../classes/dbh_classes.php";
-    include "../../controllers/profile_contr.php";
-
-    $pc = new ProfileContr();
-    $pc->retrieveProfiles();
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +16,7 @@
     <link rel="stylesheet" href="/flicket/css/style.css">
 
  
-    <title>Manage Profiles | flicket</title>
+    <title>Search Movie Sessions | flicket</title>
     <link rel="icon" type="image/x-icon" href="/flicket/img/favicon.ico">
 </head>
 
@@ -34,61 +28,76 @@
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content">
             <div class="d-flex justify-content-between align-items-center">
-                <h1>Profiles</h1>
+                <h1>Movies</h1>
 
                 <div class="d-flex">
-                    <form method="POST" action="../../includes/profileMgmt_inc.php" class="d-flex">
+                    <form method="POST" action="../../includes/movieMgmt_inc.php" class="d-flex">
                         <div class="input-group">
                             <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
                             <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><button class="dropdown-item" type="submit" name="filter" value="None"></button></li>
-                                <li><button class="dropdown-item" type="submit" name="filter" value="userType">User Type</button></li>
-                                <li><button class="dropdown-item" type="submit" name="filter" value="description">Description</button></li>
-                                <li><button class="dropdown-item" type="submit" name="filter" value="accessType">Access Type</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="id">Movie ID</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="title">Title</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="synopsis">Synopsis</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="runtimeMin">Runtime (Minutes)</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="startDate">Start Date</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="endDate">End Date</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="language">Language</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="genres">Genre</button></li>
                             </ul>
                         </div>
                     </form>
-                    <a href="createProfile.php" type="submit" class="btn btn-success bi bi-person-plus fs-3 ms-4" title="Create Profile"></a>
+                    <a href="createMovieSession.php" type="submit" class="btn btn-success bi bi-plus-lg fs-3 ms-4" title="Create Movie Session"></a>
                 </div>
             </div>
             <table class="table table-hover text-white mt-4">
                 <thead>
                     <tr>
-                        <th>User Type</th>
-                        <th>Description</th>
-                        <th>Access Type</th>
+                        <th>Movie ID</th>
+                        <th>Title</th>
+                        <th>Synopsis</th>
+                        <th>Runtime (Minutes)</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Language</th>
+                        <th>Genre</th>
                         <th></th>
                     <tr>
                 </thead>
                 <tbody class="align-middle">
-                    <?php foreach ($_SESSION['profiles'] as $profile) { ?>
+                    <?php foreach ($_SESSION['movies'] as $movie) { ?>
                     <tr>
-                        <td><?php echo $profile['userType']; ?></td>
-                        <td><?php echo $profile['description']; ?></td> 
-                        <td><?php echo $profile['accessType']; ?></td> 
+                        <td><?php echo $movie['id']; ?></td>
+                        <td title="<?php echo $movie['title']; ?>"><?php echo $movie['title']; ?></td>
+                        <td title="<?php echo $movie['synopsis']; ?>"><?php echo $movie['synopsis']; ?></td>
+                        <td><?php echo $movie['runtimeMin']; ?></td>
+                        <td><?php echo $movie['startDate']; ?></td>
+                        <td><?php echo $movie['endDate']; ?></td>
+                        <td><?php echo $movie['language']; ?></td>
+                        <td title="<?php echo $movie['genres']; ?>"><?php echo $movie['genres']; ?></td>
+
                         <td class="d-flex justify-content-evenly">
-                            <a href="updateProfile.php?userType=<?php echo $profile['userType']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Profile"></a>
-                            <button type="button" href="#" class="btn btn-danger bi bi-person-slash fs-5" title="Delete Profile" data-bs-toggle="modal" data-bs-target="#delete<?php echo $profile['userType']; ?>"></button>
+                            <a href="updateMovieSession.php?movieId=<?php echo $movie['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Movie Session"></a>
+                            <button type="button" href="#" class="btn btn-danger bi bi-trash fs-5" title="Delete Movie Session" data-bs-toggle="modal" data-bs-target="#delete<?php echo $movie['id']; ?>"></button>
                         </td>
                     </tr>
                     
-                    <div class="modal fade" id="delete<?php echo $profile['userType']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal fade" id="delete<?php echo $movie['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">Delete Profile</h5>
+                                <h5 class="modal-title" id="modalLabel">Delete Movie Session</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                Permanently delete the following profile?
+                                Permanently delete the following movie?
                                 <br/><br/>
-                                <span>User Type </span>: <?php echo $profile['userType']; ?><br/>
-                                <span>Description </span> &nbsp;: <?php echo $profile['description']; ?><br/>
-                                <span>Access Type </span>: <?php echo $profile['accessType']; ?><br/>
+                                <span>Movie ID </span>: <?php echo $movie['id']; ?><br/>
+                                <span>Title </span> &nbsp;: <?php echo $movie['title']; ?><br/>
                             </div>
                             <div class="modal-footer">
-                                <a href="../../includes/profileMgmt_inc.php?deleteId=<?php echo $profile['userType']; ?>" type="button" class="btn btn-danger">Yes</a>
+                                <a href="../../includes/movieMgmt_inc.php?deleteId=<?php echo $movie['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                             </div>
                             </div>
