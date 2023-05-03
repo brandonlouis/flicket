@@ -28,7 +28,7 @@
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content">
             <div class="d-flex justify-content-between align-items-center">
-                <h1>Profiles</h1>
+                <h1>Manage Profiles</h1>
 
                 <div class="d-flex">
                     <form method="POST" action="../../includes/profileMgmt_inc.php" class="d-flex">

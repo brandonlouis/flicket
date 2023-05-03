@@ -28,7 +28,7 @@
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content">
             <div class="d-flex justify-content-between align-items-center">
-                <h1>Movies</h1>
+                <h1>Manage Movies</h1>
 
                 <div class="d-flex">
                     <form method="POST" action="../../includes/movieMgmt_inc.php" class="d-flex">
