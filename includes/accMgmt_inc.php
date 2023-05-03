@@ -1,8 +1,6 @@
 <?php
 
-include "../classes/dbh_classes.php";
-include "../controllers/account_contr.php";
-include "../classes/account_classes.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/account_contr.php";
 
 if (isset($_GET['deleteId'])) {
     $amc = new AccountContr();

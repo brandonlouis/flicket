@@ -1,6 +1,6 @@
 <?php
 
-class Movie extends MovieContr {
+class Movie extends Dbh {
 
     private $id;
     private $title;
@@ -15,93 +15,193 @@ class Movie extends MovieContr {
     private $language;
     private $genre;
 
+    
+    public function retrieveAllMovies() {
+        $sql = "SELECT m.*, GROUP_CONCAT(mg.genreName ORDER BY mg.genreName ASC SEPARATOR ', ') AS genres
+                FROM movie m
+                JOIN moviegenre mg ON m.id = mg.movieId
+                GROUP BY m.id 
+                ORDER BY m.title ASC;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
 
-    public function __construct($id=NULL, $title=NULL, $synopsis=NULL, $totalScore=NULL, $totalRatingsReceived=NULL, $runtimeMin=NULL, $trailerURL=NULL, $startDate=NULL, $endDate=NULL, $poster=NULL, $language=NULL, $genre=NULL) {
+        $movies = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $movies[] = $row;
+        }
+
+        $stmt = null;
+        return $movies;
+    }
+
+    public function retrieveOneMovie($id) {
         $this->id = $id;
+
+        $sql = "SELECT m.*, GROUP_CONCAT(g.genreName SEPARATOR ', ') as genres
+                FROM movie m
+                LEFT JOIN moviegenre mg ON m.id = mg.movieId
+                LEFT JOIN genre g ON mg.genreName = g.genreName
+                WHERE m.id = ?
+                GROUP BY m.id";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$this->id]);
+
+        $movieDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $stmt = null;
+        return $movieDetails;
+    }
+    
+
+    public function retrieveAllLanguages() {
+        $sql = "SELECT * from language;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+
+        $languages = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $languages[] = $row;
+        }
+
+        $stmt = null;
+        return $languages;
+    }
+
+    public function retrieveAllGenres() {
+        $sql = "SELECT * from genre ORDER BY genreName ASC;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+
+        $genres = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $genres[] = $row;
+        }
+
+        $stmt = null;
+        return $genres;
+    }
+
+    public function createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster) {
+        session_start();
         $this->title = $title;
         $this->synopsis = $synopsis;
-        $this->totalScore = $totalScore;
-        $this->totalRatingsReceived = $totalRatingsReceived;
         $this->runtimeMin = $runtimeMin;
         $this->trailerURL = $trailerURL;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
-        $this->poster = $poster;
         $this->language = $language;
         $this->genre = $genre;
+        $this->poster = $poster;
+
+        $sql = "INSERT INTO movie (title, synopsis, runtimeMin, trailerURL, startDate, endDate, language, poster) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$this->title, $this->synopsis, $this->runtimeMin, $this->trailerURL, $this->startDate, $this->endDate, $this->language, $this->poster]);
+
+        $sql2 = "SELECT id FROM movie WHERE title = ? AND poster = ?;";
+        $stmt = $this->connect()->prepare($sql2);
+        $stmt->execute([$this->title, $this->poster]);
+        $movieId = $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+
+        foreach ($this->genre as $genreName) {
+            $genreSql = "INSERT INTO moviegenre (genreName, movieId) VALUES (?, ?);";
+            $genreStmt = $this->connect()->prepare($genreSql);
+            $genreStmt->execute([$genreName, $movieId]);
+        }
+
+        $stmt = null;
+        $genreStmt = null;
+        return array("Movie successfully created!", "success");
     }
 
-    public function getId() {
-        return $this->id;
-    }
-    public function getTitle() {
-        return $this->title;
-    }
-    public function getSynopsis() {
-        return $this->synopsis;
-    }
-    public function getTotalScore() {
-        return $this->totalScore;
-    }
-    public function getTotalRatingsReceived() {
-        return $this->totalRatingsReceived;
-    }
-    public function getRuntimeMin() {
-        return $this->runtimeMin;
-    }
-    public function getTrailerURL() {
-        return $this->trailerURL;
-    }
-    public function getStartDate() {
-        return $this->startDate;
-    }
-    public function getEndDate() {
-        return $this->endDate;
-    }
-    public function getPoster() {
-        return $this->poster;
-    }
-    public function getLanguage() {
-        return $this->language;
-    }
-    public function getGenre() {
-        return $this->genre;
-    }
-
-    public function setId($id) {
+    public function updateMovie($id, $title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster) {
+        session_start();
         $this->id = $id;
-    }
-    public function setTitle($title) {
         $this->title = $title;
-    }
-    public function setSynopsis($synopsis) {
         $this->synopsis = $synopsis;
-    }
-    public function setTotalScore($totalScore) {
-        $this->totalScore = $totalScore;
-    }
-    public function setTotalRatingsReceived($totalRatingsReceived) {
-        $this->totalRatingsReceived = $totalRatingsReceived;
-    }
-    public function setRuntimeMin($runtimeMin) {
         $this->runtimeMin = $runtimeMin;
-    }
-    public function setTrailerURL($trailerURL) {
         $this->trailerURL = $trailerURL;
-    }
-    public function setStartDate($startDate) {
         $this->startDate = $startDate;
-    }
-    public function setEndDate($endDate) {
         $this->endDate = $endDate;
-    }
-    public function setPoster($poster) {
-        $this->poster = $poster;
-    }
-    public function setLanguage($language) {
         $this->language = $language;
-    }
-    public function setGenre($genre) {
         $this->genre = $genre;
+        $this->poster = $poster;
+
+        if ($this->poster == null) {
+            $sql = "UPDATE movie SET title = ?, synopsis = ?, runtimeMin = ?, trailerURL = ?, startDate = ?, endDate = ?, language = ? WHERE id = ?;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$this->title, $this->synopsis, $this->runtimeMin, $this->trailerURL, $this->startDate, $this->endDate, $this->language, $this->id]);
+        } else if ($this->poster != null) {
+            $sql = "UPDATE movie SET title = ?, synopsis = ?, runtimeMin = ?, trailerURL = ?, startDate = ?, endDate = ?, language = ?, poster = ? WHERE id = ?;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$this->title, $this->synopsis, $this->runtimeMin, $this->trailerURL, $this->startDate, $this->endDate, $this->language, $this->poster, $this->id]);
+        }
+
+        $deleteGenreSql = "DELETE FROM moviegenre WHERE movieId = ?";
+        $deleteGenreStmt = $this->connect()->prepare($deleteGenreSql);
+        $deleteGenreStmt->execute([$this->id]);
+
+        foreach ($this->genre as $genreName) {
+            $genreSql = "INSERT INTO moviegenre (movieId, genreName) VALUES (?, ?)";
+            $genreStmt = $this->connect()->prepare($genreSql);
+            $genreStmt->execute([$this->id, $genreName]);
+        }
+                
+
+        $stmt = null;
+        $genreStmt = null;
+        return array('Movie (ID: ' . $this->id . ') updated successfully!', "success");
+    }
+
+    public function deleteMovie($id) {
+        session_start();
+        $this->id = $id;
+
+        $sql = "DELETE FROM movie WHERE id = ?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$this->id]);
+
+        $stmt = null;
+        return array('Movie (ID: ' . $this->id . ') deleted successfully!', "success");
+    }
+
+    public function searchMovies($searchText, $filter) {
+        session_start();
+
+        if ($filter == "None") {
+            $sql = "SELECT m.*, genres 
+                    FROM movie m 
+                    JOIN (
+                        SELECT movieId, GROUP_CONCAT(genreName ORDER BY genreName ASC SEPARATOR ', ') AS genres
+                        FROM moviegenre
+                        GROUP BY movieId
+                    ) mg ON m.id = mg.movieId
+                    WHERE m.id LIKE ? OR m.title LIKE ? OR m.synopsis LIKE ? OR m.runtimeMin LIKE ? OR m.trailerURL LIKE ? OR m.startDate LIKE ? OR m.endDate LIKE ? OR m.language LIKE ? OR genres LIKE ?
+                    GROUP BY m.id 
+                    ORDER BY m.title ASC";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(['%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%']);
+
+        } else {
+            $sql = "SELECT m.*, genres 
+                    FROM movie m 
+                    JOIN (
+                        SELECT movieId, GROUP_CONCAT(genreName ORDER BY genreName ASC SEPARATOR ', ') AS genres
+                        FROM moviegenre
+                        GROUP BY movieId
+                    ) mg ON m.id = mg.movieId
+                    WHERE " . $filter . " LIKE ?
+                    GROUP BY m.id 
+                    ORDER BY m.title ASC;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(['%' . $searchText . '%']);    
+        }
+
+        $movies = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $movies[] = $row;
+        }
+
+        $stmt = null;
+        return $movies;
     }
 }

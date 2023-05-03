@@ -1,11 +1,11 @@
 <?php
     session_start();
 
-    include "../classes/dbh_classes.php";
-    include "../controllers/movie_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/dbh_classes.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie_contr.php";
 
     $mc = new MovieContr();
-    $mc->retrieveMovies();
+    $movies = $mc->retrieveAllMovies();
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@
 
 <body class="d-flex flex-column h-100">
     <?php
-        include("../templates/header.php");
+        include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/header.php';
     ?>
 
     <div class="container mt-4" style="margin-bottom: 80px">
@@ -52,7 +52,7 @@
             </form>
         </div>    
         <div class="content" style="display:grid; grid-template-columns: repeat(4, 1fr); justify-items:center;">
-            <?php foreach ($_SESSION['movies'] as $movie) { ?>
+            <?php foreach ($movies as $movie) { ?>
                 <a href="#" class="text-decoration-none border-0" style="width: 17rem;">
                     <img src="data:image/png;base64,<?php echo $movie['poster']; ?>" class="card-img-top mb-3" style="height:400px; object-fit:cover;" alt="<?php echo $movie['title'] ?>">
                     <div class="card-body d-flex flex-column justify-content-between">
@@ -73,7 +73,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
     <?php
-        include("../templates/footer.php");
+        include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/footer.php';
     ?>
 </body>
 

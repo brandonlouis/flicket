@@ -5,11 +5,10 @@
         exit;
     }
 
-    include "../../classes/dbh_classes.php";
-    include "../../controllers/profile_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/profile_contr.php";
 
     $pc = new ProfileContr();
-    $pc->retrieveProfiles();
+    $profiles = $pc->retrieveAllProfiles();
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +27,7 @@
 
 <body class="d-flex flex-column h-100">
     <?php
-        include("../../templates/header.php");
+        include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/header.php';
     ?>
 
     <div class="container mt-4" style="margin-bottom: 80px">
@@ -40,8 +39,9 @@
                         <i class="bi bi-person-lines-fill"></i>
                     </span>
                     <select class="form-select" id="userType" name="userType" aria-label="Default select">
-                        <?php foreach ($_SESSION['profiles'] as $profile) { ?>
-                            <option value="<?php echo $profile['userType']; ?>" <?php if($_SESSION['accountDetails']['userType'] == $profile['userType']) { ?> selected <?php } ?>><?php echo $profile['userType']; ?></option>
+                        <option hidden>Please select User Type</option>
+                        <?php foreach ($profiles as $profile) { ?>
+                            <option value="<?php echo $profile['userType']; ?>"><?php echo $profile['userType']; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -89,7 +89,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
     <?php
-        include("../../templates/footer.php");
+        include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/footer.php';
     ?>
 </body>
 

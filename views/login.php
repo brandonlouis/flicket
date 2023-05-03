@@ -52,7 +52,7 @@
                             </span>
                             <input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="Password" required>
                         </div>
-                        <a href="/" class="w-100 mt-1" style="font-size: 13px; text-align: right;"><b>Forgot password?</b></a>
+                        <a href="#" class="w-100 mt-1" style="font-size: 13px; text-align: right;"><b>Forgot password?</b></a>
                         <button type="submit" class="btn btn-danger w-100 my-4">Login</button>
                     </div>
                     <div class="d-flex justify-content-center mt-2">

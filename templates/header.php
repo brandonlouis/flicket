@@ -33,7 +33,6 @@
                     echo '<div class="dropdown">
                             <img class="btn btn-link dropdown-toggle p-0" src="/flicket/img/avatar.png" width="40px" alt="dropdown image" id="dropdownMenuButton1" data-bs-toggle="dropdown">
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="/">Profile</a></li>
                                 <li><a class="dropdown-item" href="/flicket/views/account/manageAccounts.php">Manage Accounts</a></li>
                                 <li><a class="dropdown-item" href="/flicket/views/profile/manageProfiles.php">Manage Profiles</a></li>
                                 <li><a class="dropdown-item" href="/flicket/includes/logout_inc.php">Logout</a></li>
@@ -43,10 +42,10 @@
                     echo '<div class="dropdown">
                             <img class="btn btn-link dropdown-toggle p-0" src="/flicket/img/avatar.png" width="40px" alt="dropdown image" id="dropdownMenuButton1" data-bs-toggle="dropdown">
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="/">Profile</a></li>
-                                <li><a class="dropdown-item" href="/flicket/views/cinemaRoom/manageCinemaRooms.php">Manage Cinema Rooms</a></li>
-                                <li><a class="dropdown-item" href="/flicket/views/seats/manageSeats.php">Manage Seats</a></li>
-                                <li><a class="dropdown-item" href="/flicket/views/movieSessions/manageMovieSessions.php">Manage Movie Sessions</a></li>
+                                <li><a class="dropdown-item" href="/flicket/views/movieMgmt/manageMovies.php">Manage Movies</a></li>
+                                <li><a class="dropdown-item" href="/flicket/views/movieMgmt/manageShowtimes.php">Manage Showtimes</a></li>
+                                <li><a class="dropdown-item" href="/flicket/views/cinemaMgmt/manageCinemaRooms.php">Manage Cinema Rooms</a></li>
+                                <li><a class="dropdown-item" href="/flicket/views/cinemaMgmt/manageSeats.php">Manage Seats</a></li>
                                 <li><a class="dropdown-item" href="/flicket/includes/logout_inc.php">Logout</a></li>
                             </ul>
                         </div>';
@@ -54,13 +53,13 @@
                     echo '<div class="dropdown">
                             <img class="btn btn-link dropdown-toggle p-0" src="/flicket/img/avatar.png" width="40px" alt="dropdown image" id="dropdownMenuButton1" data-bs-toggle="dropdown">
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="/">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
                                 <li><a class="dropdown-item" href="/flicket/includes/logout_inc.php">Logout</a></li>
                             </ul>
                         </div>';
                 }
             } else {
-                echo '<a href="views/login.php" class="btn btn-danger">Login</a>';
+                echo '<a href="/flicket/views/login.php" class="btn btn-danger">Login</a>';
             }
         ?>
     </div>

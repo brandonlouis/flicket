@@ -1,8 +1,6 @@
 <?php
 
-include "../classes/dbh_classes.php";
-include "../controllers/profile_contr.php";
-include "../classes/profile_classes.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/profile_contr.php";
 
 if (isset($_GET['deleteId'])) {
     $pc = new ProfileContr();
