@@ -5,11 +5,10 @@
         exit;
     }
 
-    include "../../classes/dbh_classes.php";
-    include "../../controllers/account_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/account_contr.php";
 
     $amc = new AccountContr();
-    $amc->retrieveAccounts();
+    $accounts = $amc->retrieveAllAccounts();
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +27,7 @@
 
 <body class="d-flex flex-column h-100">
     <?php
-        include("../../templates/header.php");
+        include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/header.php';
     ?>
 
     <div class="container mt-4" style="margin-bottom: 80px">
@@ -66,7 +65,7 @@
                     <tr>
                 </thead>
                 <tbody class="align-middle">
-                    <?php foreach ($_SESSION['accounts'] as $account) { ?>
+                    <?php foreach ($accounts as $account) { ?>
                     <tr <?php if (!$account['userType']) { ?> class="text-danger" title="WARNING: Account does not have a User Type" <?php } ?>>
                         <td><?php echo $account['id']; ?></td>
                         <td><?php echo $account['fullName']; ?></td>
@@ -112,7 +111,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
     <?php
-        include("../../templates/footer.php");
+        include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/footer.php';
     ?>
 </body>
 

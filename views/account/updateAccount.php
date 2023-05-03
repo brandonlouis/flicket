@@ -5,15 +5,14 @@
         exit;
     }
 
-    include "../../classes/dbh_classes.php";
-    include "../../controllers/account_contr.php";
-    include "../../controllers/profile_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/account_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/profile_contr.php";
 
     $amc = new AccountContr();
-    $amc->retrieveAnAccount($_GET['id']);
+    $accountDetails = $amc->retrieveOneAccount($_GET['id']);
 
     $pc = new ProfileContr();
-    $pc->retrieveProfiles();
+    $profiles = $pc->retrieveAllProfiles();
 ?>
 
 <!DOCTYPE html>
@@ -32,20 +31,20 @@
 
 <body class="d-flex flex-column h-100">
     <?php
-        include("../../templates/header.php");
+        include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/header.php';
     ?>
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content">
             <h1>Account Details</h1>
-            <form method="POST" action="../../includes/accMgmt_inc.php?id=<?php echo $_SESSION['accountDetails']['id']; ?>" class="w-50">
+            <form method="POST" action="../../includes/accMgmt_inc.php?id=<?php echo $accountDetails['id']; ?>" class="w-50">
                 <div class="input-group mt-4">
                     <span class="input-group-text">
                         <i class="bi bi-person-lines-fill"></i>
                     </span>
                     <select class="form-select" id="userType" name="userType" aria-label="Default select">
-                        <?php foreach ($_SESSION['profiles'] as $profile) { ?>
-                            <option value="<?php echo $profile['userType']; ?>" <?php if($_SESSION['accountDetails']['userType'] == $profile['userType']) { ?> selected <?php } ?>><?php echo $profile['userType']; ?></option>
+                        <?php foreach ($profiles as $profile) { ?>
+                            <option value="<?php echo $profile['userType']; ?>" <?php if($accountDetails['userType'] == $profile['userType']) { ?> selected <?php } ?>><?php echo $profile['userType']; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -53,19 +52,19 @@
                     <span class="input-group-text">
                         <i class="bi bi-person"></i>
                     </span>
-                    <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name" pattern="[a-zA-Z\s]*" value="<?php echo $_SESSION['accountDetails']['fullName']; ?>" required>
+                    <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name" pattern="[a-zA-Z\s]*" value="<?php echo $accountDetails['fullName']; ?>" required>
                 </div>
                 <div class="input-group mt-3">
                     <span class="input-group-text">
                         <i class="bi bi-envelope"></i>
                     </span>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo $_SESSION['accountDetails']['email']; ?>" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo $accountDetails['email']; ?>" required>
                 </div>
                 <div class="input-group mt-3">
                     <span class="input-group-text">
                         <i class="bi bi-phone"></i>
                     </span>
-                    <input type="tel" class="form-control" id="phoneNo" name="phoneNo" placeholder="Phone" pattern="(6|8|9)\d{7}" value="<?php echo $_SESSION['accountDetails']['phoneNo']; ?>" required>
+                    <input type="tel" class="form-control" id="phoneNo" name="phoneNo" placeholder="Phone" pattern="(6|8|9)\d{7}" value="<?php echo $accountDetails['phoneNo']; ?>" required>
                 </div>
                 <div class="input-group mt-3">
                     <span class="input-group-text">
@@ -93,7 +92,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
     <?php
-        include("../../templates/footer.php");
+        include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/footer.php';
     ?>
 </body>
 

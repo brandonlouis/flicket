@@ -1,14 +1,12 @@
 <?php
 
-include "../classes/dbh_classes.php";
-include "../controllers/movie_contr.php";
-include "../classes/movie_classes.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie_contr.php";
 
 if (isset($_GET['deleteId'])) {
     $mc = new MovieContr();
     $mc->deleteMovie($_GET['deleteId']);
 
-} else if (isset($_POST['createMovieSession']) || isset($_POST['updateMovieSession'])) {
+} else if (isset($_POST['createMovie']) || isset($_POST['updateMovie'])) {
     $title = $_POST["title"];
     $synopsis = $_POST["synopsis"];
     $runtimeMin = $_POST["runtimeMin"];
@@ -25,9 +23,9 @@ if (isset($_GET['deleteId'])) {
     
     $mc = new MovieContr();
 
-    if (isset($_POST['createMovieSession'])) {
+    if (isset($_POST['createMovie'])) {
         $mc->createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster);
-    } else if (isset($_POST['updateMovieSession']) && isset($_GET['movieId'])) {
+    } else if (isset($_POST['updateMovie']) && isset($_GET['movieId'])) {
         $mc->updateMovie($_GET['movieId'], $title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster);
     }
 } else if (isset($_POST['filter'])) {

@@ -5,11 +5,10 @@
         exit;
     }
 
-    include "../../classes/dbh_classes.php";
-    include "../../controllers/profile_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/profile_contr.php";
 
     $pc = new ProfileContr();
-    $pc->retrieveAProfile($_GET['userType']);
+    $profileDetails = $pc->retrieveOneProfile($_GET['userType']);
 ?>
 
 <!DOCTYPE html>
@@ -28,25 +27,25 @@
 
 <body class="d-flex flex-column h-100">
     <?php
-        include("../../templates/header.php");
+        include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/header.php';
     ?>
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content">
             <h1>Profile Details</h1>
-            <form method="POST" action="../../includes/profileMgmt_inc.php?userType=<?php echo $_SESSION['profileDetails']['userType']; ?>" class="w-50">
+            <form method="POST" action="../../includes/profileMgmt_inc.php?userType=<?php echo $profileDetails['userType']; ?>" class="w-50">
                 <div class="input-group mt-4">
                     <span class="input-group-text">
                         <i class="bi bi-person-lines-fill"></i>
                     </span>
-                    <input type="text" class="form-control" id="userType" name="userType" placeholder="User Type" value="<?php echo $_SESSION['profileDetails']['userType']; ?>" required>
+                    <input type="text" class="form-control" id="userType" name="userType" placeholder="User Type" value="<?php echo $profileDetails['userType']; ?>" required>
                 </div>
                 <div class="input-group mt-3">
                     <span class="input-group-text">
                         <i class="bi bi-card-text"></i>
                     </span>
                     <div class="form-floating">
-                        <textarea class="form-control" style="height: 100px" placeholder="Description" id="description" name="description"><?php echo $_SESSION['profileDetails']['description']; ?></textarea>
+                        <textarea class="form-control" style="height: 100px" placeholder="Description" id="description" name="description"><?php echo $profileDetails['description']; ?></textarea>
                         <label class="text-secondary" for="description">Description</label>
                     </div>
                 </div>
@@ -55,8 +54,8 @@
                         <i class="bi bi-person-lock"></i>
                     </span>
                     <select class="form-select" id="accessType" name="accessType" aria-label="Default select">
-                        <option value="internal" <?php if($_SESSION['profileDetails']['accessType'] == 'internal') { ?> selected <?php } ?>>internal</option>
-                        <option value="external" <?php if($_SESSION['profileDetails']['accessType'] == 'external') { ?> selected <?php } ?>>external</option>
+                        <option value="internal" <?php if($profileDetails['accessType'] == 'internal') { ?> selected <?php } ?>>internal</option>
+                        <option value="external" <?php if($profileDetails['accessType'] == 'external') { ?> selected <?php } ?>>external</option>
                     </select>
                 </div>
                 <div class="d-flex">
@@ -73,7 +72,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
     <?php
-        include("../../templates/footer.php");
+        include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/footer.php';
     ?>
 </body>
 

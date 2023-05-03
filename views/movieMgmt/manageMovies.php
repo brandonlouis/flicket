@@ -5,11 +5,10 @@
         exit;
     }
 
-    include "../../classes/dbh_classes.php";
-    include "../../controllers/movie_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie_contr.php";
 
     $mc = new MovieContr();
-    $mc->retrieveMovies();
+    $movies = $mc->retrieveAllMovies();
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +27,7 @@
 
 <body class="d-flex flex-column h-100">
     <?php
-        include("../../templates/header.php");
+        include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/header.php';
     ?>
 
     <div class="container mt-4" style="margin-bottom: 80px">
@@ -54,7 +53,7 @@
                             </ul>
                         </div>
                     </form>
-                    <a href="createMovieSession.php" type="submit" class="btn btn-success bi bi-plus-lg fs-3 ms-4" title="Create Movie Session"></a>
+                    <a href="createMovie.php" type="submit" class="btn btn-success bi bi-plus-lg fs-3 ms-4" title="Create Movie Session"></a>
                 </div>
             </div>
             <table class="table table-hover text-white mt-4">
@@ -72,7 +71,7 @@
                     <tr>
                 </thead>
                 <tbody class="align-middle">
-                    <?php foreach ($_SESSION['movies'] as $movie) { ?>
+                    <?php foreach ($movies as $movie) { ?>
                     <tr>
                         <td><?php echo $movie['id']; ?></td>
                         <td title="<?php echo $movie['title']; ?>"><?php echo $movie['title']; ?></td>
@@ -84,7 +83,7 @@
                         <td title="<?php echo $movie['genres']; ?>"><?php echo $movie['genres']; ?></td>
 
                         <td class="d-flex justify-content-evenly">
-                            <a href="updateMovieSession.php?movieId=<?php echo $movie['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Movie Session"></a>
+                            <a href="updateMovie.php?movieId=<?php echo $movie['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Movie Session"></a>
                             <button type="button" href="#" class="btn btn-danger bi bi-trash fs-5" title="Delete Movie Session" data-bs-toggle="modal" data-bs-target="#delete<?php echo $movie['id']; ?>"></button>
                         </td>
                     </tr>
@@ -121,7 +120,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
     <?php
-        include("../../templates/footer.php");
+        include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/footer.php';
     ?>
 </body>
 
