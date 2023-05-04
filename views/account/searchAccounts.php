@@ -31,7 +31,7 @@
                 <h1>Manage Accounts</h1>
 
                 <div class="d-flex">
-                    <form method="POST" action="../../includes/accMgmt_inc.php" class="d-flex">
+                    <form method="POST" action="../../controllers/account_contr.php" class="d-flex">
                         <div class="input-group">
                             <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
                             <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
@@ -88,7 +88,7 @@
                                 <span>User Type </span> &nbsp;: <?php echo $account['userType']; ?><br/>
                             </div>
                             <div class="modal-footer">
-                                <a href="../../includes/accMgmt_inc.php?deleteId=<?php echo $account['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                                <a href="../../controllers/account_contr.php?deleteId=<?php echo $account['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                             </div>
                             </div>

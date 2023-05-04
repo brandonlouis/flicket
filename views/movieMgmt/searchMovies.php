@@ -31,7 +31,7 @@
                 <h1>Manage Movies</h1>
 
                 <div class="d-flex">
-                    <form method="POST" action="../../includes/movieMgmt_inc.php" class="d-flex">
+                    <form method="POST" action="../../controllers/movie_contr.php" class="d-flex">
                         <div class="input-group">
                             <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
                             <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
@@ -97,7 +97,7 @@
                                 <span>Title </span> &nbsp;: <?php echo $movie['title']; ?><br/>
                             </div>
                             <div class="modal-footer">
-                                <a href="../../includes/movieMgmt_inc.php?deleteId=<?php echo $movie['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                                <a href="../../controllers/movie_contr.php?deleteId=<?php echo $movie['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                             </div>
                             </div>

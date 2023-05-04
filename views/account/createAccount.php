@@ -33,7 +33,7 @@
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content">
             <h1>Account Details</h1>
-            <form method="POST" action="../../includes/accMgmt_inc.php" class="w-50">
+            <form method="POST" action="../../controllers/account_contr.php" class="w-50">
                 <div class="input-group mt-4">
                     <span class="input-group-text">
                         <i class="bi bi-person-lines-fill"></i>

@@ -33,7 +33,7 @@
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content">
             <h1>Profile Details</h1>
-            <form method="POST" action="../../includes/profileMgmt_inc.php?userType=<?php echo $profileDetails['userType']; ?>" class="w-50">
+            <form method="POST" action="../../controllers/profile_contr.php?userType=<?php echo $profileDetails['userType']; ?>" class="w-50">
                 <div class="input-group mt-4">
                     <span class="input-group-text">
                         <i class="bi bi-person-lines-fill"></i>
