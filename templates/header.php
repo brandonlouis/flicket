@@ -26,39 +26,31 @@
                 <a class="nav-item nav-link <?php if ($_SERVER['REQUEST_URI'] == '/flicket/views/foodDrinks.php') echo 'active'; ?>" id="foodDrinks" href="/foodDrinks">Food & Drinks</a>
             </li>
         </ul>
-        
         <?php
             if (isset($_SESSION['userType'])) {
+                // user is logged in
+                echo '<div class="dropdown">
+                        <img class="btn btn-link dropdown-toggle p-0" src="/flicket/img/avatar.png" width="40px" alt="dropdown image" id="dropdownMenuButton1" data-bs-toggle="dropdown">
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            ';
                 if ($_SESSION['userType'] == "userAdmin") {
-                    echo '<div class="dropdown">
-                            <img class="btn btn-link dropdown-toggle p-0" src="/flicket/img/avatar.png" width="40px" alt="dropdown image" id="dropdownMenuButton1" data-bs-toggle="dropdown">
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="/flicket/views/account/manageAccounts.php">Manage Accounts</a></li>
-                                <li><a class="dropdown-item" href="/flicket/views/profile/manageProfiles.php">Manage Profiles</a></li>
-                                <li><a class="dropdown-item" href="/flicket/includes/logout_inc.php">Logout</a></li>
-                            </ul>
-                        </div>';
-                } else if ($_SESSION['userType'] == "cinemaManager") {
-                    echo '<div class="dropdown">
-                            <img class="btn btn-link dropdown-toggle p-0" src="/flicket/img/avatar.png" width="40px" alt="dropdown image" id="dropdownMenuButton1" data-bs-toggle="dropdown">
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="/flicket/views/movieMgmt/manageMovies.php">Manage Movies</a></li>
-                                <li><a class="dropdown-item" href="/flicket/views/movieMgmt/manageShowtimes.php">Manage Showtimes</a></li>
-                                <li><a class="dropdown-item" href="/flicket/views/cinemaMgmt/manageCinemaRooms.php">Manage Cinema Rooms</a></li>
-                                <li><a class="dropdown-item" href="/flicket/views/cinemaMgmt/manageSeats.php">Manage Seats</a></li>
-                                <li><a class="dropdown-item" href="/flicket/includes/logout_inc.php">Logout</a></li>
-                            </ul>
-                        </div>';
+                    echo '<li><a class="dropdown-item" href="/flicket/views/account/manageAccounts.php">Manage Accounts</a></li>
+                        <li><a class="dropdown-item" href="/flicket/views/profile/manageProfiles.php">Manage Profiles</a></li>';
+                } elseif ($_SESSION['userType'] == "cinemaManager") {
+                    echo '<li><a class="dropdown-item" href="/flicket/views/movieMgmt/manageMovies.php">Manage Movies</a></li>
+                        <li><a class="dropdown-item" href="/flicket/views/movieMgmt/manageShowtimes.php">Manage Showtimes</a></li>
+                        <li><a class="dropdown-item" href="/flicket/views/cinemaMgmt/manageCinemaRooms.php">Manage Cinema Rooms</a></li>
+                        <li><a class="dropdown-item" href="/flicket/views/cinemaMgmt/manageSeats.php">Manage Seats</a></li>
+                        <li><a class="dropdown-item" href="/flicket/views/cinemaMgmt/manageTicketTypes.php">Manage Ticket Types</a></li>';
                 } else {
-                    echo '<div class="dropdown">
-                            <img class="btn btn-link dropdown-toggle p-0" src="/flicket/img/avatar.png" width="40px" alt="dropdown image" id="dropdownMenuButton1" data-bs-toggle="dropdown">
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="/flicket/includes/logout_inc.php">Logout</a></li>
-                            </ul>
-                        </div>';
+                    echo '<li><a class="dropdown-item" href="#">Profile</a></li>';
                 }
+                // logout button
+                echo '<li><a class="dropdown-item" href="/flicket/controllers/logout_contr.php">Logout</a></li>
+                        </ul>
+                    </div>';
             } else {
+                // user is not logged in
                 echo '<a href="/flicket/views/login.php" class="btn btn-danger">Login</a>';
             }
         ?>

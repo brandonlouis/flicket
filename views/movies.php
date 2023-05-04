@@ -33,7 +33,7 @@
                 <h1>Movies</h1>
                 <p style="margin:0">Discover new movies, book your seats, and enjoy the show</p>
             </span>
-            <form method="POST" action="../../includes/movieMgmt_inc.php" class="d-flex">
+            <form method="POST" action="../../controllers/movie_contr.php" class="d-flex">
                 <div class="input-group">
                     <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
                     <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>

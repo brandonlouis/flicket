@@ -31,7 +31,7 @@
                 <h1>Manage Profiles</h1>
 
                 <div class="d-flex">
-                    <form method="POST" action="../../includes/profileMgmt_inc.php" class="d-flex">
+                    <form method="POST" action="../../controllers/profile_contr.php" class="d-flex">
                         <div class="input-group">
                             <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
                             <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
@@ -82,7 +82,7 @@
                                 <span>Access Type </span>: <?php echo $profile['accessType']; ?><br/>
                             </div>
                             <div class="modal-footer">
-                                <a href="../../includes/profileMgmt_inc.php?deleteId=<?php echo $profile['userType']; ?>" type="button" class="btn btn-danger">Yes</a>
+                                <a href="../../controllers/profile_contr.php?deleteId=<?php echo $profile['userType']; ?>" type="button" class="btn btn-danger">Yes</a>
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                             </div>
                             </div>

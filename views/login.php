@@ -25,7 +25,7 @@
         <div class="loginRegisterContainer d-flex rounded-4">
             <div class="d-flex justify-content-center align-items-center" style="width:40%">
                 <a href="../index.php" class="btn btn-dark position-absolute m-3" style="left:10%; top:7.5%">&#11148;&nbsp;&nbsp;Return to Website</a>
-                <form method="POST" action="../includes/login_inc.php">
+                <form method="POST" action="../controllers/login_contr.php">
                     <div class="d-flex flex-column align-items-center" style="width: 380px">
                         <img src="../img/flicket.png" width="230">
                         <h3 class="text-center mt-5"><b>Welcome Back!</b></h3>

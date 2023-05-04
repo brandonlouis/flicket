@@ -34,7 +34,7 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../includes/movieMgmt_inc.php?movieId=<?php echo $movieDetails['id']; ?>" enctype="multipart/form-data" style="width:45%">
+            <form method="POST" action="../../controllers/movie_contr.php?movieId=<?php echo $movieDetails['id']; ?>" enctype="multipart/form-data" style="width:45%">
                 <h1>Movie Details</h1>
         
                 <div class="input-group mt-4">
