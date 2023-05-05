@@ -6,6 +6,9 @@ body {
     color: white;
     margin: 0%;
     overflow-x: hidden;
+    background: linear-gradient(to bottom, #222222 0%, #333333 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 

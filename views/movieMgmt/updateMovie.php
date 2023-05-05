@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="/flicket/css/style.css">
 
  
-    <title>Update Movie Session | flicket</title>
+    <title>Update Movie | flicket</title>
     <link rel="icon" type="image/x-icon" href="/flicket/img/favicon.ico">
 </head>
 
@@ -111,7 +111,7 @@
                     <input type="file" class="form-control" id="posterFile" name="posterFile" onchange="previewPoster()" accept="image/*" max-size="2MB">
                 </div>
                 <div class="d-flex">
-                    <button type="submit" name="updateMovie" class="btn btn-danger my-4 me-3">Update movie session</button>
+                    <button type="submit" name="updateMovie" class="btn btn-danger my-4 me-3">Update movie</button>
                     <a href="manageMovies.php" class="btn btn-outline-info my-4">Cancel</a>
                 </div>
             </form>

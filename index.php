@@ -1,5 +1,11 @@
 <?php
     session_start();
+
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie_contr.php";
+
+    $mc = new MovieContr();
+    $movies = $mc->retrieveAllAvailableMovies();
+    $random_number = rand(0,count($movies)-1);
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +19,7 @@
 
  
     <title>Home | flicket</title>
-    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/flicket/img/favicon.ico">
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -23,8 +29,50 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content">
-            <h1>Home</h1>
-            <p>Home page content goes here.</p>
+            <div class="d-flex align-items-center" style="max-height:700px;overflow:hidden;">
+                <div class="" style="width:40%">
+                    <p style="color:white;font-size:15px;width: fit-content;padding: 2px 10px;background-color: #d74545;border-radius: 15px;"><?php echo $movies[$random_number]['genres']; ?></p>
+                    <h1><?php echo $movies[$random_number]['title']; ?></h1>
+                    <p><?php echo $movies[$random_number]['synopsis']; ?></p>
+                    <div class="mt-5">
+                        <a href="#" type="button" class="btn btn-danger">Book Now</a>
+                        <a href="#" type="button" class="ms-4 btn btn-outline-light">See Details</a>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end" style="width:60%">
+                    <img src="data:image/png;base64,<?php echo $movies[$random_number]['poster']; ?>" style="height:700px;width:auto;" alt="<?php echo $movies[$random_number]['title'] ?>">
+                    <img src="data:image/png;base64,<?php echo $movies[$random_number]['poster']; ?>" style="height: 1200px;width:auto;position:absolute;z-index:-1;opacity:0.2;clip-path:inset(0 0 50% 0);left:25rem;right:0;margin-left:auto;margin-right:auto;top:12rem;" alt="<?php echo $movies[$random_number]['title'] ?>">
+                </div>
+            </div>
+
+            <?php 
+                $mv = array();
+                $movie_count = count($movies);
+                $num_movies = min(4, $movie_count);
+                for ($i = 0; $i < $num_movies; $i++) {
+                    do {
+                        $random_number = rand(0, $movie_count-1);
+                        $random_movie = $movies[$random_number];
+                    } while (in_array($random_movie, $mv));
+                    $mv[] = $random_movie;
+                }  
+            ?>
+            <h2 style="margin-top: 100px;">Now Showing</h2>
+            <hr>
+            <div class="mt-5 align-items-center" style="display:grid; grid-template-columns: repeat(4, 1fr); justify-items:center;">
+                <?php foreach ($mv as $movie) { ?>
+                    <a href="#" class="text-decoration-none border-0 mb-5" style="width: 17rem;">
+                        <img src="data:image/png;base64,<?php echo $movie['poster']; ?>" class="card-img-top mb-3" style="height:400px; object-fit:cover;" alt="<?php echo $movie['title'] ?>">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <h5 class="card-title text-white mb-2"><?php echo $movie['title'] ?></h5>
+                            <div class="d-flex justify-content-between">
+                                <p class="card-text text-white" style="font-size:12px;width: fit-content;padding: 2px 10px;background-color: #d74545;border-radius: 15px;"><?php echo $movie['genres'] ?></p>
+                                <p class="card-text text-white-50" style="font-size:12px;"><?php echo $movie['runtimeMin'] ?> minutes</p>
+                            </div>
+                        </div>
+                    </a>
+                <?php } ?>
+            </div>
         </div>
     </div>
 

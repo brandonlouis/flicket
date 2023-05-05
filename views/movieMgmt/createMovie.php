@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="/flicket/css/style.css">
 
  
-    <title>Create Movie Session | flicket</title>
+    <title>Create Movie | flicket</title>
     <link rel="icon" type="image/x-icon" href="/flicket/img/favicon.ico">
 </head>
 
@@ -110,7 +110,7 @@
                     <input type="file" class="form-control" id="posterFile" name="posterFile" onchange="previewPoster()" accept="image/*" required>
                 </div>
                 <div class="d-flex">
-                    <button type="submit" name="createMovie" class="btn btn-danger my-4 me-3">Create movie session</button>
+                    <button type="submit" name="createMovie" class="btn btn-danger my-4 me-3">Create movie</button>
                     <a href="manageMovies.php" class="btn btn-outline-info my-4">Cancel</a>
                 </div>
             </form>

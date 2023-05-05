@@ -17,7 +17,7 @@
 
  
     <title>Register | flicket</title>
-    <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/flicket/img/favicon.ico">
 </head>
 
 <body>

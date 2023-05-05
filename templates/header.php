@@ -39,9 +39,9 @@
                 } elseif ($_SESSION['userType'] == "cinemaManager") {
                     echo '<li><a class="dropdown-item" href="/flicket/views/movieMgmt/manageMovies.php">Manage Movies</a></li>
                         <li><a class="dropdown-item" href="/flicket/views/movieMgmt/manageShowtimes.php">Manage Showtimes</a></li>
-                        <li><a class="dropdown-item" href="/flicket/views/cinemaMgmt/manageCinemaRooms.php">Manage Cinema Rooms</a></li>
+                        <li><a class="dropdown-item" href="/flicket/views/cinemaHalls/manageCinemaHalls.php">Manage Cinema Halls</a></li>
                         <li><a class="dropdown-item" href="/flicket/views/cinemaMgmt/manageSeats.php">Manage Seats</a></li>
-                        <li><a class="dropdown-item" href="/flicket/views/cinemaMgmt/manageTicketTypes.php">Manage Ticket Types</a></li>';
+                        <li><a class="dropdown-item" href="/flicket/views/ticketType/manageTicketTypes.php">Manage Ticket Types</a></li>';
                 } else {
                     echo '<li><a class="dropdown-item" href="#">Profile</a></li>';
                 }
