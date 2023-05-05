@@ -67,7 +67,6 @@ class MovieContr {
     }
 }
 
-
 if (isset($_GET['deleteId'])) {
     $mc = new MovieContr();
     $mc->deleteMovie($_GET['deleteId']);
