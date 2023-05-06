@@ -69,7 +69,7 @@
                 </thead>
                 <tbody class="align-middle">
                     <?php foreach ($_SESSION['movies'] as $movie) { ?>
-                    <tr>
+                    <tr class="clickable-row" onclick="window.location='viewMovie.php?movieId=<?php echo $movie['id']; ?>'">
                         <td><?php echo $movie['id']; ?></td>
                         <td title="<?php echo $movie['title']; ?>"><?php echo $movie['title']; ?></td>
                         <td title="<?php echo $movie['synopsis']; ?>"><?php echo $movie['synopsis']; ?></td>
