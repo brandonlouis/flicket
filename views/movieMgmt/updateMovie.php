@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="/flicket/css/style.css">
 
  
-    <title>Update Movie Session | flicket</title>
+    <title>Update Movie | flicket</title>
     <link rel="icon" type="image/x-icon" href="/flicket/img/favicon.ico">
 </head>
 
@@ -96,7 +96,7 @@
                     <span class="input-group-text">
                         <i class="bi bi-camera-reels"></i>
                     </span>
-                    <input type="text" class="form-control bg-dark-subtle" id="genre" name="genre" placeholder='Genre (select using dropdown)' value="<?php echo $movieDetails['genres']; ?>" required onclick="this.blur();" onkeydown="return false;">
+                    <input type="text" class="form-control bg-dark-subtle pe-none" id="genre" name="genre" placeholder='Genre (select using dropdown)' value="<?php echo $movieDetails['genres']; ?>" required>
                     <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Genres</button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><button class="dropdown-item genre-btn" type="button" data-value="reset"><b>Reset</b></button></li>
@@ -111,7 +111,7 @@
                     <input type="file" class="form-control" id="posterFile" name="posterFile" onchange="previewPoster()" accept="image/*" max-size="2MB">
                 </div>
                 <div class="d-flex">
-                    <button type="submit" name="updateMovie" class="btn btn-danger my-4 me-3">Update movie session</button>
+                    <button type="submit" name="updateMovie" class="btn btn-danger my-4 me-3">Update movie</button>
                     <a href="manageMovies.php" class="btn btn-outline-info my-4">Cancel</a>
                 </div>
             </form>
