@@ -87,6 +87,77 @@ a {
 
 
 
+/* SEATS DISPLAY SEATS DISPLAY SEATS DISPLAY SEATS DISPLAY SEATS DISPLAY SEATS DISPLAY SEATS DISPLAY */
+.screen {
+    margin-left: 18px;
+    background-color: #474747;
+    width: -webkit-fill-available !important;
+}
+
+.row.screen {
+    margin-bottom: 30px;
+}
+
+.seat, .legendseat {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    margin: 2px;
+    border: 1px solid #aaa;
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+}
+
+.seat.available, .legendseat.available {
+    background-color: #d66666;
+    border-color: #d66666;
+}
+
+.seat.occupied, .legendseat.occupied {
+    background-color: #444;
+    border-color: #444;
+}
+
+.seat.suspended, .legendseat.suspended {
+    background-color: transparent;
+    border-color: gray;
+}
+
+.seat.selected {
+    background-color: #ff4444;
+    border-color: #ff4444;
+    box-shadow: 0px 0px 10px #ff4444;
+}
+
+.row {
+    margin-bottom: 10px;
+}
+
+.col-label {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 2px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+}
+
+.legend.label {
+    display: flex;
+    align-items: center;
+    width: auto;
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+    padding-right: 0;
+}
 
 
 

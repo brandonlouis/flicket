@@ -32,7 +32,7 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content">
-            <form method="POST" action="../../controllers/ticketType_contr.php?ticketTypeId=<?php echo $ticketTypeDetails['id']; ?>" enctype="multipart/form-data" style="width:45%">
+            <form method="POST" action="../../controllers/ticketType_contr.php?ticketTypeId=<?php echo $ticketTypeDetails['id']; ?>" style="width:45%">
                 <h1>Ticket Type Details</h1>
         
                 <div class="input-group mt-4">

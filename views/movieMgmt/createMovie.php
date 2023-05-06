@@ -94,7 +94,7 @@
                     <span class="input-group-text">
                         <i class="bi bi-camera-reels"></i>
                     </span>
-                    <input type="text" class="form-control bg-dark-subtle" id="genre" name="genre" placeholder='Genre (select using dropdown)' required onclick="this.blur();" onkeydown="return false;">
+                    <input type="text" class="form-control bg-dark-subtle pe-none" id="genre" name="genre" placeholder='Genre (select using dropdown)' required>
                     <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Genres</button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><button class="dropdown-item genre-btn" type="button" data-value="reset"><b>Reset</b></button></li>
