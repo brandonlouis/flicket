@@ -169,13 +169,10 @@
                     event.target.classList.remove(status);
                     event.target.classList.add('selected');
                 }
-
-                if (selectedSeat !== '') {
-                    selectedSeatsInput.value = selectedSeats.join(', ');
-                }
+                
+                selectedSeatsInput.value = selectedSeats.join(', ');
             });
         }
-
     }
 
     window.addEventListener('load', generateSeatingLayout);
