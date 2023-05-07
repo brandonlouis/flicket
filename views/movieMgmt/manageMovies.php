@@ -74,7 +74,7 @@
                 </thead>
                 <tbody class="align-middle">
                     <?php foreach ($movies as $movie) { ?>
-                    <tr class="clickable-row" onclick="window.location='viewMovie.php?movieId=<?php echo $movie['id']; ?>'">
+                    <tr class="clickable-row" data-bs-toggle="modal" data-bs-target="#view<?php echo $movie['id']; ?>">
                         <td><?php echo $movie['id']; ?></td>
                         <td title="<?php echo $movie['title']; ?>"><?php echo $movie['title']; ?></td>
                         <td title="<?php echo $movie['synopsis']; ?>"><?php echo $movie['synopsis']; ?></td>
@@ -101,8 +101,8 @@
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">Suspend Movie</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h5 class="modal-title" id="modalLabel">Delete Movie Session</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 Suspend the following movie?
@@ -114,6 +114,74 @@
                                 <a href="../../controllers/movie_contr.php?suspendId=<?php echo $movie['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                             </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="view<?php echo $movie['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered mw-100 w-75">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel">View Movie Session</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                        <dl class="row">
+                                            <dt class="col-sm-3">Movie ID</dt>
+                                            <dd class="col-sm-9 mb-5"><?php echo $movie['id']; ?></dd>
+
+                                            <dt class="col-sm-3">Title</dt>
+                                            <dd class="col-sm-9 mb-5"><?php echo $movie['title']; ?></dd>
+
+                                            <dt class="col-sm-3">Synopsis</dt>
+                                            <dd class="col-sm-9 mb-5">
+                                                <p><?php echo $movie['synopsis']; ?></p>
+                                            </dd>
+
+                                            <dt class="col-sm-3">Runtime (Minutes)</dt>
+                                            <dd class="col-sm-9 mb-5"><?php echo $movie['runtimeMin']; ?></dd>
+
+                                            <dt class="col-sm-3">Start Date</dt>
+                                            <dd class="col-sm-9 mb-5"><?php echo $movie['startDate']; ?></dd>
+
+                                            <dt class="col-sm-3">End Date</dt>
+                                            <dd class="col-sm-9 mb-5"><?php echo $movie['endDate']; ?></dd>
+
+                                            <dt class="col-sm-3">Language</dt>
+                                            <dd class="col-sm-9 mb-5"><?php echo $movie['language']; ?></dd>
+
+                                            <dt class="col-sm-3">Genres</dt>
+                                            <dd class="col-sm-9 mb-5">
+                                                <?php echo $movie['genres']; ?>
+                                            </dd>
+
+                                            <dt class="col-sm-3">Trailer URL</dt>
+                                            <dd class="col-sm-9">
+                                                <a href="<?php echo $movie['trailerURL']; ?>">
+                                                    <?php echo $movie['trailerURL']; ?>
+                                                </a>
+                                            </dd>
+                                            <dt class="col-sm-3">Trailer Video</dt>
+                                            <dd class="col-sm-9">
+                                                <iframe width="560" height="315"
+                                                src="<?php echo $movie['trailerURL']; ?>">
+                                                </iframe>
+                                            </dd>
+                                        </div>
+                                        <div class="col">
+                                            <div class=" d-flex justify-content-center">
+                                                <?php
+                                                $posterImg = '<img id="posterImg" style="width:100%" src="data:image/png;base64,' . $movie['poster'] . '" alt="Movie Poster" />';
+                                                echo $posterImg;?>
+                                            </div>
+                                        
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

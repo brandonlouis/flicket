@@ -42,7 +42,9 @@
                         <li><a class="dropdown-item" href="/flicket/views/cinemaHalls/manageCinemaHalls.php">Manage Cinema Halls</a></li>
                         <li><a class="dropdown-item" href="/flicket/views/seat/manageSeats.php">Manage Seats</a></li>
                         <li><a class="dropdown-item" href="/flicket/views/ticketType/manageTicketTypes.php">Manage Ticket Types</a></li>
-                        <li><a class="dropdown-item" href="/flicket/views/fnbMgmt/manageFnBitems.php">Manage F&B Items</a></li>';
+                        <li><a class="dropdown-item" href="/flicket/views/fnbItemMgmt/manageFnBitems.php">Manage F&B Items</a></li>
+                        <li><a class="dropdown-item" href="/flicket/views/dealMgmt/manageDeals.php">Manage Deals</a></li>';
+
                 } else {
                     echo '<li><a class="dropdown-item" href="#">Profile</a></li>';
                 }
