@@ -51,6 +51,25 @@ class Movie extends Dbh {
         $stmt = null;
         return $movieDetails;
     }
+
+    public function retrieveAllAvailableMovies() {
+        $sql = "SELECT m.*, GROUP_CONCAT(mg.genreName ORDER BY mg.genreName ASC SEPARATOR ', ') AS genres
+                FROM movie m
+                JOIN moviegenre mg ON m.id = mg.movieId
+                WHERE m.status = 'Available'
+                GROUP BY m.id 
+                ORDER BY m.title ASC;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+
+        $movies = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $movies[] = $row;
+        }
+
+        $stmt = null;
+        return $movies;
+    }
     
 
     public function retrieveAllLanguages() {
@@ -97,8 +116,8 @@ class Movie extends Dbh {
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->title, $this->synopsis, $this->runtimeMin, $this->trailerURL, $this->startDate, $this->endDate, $this->language, $this->poster]);
 
-        $sql2 = "SELECT id FROM movie WHERE title = ? AND poster = ?;";
-        $stmt = $this->connect()->prepare($sql2);
+        $sqlId = "SELECT id FROM movie WHERE title = ? AND poster = ?;";
+        $stmt = $this->connect()->prepare($sqlId);
         $stmt->execute([$this->title, $this->poster]);
         $movieId = $stmt->fetch(PDO::FETCH_ASSOC)['id'];
 
@@ -130,7 +149,7 @@ class Movie extends Dbh {
             $sql = "UPDATE movie SET title = ?, synopsis = ?, runtimeMin = ?, trailerURL = ?, startDate = ?, endDate = ?, language = ? WHERE id = ?;";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute([$this->title, $this->synopsis, $this->runtimeMin, $this->trailerURL, $this->startDate, $this->endDate, $this->language, $this->id]);
-        } else if ($this->poster != null) {
+        } else {
             $sql = "UPDATE movie SET title = ?, synopsis = ?, runtimeMin = ?, trailerURL = ?, startDate = ?, endDate = ?, language = ?, poster = ? WHERE id = ?;";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute([$this->title, $this->synopsis, $this->runtimeMin, $this->trailerURL, $this->startDate, $this->endDate, $this->language, $this->poster, $this->id]);
@@ -152,16 +171,27 @@ class Movie extends Dbh {
         return array('Movie (ID: ' . $this->id . ') updated successfully!', "success");
     }
 
-    public function deleteMovie($id) {
+    public function suspendMovie($id) {
         session_start();
         $this->id = $id;
-
-        $sql = "DELETE FROM movie WHERE id = ?;";
+        
+        $sql = "UPDATE movie SET status = 'Suspended' WHERE id = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->id]);
-
+        
         $stmt = null;
-        return array('Movie (ID: ' . $this->id . ') deleted successfully!', "success");
+        return array('Movie (ID: ' . $this->id . ') suspended successfully!', "success");        
+    }
+    public function activateMovie($id) {
+        session_start();
+        $this->id = $id;
+        
+        $sql = "UPDATE movie SET status = 'Available' WHERE id = ?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$this->id]);
+        
+        $stmt = null;
+        return array('Movie (ID: ' . $this->id . ') activated successfully!', "success");        
     }
 
     public function searchMovies($searchText, $filter) {

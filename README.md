@@ -17,8 +17,7 @@ Only have to do this once:
 
 ## 4. Database Access/Creation
 - Go to [phpMyAdmin](http://localhost/phpmyadmin/)
-- Create a new database called `flicketdb`
 - Click on `import` on the top bar
-- Click `Choose File` and select the `combinedQuery.sql` files in `flicket/databaseInit` folder
+- Click `Choose File` and select the `flicketdb.sql` files in `flicket/databaseInit` folder
 
 ## Done :)
