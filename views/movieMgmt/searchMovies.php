@@ -78,13 +78,13 @@
                         <td><?php echo $movie['endDate']; ?></td>
                         <td><?php echo $movie['language']; ?></td>
                         <td title="<?php echo $movie['genres']; ?>"><?php echo $movie['genres']; ?></td>
-                        <td class="<?php echo $movie['status'] == 'available' ? 'text-success' : 'text-danger'; ?>"><?php echo $movie['status']; ?></td>
+                        <td><span class="<?php echo $movie['status'] == 'available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo ucfirst($movie['status']); ?></span></td>
 
                         <td class="d-flex justify-content-evenly">
                             <a href="updateMovie.php?movieId=<?php echo $movie['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Movie"></a>
                             <?php
                                 if ($movie['status'] == 'available') {
-                                    echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Movie" data-bs-toggle="modal" data-bs-target="#suspend' . $movie['id'] . '"></button>';
+                                    echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Movie" data-bs-toggle="modal" data-bs-target="#suspend' . $movie['id'] . '" onclick="event.stopPropagation();"></button>';
                                 } else {
                                     echo '<a href="../../controllers/movie_contr.php?activateId=' . $movie["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Movie"></a>';
                                 }

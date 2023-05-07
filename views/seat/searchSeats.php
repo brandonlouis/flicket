@@ -63,7 +63,11 @@
                         <td><?php echo $seat['name']; ?></td>
                         <td><?php echo $seat['hallNumber']; ?></td>
                         <td><?php echo $seat['rowLetter'] . $seat['seatNumber']; ?></td>
-                        <td class="<?php echo $seat['status'] == 'available' ? 'text-success' : ($seat['status'] == 'suspended' ? 'text-danger' : 'text-warning'); ?>"><?php echo $seat['status']; ?></td>
+                        <td>
+                            <span class="<?php echo $seat['status'] == 'available' ? 'badge bg-success' : ($seat['status'] == 'occupied' ? 'badge bg-warning text-black' : 'badge bg-danger'); ?>">
+                                <?php echo ucfirst($seat['status']); ?>
+                            </span>
+                        </td>
 
                         <td class="d-flex justify-content-evenly">
                             <a href="updateSeats.php?hallId=<?php echo $seat['hallId']; ?>&selectedSeat=<?php echo $seat['rowLetter'] . $seat['seatNumber']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Seat"></a>
