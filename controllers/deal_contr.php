@@ -15,9 +15,9 @@ class DealContr {
         return $d->retrieveOneDeal($id);
     }
 
-    public function createDeal($dealName, $description, $price, $suspendStatus, $image, $fnbItems) {
+    public function createDeal($dealName, $description, $price, $status, $image, $fnbItems) {
         $d = new Deal();
-        $deal = $d->createDeal($dealName, $description, $price, $suspendStatus, $image, $fnbItems);
+        $deal = $d->createDeal($dealName, $description, $price, $status, $image, $fnbItems);
         
         setcookie('flash_message', $deal[0], time() + 3, '/');
         setcookie('flash_message_type', $deal[1], time() + 3, '/');
@@ -26,9 +26,9 @@ class DealContr {
         exit();
     }
 
-    public function updateDeal($id, $itemName, $description, $price, $suspendStatus, $image, $fnbItems) {
+    public function updateDeal($id, $itemName, $description, $price, $image, $fnbItems) {
         $d = new Deal();
-        $deal = $d->updateDeal($id, $itemName, $description, $price, $suspendStatus, $image, $fnbItems);
+        $deal = $d->updateDeal($id, $itemName, $description, $price, $image, $fnbItems);
 
         setcookie('flash_message', $deal[0], time() + 3, '/');
         setcookie('flash_message_type', $deal[1], time() + 3, '/');
@@ -37,9 +37,19 @@ class DealContr {
         exit();
     }
 
-    public function deleteDeal($id) {
+    public function suspendDeal($id) {
         $d = new Deal();
-        $deal = $d->deleteDeal($id);
+        $deal = $d->suspendDeal($id);
+
+        setcookie('flash_message', $deal[0], time() + 3, '/');
+        setcookie('flash_message_type', $deal[1], time() + 3, '/');
+
+        header("location: ../views/dealMgmt/manageDeals.php");
+        exit();
+    }
+    public function activateDeal($id) {
+        $d = new Deal();
+        $deal = $d->activateDeal($id);
 
         setcookie('flash_message', $deal[0], time() + 3, '/');
         setcookie('flash_message_type', $deal[1], time() + 3, '/');
@@ -62,15 +72,19 @@ class DealContr {
     }
 }
 
-if (isset($_GET['deleteId'])) {
+
+if (isset($_GET['suspendId'])) {
     $dc = new DealContr();
-    $dc->deleteDeal($_GET['deleteId']);
+    $dc->suspendDeal($_GET['suspendId']);
+
+} else if (isset($_GET['activateId'])) {
+    $dc = new DealContr();
+    $dc->activateDeal($_GET['activateId']);
 
 } else if (isset($_POST['createDeal']) || isset($_POST['updateDeal'])) {
     $dealName = $_POST["dealName"];
     $description = $_POST["description"];
     $price = $_POST["price"];
-    $suspendStatus = $_POST["suspendStatus"];
     $fnbItems = explode(", ", $_POST["fnbItem"]);
     $image = null;
     if (isset($_FILES["imgFile"]) && $_FILES["imgFile"]["error"] !== UPLOAD_ERR_NO_FILE) {
@@ -81,21 +95,14 @@ if (isset($_GET['deleteId'])) {
     $dc = new DealContr();
 
     if (isset($_POST['createDeal'])) {
-        $dc->createDeal($dealName, $description, $price, $suspendStatus, $image, $fnbItems);
+        $status = $_POST["status"];
+        $dc->createDeal($dealName, $description, $price, $status, $image, $fnbItems);
     } else if (isset($_POST['updateDeal']) && isset($_GET['dealId'])) {
-        $dc->updateDeal($_GET['dealId'], $dealName, $description, $price, $suspendStatus, $image, $fnbItems);
+        $dc->updateDeal($_GET['dealId'], $dealName, $description, $price, $image, $fnbItems);
     }
 } else if (isset($_POST['filter'])) {
     $searchText = $_POST['searchText'];
     $filter = $_POST['filter'];
-
-    if ($filter == 'suspendStatus'){
-        if(preg_match('/not suspended/i',$searchText) == 1){
-            $searchText = 0;
-        } else if(preg_match('/suspended/i',$searchText) == 1) {
-            $searchText = 1;
-        }
-    }
 
     $dc = new DealContr();
     $dc->searchDeals($searchText, $filter);

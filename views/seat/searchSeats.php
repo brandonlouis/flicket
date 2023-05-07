@@ -64,8 +64,8 @@
                         <td><?php echo $seat['hallNumber']; ?></td>
                         <td><?php echo $seat['rowLetter'] . $seat['seatNumber']; ?></td>
                         <td>
-                            <span class="<?php echo $seat['status'] == 'available' ? 'badge bg-success' : ($seat['status'] == 'occupied' ? 'badge bg-warning text-black' : 'badge bg-danger'); ?>">
-                                <?php echo ucfirst($seat['status']); ?>
+                            <span class="<?php echo $seat['status'] == 'Available' ? 'badge bg-success' : ($seat['status'] == 'Occupied' ? 'badge bg-warning text-black' : 'badge bg-danger'); ?>">
+                                <?php echo $seat['status']; ?>
                             </span>
                         </td>
 

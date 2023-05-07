@@ -41,9 +41,9 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><button class="dropdown-item" type="submit" name="filter" value="None"></button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="id">F&B Item ID</button></li>
-                                <li><button class="dropdown-item" type="submit" name="filter" value="itemName">Name</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="dealName">Name</button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="price">Price</button></li>
-                                <li><button class="dropdown-item" type="submit" name="filter" value="suspendStatus">Suspend Status</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="status">Status</button></li>
                             </ul>
                         </div>
                     </form>
@@ -56,7 +56,7 @@
                         <th>Deal ID</th>
                         <th>Name</th>
                         <th>Price</th>
-                        <th>Suspend Status</th>
+                        <th>Status</th>
                         <th></th>
                     <tr>
                 </thead>
@@ -65,34 +65,36 @@
                     <tr class="clickable-row" data-bs-toggle="modal" data-bs-target="#view<?php echo $deal['id']; ?>">
                         <td><?php echo $deal['id']; ?></td>
                         <td><?php echo $deal['dealName']; ?></td>
-                        <td><?php echo $deal['price']; ?></td>
-                        <?php if($deal['suspendStatus'] == 0) : ?>
-                            <td><span class="badge bg-success">Not Suspended</span></td>
-                        <?php else: ?>
-                            <td><span class="badge bg-danger">Suspended</span></td>
-                        <?php endif; ?>
+                        <td>$<?php echo $deal['price']; ?></td>
+                        <td><span class="<?php echo $deal['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $deal['status']; ?></span></td>
                         
                         <td class="d-flex justify-content-evenly">
                             <a href="updateDeal.php?dealId=<?php echo $deal['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Deal"></a>
-                            <button type="button" href="#" class="btn btn-danger bi bi-trash fs-5" title="Delete Deal" data-bs-toggle="modal" data-bs-target="#delete<?php echo $deal['id']; ?>"></button>
+                            <?php
+                                if ($deal['status'] == 'Available') {
+                                    echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Deal" data-bs-toggle="modal" data-bs-target="#suspend' . $deal['id'] . '" onclick="event.stopPropagation();"></button>';
+                                } else {
+                                    echo '<a href="../../controllers/deal_contr.php?activateId=' . $deal["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Deal"></a>';
+                                }
+                            ?>
                         </td>
                     </tr>
                     
-                    <div class="modal fade" id="delete<?php echo $deal['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal fade" id="suspend<?php echo $deal['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">Delete Deal</h5>
+                                <h5 class="modal-title" id="modalLabel">Suspend Deal</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                Permanently delete the following deal?
+                                Suspend the following deal?
                                 <br/><br/>
                                 <span>Deal ID </span>: <?php echo $deal['id']; ?><br/>
                                 <span>Name </span> &nbsp;: <?php echo $deal['dealName']; ?><br/>
                             </div>
                             <div class="modal-footer">
-                                <a href="../../controllers/deal_contr.php?deleteId=<?php echo $deal['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                                <a href="../../controllers/deal_contr.php?suspendId=<?php echo $deal['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                             </div>
                             </div>
@@ -110,50 +112,43 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col">
-                                        <dl class="row">
-                                            <dt class="col-sm-3">Deal ID</dt>
-                                            <dd class="col-sm-9 mb-5"><?php echo $deal['id']; ?></dd>
+                                            <dl class="row">
+                                                <dt class="col-sm-4">Deal ID</dt>
+                                                <dd class="col-sm-8"><?php echo $deal['id']; ?></dd>
 
-                                            <dt class="col-sm-3">Name</dt>
-                                            <dd class="col-sm-9 mb-5"><?php echo $deal['dealName']; ?></dd>
+                                                <dt class="col-sm-4">Name</dt>
+                                                <dd class="col-sm-8"><?php echo $deal['dealName']; ?></dd>
 
-                                            <dt class="col-sm-3">Description</dt>
-                                            <dd class="col-sm-9 mb-5">
-                                                <p><?php echo $deal['description']; ?></p>
-                                            </dd>
+                                                <dt class="col-sm-4">Description</dt>
+                                                <dd class="col-sm-8">
+                                                    <p><?php echo $deal['description']; ?></p>
+                                                </dd>
 
-                                            <dt class="col-sm-3">Price</dt>
-                                            <dd class="col-sm-9 mb-5">$<?php echo $deal['price']; ?></dd>
+                                                <dt class="col-sm-4">Price</dt>
+                                                <dd class="col-sm-8">$<?php echo $deal['price']; ?></dd>
 
-                                            <dt class="col-sm-3">Suspend Status</dt>
-                                            <dd class="col-sm-9 mb-5">
-                                                <?php if ($deal['suspendStatus'] == 0) : ?>
-                                                    <span class="badge bg-success">Not Suspended</span>
-                                                <?php else: ?>
-                                                    <span class="badge bg-danger">Suspended</span>
-                                                <?php endif; ?>
-                                            </dd>
-
-                                            <dt class="col-sm-3">F&B items in deal:</dt>
-                                            <dd class="col-sm-9 mb-5">
-                                                <?php 
-                                                    $fnbItems = $dc->getFnBItemInDeals($deal['id']);
-                                                    echo "<ul>";
-                                                    foreach($fnbItems as $item) {                                   
-                                                        echo "<li>" . $item['itemName'] . "  x" . $item['COUNT(*)'] . "</li>";
-                                                    } 
-                                                    echo "</ul>";
-                                                ?>
-                                            </dd>
-                                            
-                                        </div>
-                                        <div class="col">
-                                            <div class=" d-flex justify-content-center">
-                                            <?php
-                                                echo '<img src = "data:image/png;base64,' . base64_encode($deal['image']) . '" style="width:100%"/>';?>
-                                        </div>
-                                        
-                                        </div>
+                                                <dt class="col-sm-4">F&B items in deal:</dt>
+                                                <dd class="col-sm-8">
+                                                    <?php 
+                                                        $fnbItems = $dc->getFnBItemInDeals($deal['id']);
+                                                        echo "<ul>";
+                                                        foreach($fnbItems as $item) {                                   
+                                                            echo "<li>" . $item['itemName'] . "  x" . $item['COUNT(*)'] . "</li>";
+                                                        } 
+                                                        echo "</ul>";
+                                                    ?>
+                                                </dd>
+                                                <dt class="col-sm-4">Status</dt>
+                                                <dd class="col-sm-8">
+                                                    <span class="<?php echo $deal['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $deal['status']; ?></span>
+                                                </dd>
+                                            </div>
+                                            <div class="col">
+                                                <div class=" d-flex justify-content-center">
+                                                <?php
+                                                    echo '<img src = "data:image/png;base64,' . $deal['image'] . '" style="width:auto;height:300px;"/>';?>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

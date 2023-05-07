@@ -34,7 +34,7 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../controllers/movie_contr.php?movieId=<?php echo $movieDetails['id']; ?>" enctype="multipart/form-data" style="width:45%">
+            <form method="POST" action="../../controllers/movie_contr.php?movieId=<?php echo $movieDetails['id']; ?>" enctype="multipart/form-data" class="w-50">
                 <h1>Movie Details</h1>
         
                 <div class="input-group mt-4">
@@ -96,7 +96,7 @@
                     <span class="input-group-text">
                         <i class="bi bi-camera-reels"></i>
                     </span>
-                    <input type="text" class="form-control bg-dark-subtle pe-none" id="genre" name="genre" placeholder='Genre (select using dropdown)' value="<?php echo $movieDetails['genres']; ?>" required>
+                    <input type="text" class="form-control bg-dark-subtle pe-none" id="genre" name="genre" placeholder='Genre (select using dropdown)' value="<?php echo $movieDetails['genres']; ?>" required onkeydown="return false;">
                     <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Genres</button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><button class="dropdown-item genre-btn" type="button" data-value="reset"><b>Reset</b></button></li>
@@ -108,18 +108,16 @@
 
                 <div class="mt-4">
                     <label for="posterFile" class="form-label">Upload Poster Image (Maximum size: 2MB)</label>
-                    <input type="file" class="form-control" id="posterFile" name="posterFile" onchange="previewPoster()" accept="image/*" max-size="2MB">
+                    <input type="file" class="form-control" id="posterFile" name="posterFile" onchange="previewPoster()" accept="image/*">
                 </div>
                 <div class="d-flex">
                     <button type="submit" name="updateMovie" class="btn btn-danger my-4 me-3">Update movie</button>
                     <a href="manageMovies.php" class="btn btn-outline-info my-4">Cancel</a>
                 </div>
             </form>
-            <?php
-                $posterImg = '<img id="posterImg" style="width:45%" src="data:image/png;base64,' . $movieDetails['poster'] . '" alt="Movie Poster" />';
-                echo $posterImg;
-            ?>
-
+            <div style="width:45%" class="d-flex justify-content-end">
+                <?php echo '<img id="posterImg" style="width:auto;height:700px;" src="data:image/png;base64,' . $movieDetails['poster'] . '" alt="Movie Poster" />'; ?>
+            </div>
         </div>
     </div>
 
@@ -141,8 +139,8 @@
         btn.addEventListener('click', () => {
             const value = btn.getAttribute('data-value');
             if (value === "reset") {
-            genreInput.value = "";
-            return;
+                genreInput.value = "";
+                return;
             }
             if (genreInput.value.includes(value)) return;
             genreInput.value += (genreInput.value ? ', ' : '') + value;

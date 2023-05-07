@@ -6,7 +6,7 @@ class Deal extends Dbh {
     private $dealName;
     private $description;
     private $price;
-    private $suspendStatus;
+    private $status;
     private $image;
     private $fnbItems;
     
@@ -41,18 +41,18 @@ class Deal extends Dbh {
         return $singleItem;
     }
 
-    public function createDeal($dealName, $description, $price, $suspendStatus, $image, $fnbItems) {
+    public function createDeal($dealName, $description, $price, $status, $image, $fnbItems) {
         session_start();
         $this->dealName = $dealName;
         $this->description = $description;
         $this->price = $price;
-        $this->suspendStatus = $suspendStatus;
+        $this->status = $status;
         $this->image = $image;
         $this->fnbItems = $fnbItems;
 
-        $sql1 = "INSERT INTO deal (dealName, description, price, suspendStatus, image) VALUES (?, ?, ?, ?, ?);";
+        $sql1 = "INSERT INTO deal (dealName, description, price, status, image) VALUES (?, ?, ?, ?, ?);";
         $stmt1 = $this->connect()->prepare($sql1);
-        $stmt1->execute([$this->dealName, $this->description, $this->price, $this->suspendStatus, $this->image]);
+        $stmt1->execute([$this->dealName, $this->description, $this->price, $this->status, $this->image]);
 
         $sql2 = "SELECT id FROM deal WHERE dealName = ? AND image = ? AND description = ?;";
         $stmt2 = $this->connect()->prepare($sql2);
@@ -77,24 +77,23 @@ class Deal extends Dbh {
         return array("Deal successfully created!", "success");
     }
 
-    public function updateDeal($id, $dealName, $description, $price, $suspendStatus, $image, $fnbItems) {
+    public function updateDeal($id, $dealName, $description, $price, $image, $fnbItems) {
         session_start();
         $this->id = $id;
         $this->dealName = $dealName;
         $this->description = $description;
         $this->price = $price;
-        $this->suspendStatus = $suspendStatus;
         $this->image = $image;
         $this->fnbItems = $fnbItems;
 
         if($this->image == null) {
-            $sql1 = "UPDATE deal SET dealName = ?, description = ?, price = ?, suspendStatus = ? WHERE id = ?;";
+            $sql1 = "UPDATE deal SET dealName = ?, description = ?, price = ? WHERE id = ?;";
             $stmt1 = $this->connect()->prepare($sql1);
-            $stmt1->execute([$this->dealName, $this->description, $this->price, $this->suspendStatus, $this->id]);
+            $stmt1->execute([$this->dealName, $this->description, $this->price, $this->id]);
         } else {
-            $sql1 = "UPDATE deal SET dealName = ?, description = ?, price = ?, suspendStatus = ?, image = ? WHERE id = ?;";
+            $sql1 = "UPDATE deal SET dealName = ?, description = ?, price = ?, image = ? WHERE id = ?;";
             $stmt1 = $this->connect()->prepare($sql1);
-            $stmt1->execute([$this->dealName, $this->description, $this->price, $this->suspendStatus, $this->image, $this->id]);
+            $stmt1->execute([$this->dealName, $this->description, $this->price, $this->image, $this->id]);
         }
 
         $deleteSql = "DELETE FROM fnbitemdeal WHERE deal_id = ?;";
@@ -106,8 +105,6 @@ class Deal extends Dbh {
             $itemIdStmt = $this->connect()->prepare($itemIdSql);
             $itemIdStmt->execute([$itemName]);
             $itemId = $itemIdStmt->fetch(PDO::FETCH_ASSOC)['id'];
-
-            
 
             $insertSql = "INSERT INTO fnbitemdeal (fnbitem_id, deal_id) VALUES (?, ?);";
             $insertStmt = $this->connect()->prepare($insertSql);
@@ -123,21 +120,27 @@ class Deal extends Dbh {
         return array('Deal (ID: ' . $this->id . ') updated successfully!', "success");
     }
 
-    public function deleteDeal($id) {
+    public function suspendDeal($id) {
         session_start();
         $this->id = $id;
 
-        $sql = "DELETE FROM deal WHERE id = ?;";
+        $sql = "UPDATE deal SET status = 'Suspended' WHERE id = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->id]);
 
-        $deleteSql = "DELETE FROM fnbitemdeal WHERE deal_id = ?;";
-        $deleteStmt = $this->connect()->prepare($deleteSql);
-        $deleteStmt->execute([$this->id]);
-
         $stmt = null;
-        $deleteStmt= null;
-        return array('Deal (ID: ' . $this->id . ') deleted successfully!', "success");
+        return array('Deal (ID: ' . $this->id . ') suspended successfully!', "success");
+    }
+    public function activateDeal($id) {
+        session_start();
+        $this->id = $id;
+        
+        $sql = "UPDATE deal SET status = 'Available' WHERE id = ?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$this->id]);
+        
+        $stmt = null;
+        return array('Deal (ID: ' . $this->id . ') activated successfully!', "success");
     }
 
     public function searchDeals($searchText, $filter) {
@@ -146,7 +149,7 @@ class Deal extends Dbh {
         if ($filter == "None") {
             $sql = "SELECT * 
                     FROM deal 
-                    WHERE id LIKE ? OR dealName LIKE ? OR price LIKE ? OR suspendStatus LIKE ?
+                    WHERE id LIKE ? OR dealName LIKE ? OR price LIKE ? OR status LIKE ?
                     ORDER BY id, dealName ASC";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute(['%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%']);

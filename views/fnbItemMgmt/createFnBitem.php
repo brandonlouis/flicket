@@ -33,46 +33,47 @@
         <div class="content d-flex justify-content-evenly align-items-center">
             <form method="POST" action="../../controllers/fnbitem_contr.php" enctype="multipart/form-data" class="w-50">
                 <h1>F&B Item Details</h1>
-                <div class="input-group mt-4">
+                <div class="input-group mt-4" title="Name">
                     <span class="input-group-text">
                         <i class="bi bi-card-heading"></i>
                     </span>
                     <input type="text" class="form-control" id="itemName" name="itemName" placeholder="Name" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Description">
                     <span class="input-group-text">
-                        <i class="bi bi-book"></i>
+                        <i class="bi bi-card-text"></i>
                     </span>
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Description" id="description" name="description" style="height: 100px" required></textarea>
                         <label class="text-secondary" for="synopsis">Description</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Price">
                     <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
+                        <i class="bi bi-currency-dollar"></i>
                     </span>
-                    <input type="number" class="form-control" min="0" step="any" id="price" name="price" placeholder=0 required>
+                    <input type="number" class="form-control" min="0" step="0.01" id="price" name="price" placeholder="Price (e.g. 4.99)" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Category">
                     <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
+                        <i class="bi bi-tag"></i>
                     </span>
                     <select class="form-select" id="category" name="category" aria-label="Default select">
-                            <option value="food" >food</option>
-                            <option value="drink" >drink</option>
+                        <option hidden>Select a category for F&B Item</option>
+                        <option value="Food">Food</option>
+                        <option value="Drink">Drink</option>
                     </select>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Status">
                     <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
+                        <i class="bi bi-gear"></i>
                     </span>
-                    <select class="form-select" id="suspendStatus" name="suspendStatus" aria-label="Default select">
-                            <option value="0" >Not Suspended</option>
-                            <option value="1" >Suspended</option>
+                    <select class="form-select" id="status" name="status" aria-label="Default select">
+                        <option hidden>Select a status for F&B Item</option>
+                        <option value="Available">Available</option>
+                        <option value="Suspended">Suspended</option>
                     </select>
                 </div>
-
         
                 <div class="mt-4">
                     <label for="imgFile" class="form-label">Upload F&B Item Image (Maximum size: 2MB)</label>
@@ -83,8 +84,8 @@
                     <a href="manageFnBItems.php" class="btn btn-outline-info my-4">Cancel</a>
                 </div>
             </form>
-            <div style="width:45%">
-                <img id="img" src="" alt="Preview" style="display:none;width:-webkit-fill-available;height:-webkit-fill-available">
+            <div style="width:45%" class="d-flex justify-content-end">
+                <img id="img" src="" alt="Preview" style="display:none;width:auto;height:550px;max-width:-webkit-fill-available;">
             </div>
         </div>
     </div>

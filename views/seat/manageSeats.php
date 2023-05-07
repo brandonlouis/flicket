@@ -58,7 +58,7 @@
                                 <a href="createSeats.php?hallId=<?php echo $hall['id']; ?>" type="submit" class="btn btn-success bi bi-plus-lg fs-5" title="Create Seats"></a>
                                 
                                 <?php if ($hall['totalSeats'] > 0) { ?>
-                                    <a href="updateSeats.php?hallId=<?php echo $hall['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Update Seats"></a>
+                                    <a href="updateSeats.php?hallId=<?php echo $hall['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Seats"></a>
                                 <?php } ?>
                             </td>
                         </tr>

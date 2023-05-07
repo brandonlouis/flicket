@@ -15,20 +15,25 @@ class FnBItemContr {
         return $fnb->retrieveOneFnBItem($id);
     }
 
-    public function createFnBItem($itemName, $description, $price, $category, $suspendStatus, $image) {
+    public function createFnBItem($itemName, $description, $price, $category, $status, $image) {
         $fnb = new FnBItem();
-        $fnbitem = $fnb->createFnBItem($itemName, $description, $price, $category, $suspendStatus, $image);
+        $fnbitem = $fnb->createFnBItem($itemName, $description, $price, $category, $status, $image);
         
         setcookie('flash_message', $fnbitem[0], time() + 3, '/');
         setcookie('flash_message_type', $fnbitem[1], time() + 3, '/');
 
-        header("location: ../views/fnbItemMgmt/manageFnBItems.php");
-        exit();
+        if ($fnbitem[1] == "danger") {
+            header("location: ../views/fnbItemMgmt/createFnBItem.php");
+            exit();
+        } else {
+            header("location: ../views/fnbItemMgmt/manageFnBItems.php");
+            exit();
+        }
     }
 
-    public function updateFnBItem($id, $itemName, $description, $price, $category, $suspendStatus, $image) {
+    public function updateFnBItem($id, $itemName, $description, $price, $category, $image) {
         $fnb = new FnBItem();
-        $fnbItem = $fnb->updateFnBItem($id, $itemName, $description, $price, $category, $suspendStatus, $image);
+        $fnbItem = $fnb->updateFnBItem($id, $itemName, $description, $price, $category, $image);
 
         setcookie('flash_message', $fnbItem[0], time() + 3, '/');
         setcookie('flash_message_type', $fnbItem[1], time() + 3, '/');
@@ -37,9 +42,19 @@ class FnBItemContr {
         exit();
     }
 
-    public function deleteFnBItem($id) {
+    public function suspendFnBItem($id) {
         $fnb = new FnBItem();
-        $fnbItem = $fnb->deleteFnBItem($id);
+        $fnbItem = $fnb->suspendFnBItem($id);
+
+        setcookie('flash_message', $fnbItem[0], time() + 3, '/');
+        setcookie('flash_message_type', $fnbItem[1], time() + 3, '/');
+
+        header("location: ../views/fnbItemMgmt/manageFnBItems.php");
+        exit();
+    }
+    public function activateFnBitem($id) {
+        $fnb = new FnBItem();
+        $fnbItem = $fnb->activateFnBitem($id);
 
         setcookie('flash_message', $fnbItem[0], time() + 3, '/');
         setcookie('flash_message_type', $fnbItem[1], time() + 3, '/');
@@ -67,16 +82,20 @@ class FnBItemContr {
     }
 }
 
-if (isset($_GET['deleteId'])) {
+
+if (isset($_GET['suspendId'])) {
     $fnbc = new FnBItemContr();
-    $fnbc->deleteFnBItem($_GET['deleteId']);
+    $fnbc->suspendFnBItem($_GET['suspendId']);
+
+} else if (isset($_GET['activateId'])) {
+    $fnbc = new FnBItemContr();
+    $fnbc->activateFnBitem($_GET['activateId']);
 
 } else if (isset($_POST['createFnBItem']) || isset($_POST['updateFnBItem'])) {
     $itemName = $_POST["itemName"];
     $description = $_POST["description"];
     $price = $_POST["price"];
     $category = $_POST["category"];
-    $suspendStatus = $_POST["suspendStatus"];
     $image = null;
     if (isset($_FILES["imgFile"]) && $_FILES["imgFile"]["error"] !== UPLOAD_ERR_NO_FILE) {
         $imageContents = file_get_contents($_FILES["imgFile"]["tmp_name"]);
@@ -86,21 +105,14 @@ if (isset($_GET['deleteId'])) {
     $fnbc = new FnBItemContr();
 
     if (isset($_POST['createFnBItem'])) {
-        $fnbc->createFnBItem($itemName, $description, $price, $category, $suspendStatus, $image);
+        $status = $_POST["status"];
+        $fnbc->createFnBItem($itemName, $description, $price, $category, $status, $image);
     } else if (isset($_POST['updateFnBItem']) && isset($_GET['fnbItemId'])) {
-        $fnbc->updateFnBItem($_GET['fnbItemId'], $itemName, $description, $price, $category, $suspendStatus, $image);
+        $fnbc->updateFnBItem($_GET['fnbItemId'], $itemName, $description, $price, $category, $image);
     }
 } else if (isset($_POST['filter'])) {
     $searchText = $_POST['searchText'];
     $filter = $_POST['filter'];
-
-    if ($filter == 'suspendStatus'){
-        if(preg_match('/not suspended/i',$searchText) == 1){
-            $searchText = 0;
-        } else if(preg_match('/suspended/i',$searchText) == 1) {
-            $searchText = 1;
-        }
-    }
 
     $fnbc = new FnBItemContr();
     $fnbc->searchFnBItems($searchText, $filter);

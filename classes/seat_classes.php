@@ -47,7 +47,7 @@ class Seat extends Dbh {
 
 
     public function retrieveAllSeats($hallId) {
-        $sql = "SELECT ch.*, (SELECT COUNT(*) FROM seat s WHERE s.hallId = ch.id AND s.status = 'available') AS seatsAvailable,
+        $sql = "SELECT ch.*, (SELECT COUNT(*) FROM seat s WHERE s.hallId = ch.id AND s.status = 'Available') AS seatsAvailable,
                         COUNT(s.id) AS totalSeats,
                         GROUP_CONCAT(CONCAT(s.rowLetter, ':', s.seatNumber, ':', s.status) SEPARATOR ',') AS seatData
                 FROM cinemahall ch
@@ -90,7 +90,7 @@ class Seat extends Dbh {
         $this->hallId = $hallId;
         $this->status = $status;
 
-        $sql = "SELECT COUNT(*) AS occupied_count FROM seat WHERE hallId = ? AND status = 'occupied';";
+        $sql = "SELECT COUNT(*) AS occupied_count FROM seat WHERE hallId = ? AND status = 'Occupied';";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->hallId]);
         $occupiedCount = $stmt->fetch(PDO::FETCH_ASSOC)['occupied_count'];
@@ -153,7 +153,7 @@ class Seat extends Dbh {
         session_start();
         $this->id = $id;
         
-        $sql = "UPDATE seat SET status = 'suspended' WHERE id = ?;";
+        $sql = "UPDATE seat SET status = 'Suspended' WHERE id = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->id]);
         
@@ -164,7 +164,7 @@ class Seat extends Dbh {
         session_start();
         $this->id = $id;
         
-        $sql = "UPDATE seat SET status = 'available' WHERE id = ?;";
+        $sql = "UPDATE seat SET status = 'Available' WHERE id = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->id]);
         

@@ -78,12 +78,12 @@
                         <td><?php echo $movie['endDate']; ?></td>
                         <td><?php echo $movie['language']; ?></td>
                         <td title="<?php echo $movie['genres']; ?>"><?php echo $movie['genres']; ?></td>
-                        <td><span class="<?php echo $movie['status'] == 'available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo ucfirst($movie['status']); ?></span></td>
+                        <td><span class="<?php echo $movie['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $movie['status']; ?></span></td>
 
                         <td class="d-flex justify-content-evenly">
                             <a href="updateMovie.php?movieId=<?php echo $movie['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Movie"></a>
                             <?php
-                                if ($movie['status'] == 'available') {
+                                if ($movie['status'] == 'Available') {
                                     echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Movie" data-bs-toggle="modal" data-bs-target="#suspend' . $movie['id'] . '" onclick="event.stopPropagation();"></button>';
                                 } else {
                                     echo '<a href="../../controllers/movie_contr.php?activateId=' . $movie["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Movie"></a>';
@@ -124,56 +124,53 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col">
-                                        <dl class="row">
-                                        <dt class="col-sm-3">Movie ID</dt>
-                                            <dd class="col-sm-9 mb-5"><?php echo $movie['id']; ?></dd>
-                                            
-                                            <dt class="col-sm-3">Title</dt>
-                                            <dd class="col-sm-9 mb-5"><?php echo $movie['title']; ?></dd>
+                                            <dl class="row">
+                                                <dt class="col-sm-4">Movie ID</dt>
+                                                <dd class="col-sm-8"><?php echo $movie['id']; ?></dd>
 
-                                            <dt class="col-sm-3">Synopsis</dt>
-                                            <dd class="col-sm-9 mb-5">
-                                                <p><?php echo $movie['synopsis']; ?></p>
-                                            </dd>
+                                                <dt class="col-sm-4">Title</dt>
+                                                <dd class="col-sm-8"><?php echo $movie['title']; ?></dd>
 
-                                            <dt class="col-sm-3">Runtime (Minutes)</dt>
-                                            <dd class="col-sm-9 mb-5"><?php echo $movie['runtimeMin']; ?></dd>
+                                                <dt class="col-sm-4">Synopsis</dt>
+                                                <dd class="col-sm-8">
+                                                    <p><?php echo $movie['synopsis']; ?></p>
+                                                </dd>
 
-                                            <dt class="col-sm-3">Start Date</dt>
-                                            <dd class="col-sm-9 mb-5"><?php echo $movie['startDate']; ?></dd>
+                                                <dt class="col-sm-4">Runtime (Minutes)</dt>
+                                                <dd class="col-sm-8"><?php echo $movie['runtimeMin']; ?></dd>
 
-                                            <dt class="col-sm-3">End Date</dt>
-                                            <dd class="col-sm-9 mb-5"><?php echo $movie['endDate']; ?></dd>
+                                                <dt class="col-sm-4">Start Date</dt>
+                                                <dd class="col-sm-8"><?php echo $movie['startDate']; ?></dd>
 
-                                            <dt class="col-sm-3">Language</dt>
-                                            <dd class="col-sm-9 mb-5"><?php echo $movie['language']; ?></dd>
+                                                <dt class="col-sm-4">End Date</dt>
+                                                <dd class="col-sm-8"><?php echo $movie['endDate']; ?></dd>
 
-                                            <dt class="col-sm-3">Genres</dt>
-                                            <dd class="col-sm-9 mb-5">
-                                                <?php echo $movie['genres']; ?>
-                                            </dd>
+                                                <dt class="col-sm-4">Language</dt>
+                                                <dd class="col-sm-8"><?php echo $movie['language']; ?></dd>
 
-                                            <dt class="col-sm-3">Trailer URL</dt>
-                                            <dd class="col-sm-9">
-                                                <a href="<?php echo $movie['trailerURL']; ?>">
-                                                    <?php echo $movie['trailerURL']; ?>
-                                                </a>
-                                            </dd>
-                                            <dt class="col-sm-3">Trailer Video</dt>
-                                            <dd class="col-sm-9">
-                                                <iframe width="560" height="315"
-                                                src="<?php echo $movie['trailerURL']; ?>">
-                                                </iframe>
-                                            </dd>
-                                        </div>
-                                        <div class="col">
-                                            <div class=" d-flex justify-content-center">
-                                                <?php
-                                                $posterImg = '<img id="posterImg" style="width:100%" src="data:image/png;base64,' . $movie['poster'] . '" alt="Movie Poster" />';
-                                                echo $posterImg;?>
+                                                <dt class="col-sm-4">Genres</dt>
+                                                <dd class="col-sm-8">
+                                                    <?php echo $movie['genres']; ?>
+                                                </dd>
+
+                                                <dt class="col-sm-4">Trailer URL</dt>
+                                                <dd class="col-sm-8">
+                                                    <a href="<?php echo $movie['trailerURL']; ?>">
+                                                        <?php echo $movie['trailerURL']; ?>
+                                                    </a>
+                                                </dd>
+                                                <dt class="col-sm-4">Trailer Video</dt>
+                                                <dd class="col-sm-8">
+                                                    <iframe width="560" height="315"
+                                                    src="<?php echo $movie['trailerURL']; ?>">
+                                                    </iframe>
+                                                </dd>
                                             </div>
-                                        
-                                        </div>
+                                            <div class="col">
+                                                <div class=" d-flex justify-content-end">
+                                                    <?php echo '<img id="posterImg" style="width:auto;height:500px;" src="data:image/png;base64,' . $movie['poster'] . '" alt="Movie Poster" />'; ?>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

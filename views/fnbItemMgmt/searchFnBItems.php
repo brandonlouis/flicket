@@ -45,7 +45,7 @@
                                 <li><button class="dropdown-item" type="submit" name="filter" value="itemName">Name</button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="price">Price</button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="category">Category</button></li>
-                                <li><button class="dropdown-item" type="submit" name="filter" value="suspendStatus">Suspend Status</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="status">Status</button></li>
                             </ul>
                         </div>
                     </form>
@@ -60,7 +60,7 @@
                         <th>Name</th>
                         <th>Price</th>
                         <th>Category</th>
-                        <th>Suspend Status</th>
+                        <th>Status</th>
                         <th></th>
                     <tr>
                 </thead>
@@ -69,48 +69,37 @@
                     <tr class="clickable-row" data-bs-toggle="modal" data-bs-target="#view<?php echo $item['id']; ?>">
                         <td><?php echo $item['id']; ?></td>
                         <td><?php echo $item['itemName']; ?></td>
-                        <td><?php echo $item['price']; ?></td>
+                        <td>$<?php echo $item['price']; ?></td>
                         <td><?php echo $item['category']; ?></td>
-                        <?php if($item['suspendStatus'] == 0) : ?>
-                            <td><span class="badge bg-success">Not Suspended</span></td>
-                        <?php else: ?>
-                            <td><span class="badge bg-danger">Suspended</span></td>
-                        <?php endif; ?>
+                        <td><span class="<?php echo $item['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $item['status']; ?></span></td>
                         
                         <td class="d-flex justify-content-evenly">
                             <a href="updateFnBItem.php?fnbItemId=<?php echo $item['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit F&B Item"></a>
-                            <button type="button" href="#" class="btn btn-danger bi bi-trash fs-5" title="Delete F&B Item" data-bs-toggle="modal" data-bs-target="#delete<?php echo $item['id']; ?>"></button>
+                            <?php
+                                if ($item['status'] == 'Available') {
+                                    echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend F&B Item" data-bs-toggle="modal" data-bs-target="#suspend' . $item['id'] . '" onclick="event.stopPropagation();"></button>';
+                                } else {
+                                    echo '<a href="../../controllers/fnbitem_contr.php?activateId=' . $item["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate F&B Item"></a>';
+                                }
+                            ?>
                         </td>
                     </tr>
                     
-                    <div class="modal fade" id="delete<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal fade" id="suspend<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">Delete F&B item</h5>
+                                <h5 class="modal-title" id="modalLabel">Suspend F&B item</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                Permanently delete the following F&B item?
+                                Suspend the following F&B item?
                                 <br/><br/>
                                 <span>F&B Item ID </span>: <?php echo $item['id']; ?><br/>
                                 <span>Name </span> &nbsp;: <?php echo $item['itemName']; ?><br/>
-                                <?php 
-                                    if($fnbc->checkFnBitemInDeal($item['id'])){
-                                        echo "<span>Deals included in </span>: ";
-                                        $deals = $fnbc->getFnBItemDeals($item['id']);
-                                        echo "<ul>";
-                                        foreach($deals as $deal) {                                   
-                                            echo "<li>" . $deal['dealName'] . "</li>";
-                                        } 
-                                        echo "</ul>";
-                                        echo "<p class='text-danger'>Warning: If deleted, the associated deals will be deleted as well</p>";
-                                    } 
-                                ?> 
-                                <br/>
                             </div>
                             <div class="modal-footer">
-                                <a href="../../controllers/fnbitem_contr.php?deleteId=<?php echo $item['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                                <a href="../../controllers/fnbitem_contr.php?suspendId=<?php echo $item['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                             </div>
                             </div>
@@ -129,34 +118,25 @@
                                     <div class="row">
                                         <div class="col">
                                         <dl class="row">
-                                            <dt class="col-sm-3">F&B Item ID</dt>
-                                            <dd class="col-sm-9 mb-5"><?php echo $item['id']; ?></dd>
+                                            <dt class="col-sm-4">F&B Item ID</dt>
+                                            <dd class="col-sm-8"><?php echo $item['id']; ?></dd>
 
-                                            <dt class="col-sm-3">Name</dt>
-                                            <dd class="col-sm-9 mb-5"><?php echo $item['itemName']; ?></dd>
+                                            <dt class="col-sm-4">Name</dt>
+                                            <dd class="col-sm-8"><?php echo $item['itemName']; ?></dd>
 
-                                            <dt class="col-sm-3">Description</dt>
-                                            <dd class="col-sm-9 mb-5">
+                                            <dt class="col-sm-4">Description</dt>
+                                            <dd class="col-sm-8">
                                                 <p><?php echo $item['description']; ?></p>
                                             </dd>
 
-                                            <dt class="col-sm-3">Price</dt>
-                                            <dd class="col-sm-9 mb-5">$<?php echo $item['price']; ?></dd>
+                                            <dt class="col-sm-4">Price</dt>
+                                            <dd class="col-sm-8">$<?php echo $item['price']; ?></dd>
 
-                                            <dt class="col-sm-3">Category</dt>
-                                            <dd class="col-sm-9 mb-5"><?php echo $item['category']; ?></dd>
+                                            <dt class="col-sm-4">Category</dt>
+                                            <dd class="col-sm-8"><?php echo $item['category']; ?></dd>
 
-                                            <dt class="col-sm-3">Suspend Status</dt>
-                                            <dd class="col-sm-9 mb-5">
-                                                <?php if ($item['suspendStatus'] == 0) : ?>
-                                                    <span class="badge bg-success">Not Suspended</span>
-                                                <?php else: ?>
-                                                    <span class="badge bg-danger">Suspended</span>
-                                                <?php endif; ?>
-                                            </dd>
-
-                                            <dt class="col-sm-3">Deals included in</dt>
-                                            <dd class="col-sm-9 mb-5">
+                                            <dt class="col-sm-4">Deals included in:</dt>
+                                            <dd class="col-sm-8">
                                                 <?php 
                                                     if($fnbc->checkFnBitemInDeal($item['id'])){
                                                         $deals = $fnbc->getFnBItemDeals($item['id']);
@@ -166,16 +146,20 @@
                                                         } 
                                                         echo "</ul>";
                                                     } else {
-                                                        echo "Not in any deals";
+                                                        echo "None";
                                                     }
                                                 ?>
                                             </dd>
-                                            
+
+                                            <dt class="col-sm-4">Status</dt>
+                                            <dd class="col-sm-8">
+                                                <span class="<?php echo $item['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $item['status']; ?></span>
+                                            </dd>
                                         </div>
                                         <div class="col">
                                             <div class=" d-flex justify-content-center">
                                             <?php
-                                                echo '<img src = "data:image/png;base64,' . base64_encode($item['image']) . '" style="width:100%"/>';?>
+                                                echo '<img src = "data:image/png;base64,' . $item['image'] . '" style="width:auto;height:300px;"/>';?>
                                             </div>
                                         
                                         </div>

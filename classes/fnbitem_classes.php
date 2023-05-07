@@ -7,7 +7,7 @@ class FnBItem extends Dbh {
     private $description;
     private $price;
     private $category;
-    private $suspendStatus;
+    private $status;
     private $image;
     
     public function retrieveAllFnBitems() {
@@ -41,57 +41,73 @@ class FnBItem extends Dbh {
         return $singleItem;
     }
 
-    public function createFnBItem($itemName, $description, $price, $category, $suspendStatus, $image) {
+    public function createFnBItem($itemName, $description, $price, $category, $status, $image) {
         session_start();
         $this->itemName = $itemName;
         $this->description = $description;
         $this->price = $price;
         $this->category = $category;
-        $this->suspendStatus = $suspendStatus;
+        $this->status = $status;
         $this->image = $image;
 
-        $sql = "INSERT INTO fnbitem (itemName, description, price, category, suspendStatus, image) VALUES (?, ?, ?, ?, ?, ?);";
+        if (strpos($this->category, 'Select') !== false) {
+            return array("Please select a category", "danger");
+        } else if (strpos($this->status, 'Select') !== false) {
+            return array("Please select a status", "danger");
+        }
+
+        $sql = "INSERT INTO fnbitem (itemName, description, price, category, status, image) VALUES (?, ?, ?, ?, ?, ?);";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->itemName, $this->description, $this->price, $this->category, $this->suspendStatus, $this->image]);
+        $stmt->execute([$this->itemName, $this->description, $this->price, $this->category, $this->status, $this->image]);
 
         $stmt = null;
         return array("F&B item successfully created!", "success");
     }
 
-    public function updateFnBItem($id, $itemName, $description, $price, $category, $suspendStatus, $image) {
+    public function updateFnBItem($id, $itemName, $description, $price, $category, $image) {
         session_start();
         $this->id = $id;
         $this->itemName = $itemName;
         $this->description = $description;
         $this->price = $price;
         $this->category = $category;
-        $this->suspendStatus = $suspendStatus;
         $this->image = $image;
         
         if($this->image == null){
-            $sql = "UPDATE fnbitem SET itemName = ?, description = ?, price = ?, category = ?, suspendStatus = ? WHERE id = ?;";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->itemName, $this->description, $this->price, $this->category, $this->suspendStatus, $this->id]);
+            $sql = "UPDATE fnbitem SET itemName = ?, description = ?, price = ?, category = ? WHERE id = ?;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$this->itemName, $this->description, $this->price, $this->category, $this->id]);
         } else {
-            $sql = "UPDATE fnbitem SET itemName = ?, description = ?, price = ?, category = ?, suspendStatus = ?, image = ? WHERE id = ?;";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->itemName, $this->description, $this->price, $this->category, $this->suspendStatus, $this->image, $this->id]);
+            $sql = "UPDATE fnbitem SET itemName = ?, description = ?, price = ?, category = ?, image = ? WHERE id = ?;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$this->itemName, $this->description, $this->price, $this->category, $this->image, $this->id]);
         }
 
         $stmt = null;
         return array('F&B item (ID: ' . $this->id . ') updated successfully!', "success");
     }
 
-    public function deleteFnBitem($id) {
+    public function suspendFnBitem($id) {
         session_start();
         $this->id = $id;
 
-        $sql = "DELETE FROM fnbitem WHERE id = ?;";
+        $sql = "UPDATE fnbitem SET status = 'Suspended' WHERE id = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->id]);
 
         $stmt = null;
-        return array('F&B item (ID: ' . $this->id . ') deleted successfully!', "success");
+        return array('F&B item (ID: ' . $this->id . ') suspended successfully!', "success");
+    }
+    public function activateFnBitem($id) {
+        session_start();
+        $this->id = $id;
+        
+        $sql = "UPDATE fnbitem SET status = 'Available' WHERE id = ?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$this->id]);
+        
+        $stmt = null;
+        return array('F&B item (ID: ' . $this->id . ') activated successfully!', "success");        
     }
 
     public function searchFnBItems($searchText, $filter) {
@@ -100,7 +116,7 @@ class FnBItem extends Dbh {
         if ($filter == "None") {
             $sql = "SELECT * 
                     FROM fnbitem 
-                    WHERE id LIKE ? OR itemName LIKE ? OR price LIKE ? OR category LIKE ? OR suspendStatus LIKE ?
+                    WHERE id LIKE ? OR itemName LIKE ? OR price LIKE ? OR category LIKE ? OR status LIKE ?
                     ORDER BY id, itemName ASC";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute(['%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%']);

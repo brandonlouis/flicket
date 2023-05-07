@@ -34,59 +34,48 @@
         <div class="content d-flex justify-content-evenly align-items-center">
             <form method="POST" action="../../controllers/fnbitem_contr.php?fnbItemId=<?php echo $fnbItemDetails['id'];?>" enctype="multipart/form-data" class="w-50">
                 <h1>F&B Item Details</h1>
-                <div class="input-group mt-4">
+                <div class="input-group mt-4" title="Name">
                     <span class="input-group-text">
                         <i class="bi bi-card-heading"></i>
                     </span>
                     <input type="text" class="form-control" id="itemName" name="itemName" placeholder="Name" value="<?php echo $fnbItemDetails['itemName'];?>" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Description">
                     <span class="input-group-text">
-                        <i class="bi bi-book"></i>
+                        <i class="bi bi-card-text"></i>
                     </span>
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Description" id="description" name="description" style="height: 100px" required><?php echo $fnbItemDetails['description'];?></textarea>
                         <label class="text-secondary" for="synopsis">Description</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Price">
                     <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
+                        <i class="bi bi-currency-dollar"></i>
                     </span>
-                    <input type="number" class="form-control" min="0" step="any" id="price" name="price" placeholder=0 value="<?php echo $fnbItemDetails['price'];?>" required>
+                    <input type="number" class="form-control" min="0" step="0.01" id="price" name="price" placeholder="Price (e.g. 4.99)" value="<?php echo $fnbItemDetails['price'];?>" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Category">
                     <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
+                        <i class="bi bi-tag"></i>
                     </span>
                     <select class="form-select" id="category" name="category" aria-label="Default select">
-                            <option value="food" <?php if($fnbItemDetails['category']=='food'){echo "selected";} ?>>food</option>
-                            <option value="drink" <?php if($fnbItemDetails['category']=='drink'){echo "selected";} ?>>drink</option>
+                        <option value="Food" <?php echo $fnbItemDetails['category'] == 'Food' ? 'selected' : ''; ?>>Food</option>
+                        <option value="Drink" <?php echo $fnbItemDetails['category'] == 'Drink' ? 'selected' : ''; ?>>Drink</option>
                     </select>
                 </div>
-                <div class="input-group mt-3">
-                    <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
-                    </span>
-                    <select class="form-select" id="suspendStatus" name="suspendStatus" aria-label="Default select">
-                            <option value="0" <?php if($fnbItemDetails['suspendStatus']=='0'){echo "selected";} ?>>Not Suspended</option>
-                            <option value="1" <?php if($fnbItemDetails['suspendStatus']=='1'){echo "selected";} ?>>Suspended</option>
-                    </select>
-                </div>
-
         
                 <div class="mt-4">
                     <label for="imgFile" class="form-label">Upload F&B Item Image (Maximum size: 2MB)</label>
-                    <input type="file" class="form-control" id="imgFile" name="imgFile" onchange="previewImage()" accept="image/*">
+                    <input type="file" class="form-control" id="imgFile" name="imgFile" onchange="previewImg()" accept="image/*">
                 </div>
                 <div class="d-flex">
                     <button type="submit" name="updateFnBItem" class="btn btn-danger my-4 me-3">Update F&B item</button>
                     <a href="manageFnBItems.php" class="btn btn-outline-info my-4">Cancel</a>
                 </div>
             </form>
-            <div style="width:45%">
-            <?php
-                echo '<img src = "data:image/png;base64,' . base64_encode($fnbItemDetails['image']) . '" style="width:100%" id="img"/>';?>
+            <div style="width:45%" class="d-flex justify-content-center">
+                <?php echo '<img src = "data:image/png;base64,' . $fnbItemDetails['image'] . '" style="width:auto;height:550px;max-width:-webkit-fill-available;" id="img"/>'; ?>
             </div>
         </div>
     </div>

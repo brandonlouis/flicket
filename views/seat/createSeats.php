@@ -63,9 +63,9 @@
                     </span>
                     <select class="form-select" id="status" name="status" aria-label="Default select">
                         <option hidden>Assign a status for seat(s)</option>
-                        <option value="available">available</option>
-                        <option value="occupied">occupied</option>
-                        <option value="suspended">suspended</option>
+                        <option value="Available">Available</option>
+                        <option value="Occupied">Occupied</option>
+                        <option value="Suspended">Suspended</option>
                     </select>
                 </div>
                 <div class="d-flex">
@@ -118,7 +118,7 @@
             html += '<div class="row">';
             html += '<div class="col-label">' + String.fromCharCode(65 + i) + '</div>';
             for (let j = 0; j < seatCount && (i * seatCount + j) < <?php echo $hallDetails['capacity'] ?>; j++) {
-                html += '<div class="seat ' + (status === 'available' ? 'available' : status === 'occupied' ? 'occupied' : 'suspended') + ' pe-none" data-seat="' + String.fromCharCode(65 + i) + ':' + (j + 1) + '">' + (j + 1) + '</div>';
+                html += '<div class="seat ' + (status === 'Available' ? 'available' : status === 'Occupied' ? 'occupied' : 'suspended') + ' pe-none" data-seat="' + String.fromCharCode(65 + i) + ':' + (j + 1) + '">' + (j + 1) + '</div>';
             }
             html += '</div>';
         }        

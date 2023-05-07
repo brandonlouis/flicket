@@ -94,7 +94,7 @@
                     <span class="input-group-text">
                         <i class="bi bi-camera-reels"></i>
                     </span>
-                    <input type="text" class="form-control bg-dark-subtle pe-none" id="genre" name="genre" placeholder='Genre (select using dropdown)' required>
+                    <input type="text" class="form-control bg-dark-subtle pe-none" id="genre" name="genre" placeholder='Genre (select using dropdown)' required onkeydown="return false;">
                     <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Genres</button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><button class="dropdown-item genre-btn" type="button" data-value="reset"><b>Reset</b></button></li>
@@ -114,8 +114,8 @@
                     <a href="manageMovies.php" class="btn btn-outline-info my-4">Cancel</a>
                 </div>
             </form>
-            <div style="width:45%">
-                <img id="posterImg" src="" alt="Preview" style="display:none;width:-webkit-fill-available;height:-webkit-fill-available">
+            <div style="width:45%" class="d-flex justify-content-end">
+                <img id="posterImg" src="" alt="Preview" style="display:none;width:auto;height:700px">
             </div>
         </div>
     </div>

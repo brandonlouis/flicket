@@ -49,7 +49,7 @@
                     <span class="input-group-text">
                         <i class="bi bi-ui-checks-grid"></i>
                     </span>
-                    <input type="text" class="form-control bg-dark-subtle pe-none" id="seatLocation" name="seatLocation" placeholder="Select a seat from the diagram" required>
+                    <input type="text" class="form-control bg-dark-subtle pe-none" id="seatLocation" name="seatLocation" placeholder="Select a seat from the diagram" required onkeydown="return false;">
                 </div>
                 <div class="input-group mt-3" title="Seat status">
                     <span class="input-group-text">
@@ -57,9 +57,9 @@
                     </span>
                     <select class="form-select" id="seatStatus" name="seatStatus" aria-label="Default select">
                         <option hidden>Assign a status for selected seat(s)</option>
-                        <option value="available">available</option>
-                        <option value="occupied">occupied</option>
-                        <option value="suspended">suspended</option>
+                        <option value="Available">Available</option>
+                        <option value="Occupied">Occupied</option>
+                        <option value="Suspended">Suspended</option>
                     </select>
                 </div>
                 <div class="d-flex">
@@ -118,11 +118,11 @@
             let seatClass = '';
             if (selectedSeat === row + seatNumber) {
                 seatClass = 'selected';
-            } else if (status === 'available') {
+            } else if (status === 'Available') {
                 seatClass = 'available';
-            } else if (status === 'occupied') {
+            } else if (status === 'Occupied') {
                 seatClass = 'occupied';
-            } else if (status === 'suspended') {
+            } else if (status === 'Suspended') {
                 seatClass = 'suspended';
             }
 

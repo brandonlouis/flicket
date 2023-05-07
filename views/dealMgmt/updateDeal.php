@@ -42,45 +42,34 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../controllers/deal_contr.php?dealId=<?php echo $dealDetails['id'];?>"" enctype="multipart/form-data" class="w-50">
+            <form method="POST" action="../../controllers/deal_contr.php?dealId=<?php echo $dealDetails['id'];?>" enctype="multipart/form-data" class="w-50">
                 <h1>Deal Details</h1>
-                <div class="input-group mt-4">
+                <div class="input-group mt-4" title="Name">
                     <span class="input-group-text">
                         <i class="bi bi-card-heading"></i>
                     </span>
                     <input type="text" class="form-control" id="dealName" name="dealName" placeholder="Name" value="<?php echo $dealDetails['dealName'];?>" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Description">
                     <span class="input-group-text">
-                        <i class="bi bi-book"></i>
+                        <i class="bi bi-card-text"></i>
                     </span>
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Description" id="description" name="description" style="height: 100px" required><?php echo $dealDetails['description'];?></textarea>
-                        <label class="text-secondary" for="synopsis">Description</label>
+                        <label class="text-secondary" for="description">Description</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Price">
                     <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
+                        <i class="bi bi-currency-dollar"></i>
                     </span>
-                    <input type="number" class="form-control" min="0" step="any" id="price" name="price" placeholder=0 value="<?php echo $dealDetails['price'];?>"required>
+                    <input type="number" class="form-control" min="0" step="0.01" id="price" name="price" placeholder="Price (e.g. 12.99)" value="<?php echo $dealDetails['price'];?>"required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3"  title="F&B Items included in the deal">
                     <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
+                        <i class="bi bi-bag-check"></i>
                     </span>
-                    <select class="form-select" id="suspendStatus" name="suspendStatus" aria-label="Default select">
-                            <option value="0" <?php if($dealDetails['suspendStatus']=='0'){echo "selected";} ?>>Not Suspended</option>
-                            <option value="1" <?php if($dealDetails['suspendStatus']=='1'){echo "selected";} ?>>Suspended</option>
-                    </select>
-                </div>
-                <div class="input-group mt-3">
-                    <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
-                    </span>
-                    <input type="text" class="form-control bg-dark-subtle" id="fnbItem" name="fnbItem" 
-                    value="<?php echo $chosenFnBitemsString; ?>"
-                    placeholder='F&B items (select using dropdown)' required onclick="this.blur();" onkeydown="return false;">
+                    <input type="text" class="form-control bg-dark-subtle pe-none" id="fnbItem" name="fnbItem" value="<?php echo $chosenFnBitemsString; ?>" placeholder='F&B items (select using dropdown)' required onkeydown="return false;">
                     <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">F&B Items</button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><button class="dropdown-item fnbItem-btn" type="button" data-value="reset"><b>Reset</b></button></li>
@@ -89,19 +78,18 @@
                         <?php } ?>
                     </ul>
                 </div>
-
-        
+                
                 <div class="mt-4">
                     <label for="imgFile" class="form-label">Upload Deal Image (Maximum size: 2MB)</label>
-                    <input type="file" class="form-control" id="imgFile" name="imgFile" onchange="previewImage()" accept="image/*">
+                    <input type="file" class="form-control" id="imgFile" name="imgFile" onchange="previewImg()" accept="image/*">
                 </div>
                 <div class="d-flex">
                     <button type="submit" name="updateDeal" class="btn btn-danger my-4 me-3">Update deal</button>
                     <a href="manageDeals.php" class="btn btn-outline-info my-4">Cancel</a>
                 </div>
             </form>
-            <div style="width:45%">
-                <img id="img" src="" alt="Preview" style="display:none;width:-webkit-fill-available;height:-webkit-fill-available">
+            <div style="width:45%" class="d-flex justify-content-center">
+                <?php echo '<img src = "data:image/png;base64,' . $dealDetails['image'] . '" style="width:auto;height:550px;max-width:-webkit-fill-available;" id="img"/>'; ?>
             </div>
         </div>
     </div>

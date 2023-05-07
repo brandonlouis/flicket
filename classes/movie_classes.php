@@ -56,7 +56,7 @@ class Movie extends Dbh {
         $sql = "SELECT m.*, GROUP_CONCAT(mg.genreName ORDER BY mg.genreName ASC SEPARATOR ', ') AS genres
                 FROM movie m
                 JOIN moviegenre mg ON m.id = mg.movieId
-                WHERE m.status = 'available'
+                WHERE m.status = 'Available'
                 GROUP BY m.id 
                 ORDER BY m.title ASC;";
         $stmt = $this->connect()->prepare($sql);
@@ -149,7 +149,7 @@ class Movie extends Dbh {
             $sql = "UPDATE movie SET title = ?, synopsis = ?, runtimeMin = ?, trailerURL = ?, startDate = ?, endDate = ?, language = ? WHERE id = ?;";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute([$this->title, $this->synopsis, $this->runtimeMin, $this->trailerURL, $this->startDate, $this->endDate, $this->language, $this->id]);
-        } else if ($this->poster != null) {
+        } else {
             $sql = "UPDATE movie SET title = ?, synopsis = ?, runtimeMin = ?, trailerURL = ?, startDate = ?, endDate = ?, language = ?, poster = ? WHERE id = ?;";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute([$this->title, $this->synopsis, $this->runtimeMin, $this->trailerURL, $this->startDate, $this->endDate, $this->language, $this->poster, $this->id]);
@@ -175,7 +175,7 @@ class Movie extends Dbh {
         session_start();
         $this->id = $id;
         
-        $sql = "UPDATE movie SET status = 'suspended' WHERE id = ?;";
+        $sql = "UPDATE movie SET status = 'Suspended' WHERE id = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->id]);
         
@@ -186,7 +186,7 @@ class Movie extends Dbh {
         session_start();
         $this->id = $id;
         
-        $sql = "UPDATE movie SET status = 'available' WHERE id = ?;";
+        $sql = "UPDATE movie SET status = 'Available' WHERE id = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->id]);
         
