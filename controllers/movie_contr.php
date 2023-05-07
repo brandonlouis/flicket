@@ -14,6 +14,11 @@ class MovieContr {
         $m = new Movie();
         return $m->retrieveOneMovie($id);
     }
+
+    public function retrieveAllAvailableMovies() {
+        $m = new Movie();
+        return $m->retrieveAllAvailableMovies();
+    }
     
     public function retrieveAllLanguages() {
         $m = new Movie();
@@ -47,9 +52,19 @@ class MovieContr {
         exit();
     }
 
-    public function deleteMovie($id) {
+    public function suspendMovie($id) {
         $m = new Movie();
-        $movie = $m->deleteMovie($id);
+        $movie = $m->suspendMovie($id);
+
+        setcookie('flash_message', $movie[0], time() + 3, '/');
+        setcookie('flash_message_type', $movie[1], time() + 3, '/');
+
+        header("location: ../views/movieMgmt/manageMovies.php");
+        exit();
+    }
+    public function activateMovie($id) {
+        $m = new Movie();
+        $movie = $m->activateMovie($id);
 
         setcookie('flash_message', $movie[0], time() + 3, '/');
         setcookie('flash_message_type', $movie[1], time() + 3, '/');
@@ -67,9 +82,14 @@ class MovieContr {
     }
 }
 
-if (isset($_GET['deleteId'])) {
+
+if (isset($_GET['suspendId'])) {
     $mc = new MovieContr();
-    $mc->deleteMovie($_GET['deleteId']);
+    $mc->suspendMovie($_GET['suspendId']);
+
+} else if (isset($_GET['activateId'])) {
+    $mc = new MovieContr();
+    $mc->activateMovie($_GET['activateId']);
 
 } else if (isset($_POST['createMovie']) || isset($_POST['updateMovie'])) {
     $title = $_POST["title"];

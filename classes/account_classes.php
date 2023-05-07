@@ -51,10 +51,10 @@ class Account extends Dbh {
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->email]);
 
-        $sql2 = "SELECT * FROM profile WHERE userType = ?;"; // Check accessType for selected userType in dropdown
-        $stmt2 = $this->connect()->prepare($sql2);
-        $stmt2->execute([$this->userType]);
-        $row = $stmt2->fetch(PDO::FETCH_ASSOC);
+        $sqlProfile = "SELECT * FROM profile WHERE userType = ?;"; // Check accessType for selected userType in dropdown
+        $stmtProfile = $this->connect()->prepare($sqlProfile);
+        $stmtProfile->execute([$this->userType]);
+        $row = $stmtProfile->fetch(PDO::FETCH_ASSOC);
         $accessType = $row['accessType'];
 
         if (strpos($this->userType, "Please") !== false) {
@@ -65,10 +65,6 @@ class Account extends Dbh {
             $stmt = null;
             return array("Email already exists", "danger");
 
-        } else if ($this->password1 != $this->password2) {
-            $stmt = null;
-            return array("Passwords do not match", "danger");
-            
         } else if ($accessType != 'external' && strpos($this->email, '@flicket.com') === false) {
             $stmt = null;
             return array('Email for internal roles <b>must</b> contain "@flicket.com"', "danger");
@@ -76,6 +72,10 @@ class Account extends Dbh {
         } else if ($accessType == 'external' && strpos($this->email, '@flicket.com') !== false) {
             $stmt = null;
             return array('Email for external roles must <b>not</b> contain "@flicket.com"', "danger");
+            
+        } else if ($this->password1 != $this->password2) {
+            $stmt = null;
+            return array("Passwords do not match", "danger");
             
         } else {
             $sql = "INSERT INTO account (fullName, email, phoneNo, password, userType) VALUES (?, ?, ?, ?, ?);";
@@ -99,15 +99,20 @@ class Account extends Dbh {
         $this->password1 = $password1;
         $this->password2 = $password2;
 
+        $sqlEmail = "SELECT COUNT(*) as count FROM account WHERE email = ? AND id != ?";
+        $stmtEmail = $this->connect()->prepare($sqlEmail);
+        $stmtEmail->execute([$this->email, $this->id]);
+        $rowEmail = $stmtEmail->fetch(PDO::FETCH_ASSOC);
+
         $sql = "SELECT * FROM profile WHERE userType = ?;"; // Check accessType for selected userType in dropdown
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->userType]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $accessType = $row['accessType'];
 
-        if ($this->password1 != $this->password2) {
+        if ($rowEmail['count'] > 0) {
             $stmt = null;
-            return array("Passwords do not match", "danger");
+            return array("Email already exists", "danger");
 
         } else if ($accessType != 'external' && strpos($this->email, '@flicket.com') === false) {
             $stmt = null;
@@ -116,6 +121,10 @@ class Account extends Dbh {
         } else if ($accessType == 'external' && strpos($this->email, '@flicket.com') !== false) {
             $stmt = null;
             return array('Email for external roles must <b>not</b> contain "@flicket.com"', "danger");
+
+        } else if ($this->password1 != $this->password2) {
+            $stmt = null;
+            return array("Passwords do not match", "danger");
 
         } else {
             if (!$this->password1 && !$this->password2) {
