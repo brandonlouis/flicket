@@ -22,7 +22,7 @@ class FnBItemContr {
         setcookie('flash_message', $fnbitem[0], time() + 3, '/');
         setcookie('flash_message_type', $fnbitem[1], time() + 3, '/');
 
-        header("location: ../views/fnbMgmt/manageFnBItems.php");
+        header("location: ../views/fnbItemMgmt/manageFnBItems.php");
         exit();
     }
 
@@ -33,7 +33,7 @@ class FnBItemContr {
         setcookie('flash_message', $fnbItem[0], time() + 3, '/');
         setcookie('flash_message_type', $fnbItem[1], time() + 3, '/');
 
-        header("location: ../views/fnbMgmt/manageFnBItems.php");
+        header("location: ../views/fnbItemMgmt/manageFnBItems.php");
         exit();
     }
 
@@ -44,18 +44,28 @@ class FnBItemContr {
         setcookie('flash_message', $fnbItem[0], time() + 3, '/');
         setcookie('flash_message_type', $fnbItem[1], time() + 3, '/');
 
-        header("location: ../views/fnbMgmt/manageFnBItems.php");
+        header("location: ../views/fnbItemMgmt/manageFnBItems.php");
         exit();
     }
 
     public function searchFnBItems($searchText, $filter) {
+
         $fnb = new FnBItem();
         $_SESSION['fnbItems'] = $fnb->searchFnBItems($searchText, $filter);
-        header("location: ../views/fnbMgmt/searchFnBItems.php");
+        header("location: ../views/fnbItemMgmt/searchFnBItems.php");
         exit();
     }
-}
 
+    public function checkFnBitemInDeal($id) {
+        $fnb = new FnBItem();
+        return $fnb->checkFnBitemInDeal($id);
+    }
+
+    public function getFnBItemDeals($id) {
+        $fnb = new FnBItem();
+        return $fnb->getFnBItemDeals($id);
+    }
+}
 
 if (isset($_GET['deleteId'])) {
     $fnbc = new FnBItemContr();
@@ -68,8 +78,8 @@ if (isset($_GET['deleteId'])) {
     $category = $_POST["category"];
     $suspendStatus = $_POST["suspendStatus"];
     $image = null;
-    if (isset($_FILES["imageFile"]) && $_FILES["imageFile"]["error"] !== UPLOAD_ERR_NO_FILE) {
-        $imageContents = file_get_contents($_FILES["imagerFile"]["tmp_name"]);
+    if (isset($_FILES["imgFile"]) && $_FILES["imgFile"]["error"] !== UPLOAD_ERR_NO_FILE) {
+        $imageContents = file_get_contents($_FILES["imgFile"]["tmp_name"]);
         $image = base64_encode($imageContents);
     }
     
@@ -83,11 +93,15 @@ if (isset($_GET['deleteId'])) {
 } else if (isset($_POST['filter'])) {
     $searchText = $_POST['searchText'];
     $filter = $_POST['filter'];
-    
-    //for checking purposes
-    $_SESSION['searchText'] = $searchText;
-    $_SESSION['filter'] = $filter;
+
+    if ($filter == 'suspendStatus'){
+        if(preg_match('/not suspended/i',$searchText) == 1){
+            $searchText = 0;
+        } else if(preg_match('/suspended/i',$searchText) == 1) {
+            $searchText = 1;
+        }
+    }
 
     $fnbc = new FnBItemContr();
     $fnbc->searchFnBItems($searchText, $filter);
-}
+} 

@@ -10,20 +10,6 @@ class FnBItem extends Dbh {
     private $suspendStatus;
     private $image;
     
-    public function checkFnBitemsInDeal($id){
-
-        $sql1 = "SELECT COUNT(*) FROM fnbitemdeal WHERE fnbItem_id = ?";
-        $stmt1 = $this->connect()->prepare($sql);
-        $stmt->execute([$this->id]);
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($result["COUNT"] == 0) {
-            return false;
-        } else{
-            return true;
-        }
-    }
     public function retrieveAllFnBitems() {
         $sql = "SELECT *
                 FROM fnbitem 
@@ -82,11 +68,15 @@ class FnBItem extends Dbh {
         $this->suspendStatus = $suspendStatus;
         $this->image = $image;
         
-
-        $sql = "UPDATE fnbtitem SET itemName = ?, description = ?, price = ?, category = ?, suspendStatus = ?, image = ? WHERE id = ?;";
+        if($this->image == null){
+            $sql = "UPDATE fnbitem SET itemName = ?, description = ?, price = ?, category = ?, suspendStatus = ? WHERE id = ?;";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$this->itemName, $this->description, $this->price, $this->category, $this->suspendStatus, $this->id]);
+        } else {
+            $sql = "UPDATE fnbitem SET itemName = ?, description = ?, price = ?, category = ?, suspendStatus = ?, image = ? WHERE id = ?;";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->itemName, $this->description, $this->price, $this->category, $this->suspendStatus, $this->image, $this->id]);
-           
+        }
 
         $stmt = null;
         return array('F&B item (ID: ' . $this->id . ') updated successfully!', "success");
@@ -115,6 +105,15 @@ class FnBItem extends Dbh {
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute(['%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%']);
 
+        } else if($filter == "price") {
+            //ensures that only exact value will be returned for price
+            $searchText = (array) $searchText;
+            $sql = "SELECT *
+                    FROM fnbitem
+                    WHERE " . $filter . " = ?
+                    ORDER BY id, itemName ASC;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute($searchText); 
         } else {
             $sql = "SELECT *
                     FROM fnbitem
@@ -131,5 +130,44 @@ class FnBItem extends Dbh {
 
         $stmt = null;
         return $fnbItems;
+    }
+
+    public function checkFnBitemInDeal($id){
+        $this->id = $id;
+
+        $sql = "SELECT COUNT(*) FROM fnbitemdeal WHERE fnbItem_id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$this->id]);
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result["COUNT(*)"] == 0) {
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    public function getFnBItemDeals($id){
+        $this->id = $id;
+
+        $sql = "SELECT dealName
+                FROM fnbitem JOIN fnbitemdeal
+                ON fnbitem.id = fnbitemdeal.fnbItem_id
+                JOIN deal
+                ON fnbitemdeal.deal_id = deal.id
+                WHERE fnbitem.id = ?
+                GROUP BY deal.id
+                ORDER BY deal.dealName";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$this->id]);
+
+        $deals = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $deals[] = $row;
+        }
+
+        $stmt = null;
+        return $deals;
     }
 }
