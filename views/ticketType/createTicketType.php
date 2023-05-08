@@ -26,7 +26,7 @@
     ?>
 
     <div class="container mt-4" style="margin-bottom: 80px">
-        <div class="content">
+        <div class="content d-flex justify-content-evenly align-items-center">
             <form method="POST" action="../../controllers/ticketType_contr.php" class="w-50">
                 <h1>Ticket Type Details</h1>
                 <div class="input-group mt-4">
@@ -35,7 +35,7 @@
                     </span>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Description">
                     <span class="input-group-text">
                         <i class="bi bi-card-text"></i>
                     </span>
@@ -44,7 +44,7 @@
                         <label class="text-secondary" for="description">Description</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Price">
                     <span class="input-group-text">
                         <i class="bi bi-currency-dollar"></i>
                     </span>

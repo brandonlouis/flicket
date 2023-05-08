@@ -51,9 +51,9 @@ class FnBItem extends Dbh {
         $this->image = $image;
 
         if (strpos($this->category, 'Select') !== false) {
-            return array("Please select a category", "danger");
+            return array("Please select a Category", "danger");
         } else if (strpos($this->status, 'Select') !== false) {
-            return array("Please select a status", "danger");
+            return array("Please select a Status", "danger");
         }
 
         $sql = "INSERT INTO fnbitem (itemName, description, price, category, status, image) VALUES (?, ?, ?, ?, ?, ?);";

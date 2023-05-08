@@ -49,7 +49,7 @@
                             </ul>
                         </div>
                     </form>
-                    <a href="createFnBItem.php" type="submit" class="btn btn-success bi bi-plus-lg fs-3 ms-4" title="Create Movie Session"></a>
+                    <a href="createFnBItem.php" type="submit" class="btn btn-success bi bi-plus-lg fs-3 ms-4" title="Create F&B Item"></a>
                 </div>
             </div>
             

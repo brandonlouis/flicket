@@ -38,10 +38,10 @@
                             <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><button class="dropdown-item" type="submit" name="filter" value="None"></button></li>
-                                <li><button class="dropdown-item" type="submit" name="filter" value="cinemaName">Cinema Name</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="ch.name">Cinema Name</button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="hallNumber">Hall Number</button></li>
-                                <li><button class="dropdown-item" type="submit" name="filter" value="accessType">Seat Number</button></li>
-                                <li><button class="dropdown-item" type="submit" name="filter" value="status">Status</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="CONCAT(s.rowLetter, s.seatNumber)">Seat Number</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="s.status">Status</button></li>
                             </ul>
                         </div>
                     </form>

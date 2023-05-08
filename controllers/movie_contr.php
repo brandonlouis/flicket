@@ -30,15 +30,20 @@ class MovieContr {
         return $m->retrieveAllGenres();
     }
 
-    public function createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster) {
+    public function createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster, $status) {
         $m = new Movie();
-        $movie = $m->createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster);
+        $movie = $m->createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster, $status);
         
         setcookie('flash_message', $movie[0], time() + 3, '/');
         setcookie('flash_message_type', $movie[1], time() + 3, '/');
 
-        header("location: ../views/movieMgmt/manageMovies.php");
-        exit();
+        if ($movie[1] == 'danger') {
+            header("location: ../views/movieMgmt/createMovie.php");
+            exit();
+        } else {
+            header("location: ../views/movieMgmt/manageMovies.php");
+            exit();
+        }
     }
 
     public function updateMovie($id, $title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster) {
@@ -109,7 +114,8 @@ if (isset($_GET['suspendId'])) {
     $mc = new MovieContr();
 
     if (isset($_POST['createMovie'])) {
-        $mc->createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster);
+        $status = $_POST["status"];
+        $mc->createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster, $status);
     } else if (isset($_POST['updateMovie']) && isset($_GET['movieId'])) {
         $mc->updateMovie($_GET['movieId'], $title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster);
     }
