@@ -117,7 +117,7 @@
                         <div class="modal-dialog modal-dialog-centered mw-100 w-75">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">View Movie Session</h5>
+                                <h5 class="modal-title" id="modalLabel">View Movie</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">

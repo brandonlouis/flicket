@@ -5,7 +5,7 @@ include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/seat_classes.php";
 
 class SeatContr {
 
-    // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY 
+    // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TO MOVE TO CINEMAHALL
     public function retrieveAllHalls() {
         $s = new Seat();
         return $s->retrieveAllHalls();
@@ -15,7 +15,7 @@ class SeatContr {
         $s = new Seat();
         return $s->retrieveOneHall($id);
     }
-    // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY 
+    // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TO MOVE TO CINEMAHALL
 
     public function retrieveAllSeats($id) {
         $s = new Seat();

@@ -36,14 +36,13 @@
         <div class="content d-flex justify-content-evenly align-items-center">
             <form method="POST" action="../../controllers/movie_contr.php?movieId=<?php echo $movieDetails['id']; ?>" enctype="multipart/form-data" class="w-50">
                 <h1>Movie Details</h1>
-        
-                <div class="input-group mt-4">
+                <div class="input-group mt-4" title="Movie Title">
                     <span class="input-group-text">
                         <i class="bi bi-card-heading"></i>
                     </span>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="<?php echo $movieDetails['title']; ?>" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Synopsis">
                     <span class="input-group-text">
                         <i class="bi bi-book"></i>
                     </span>
@@ -52,19 +51,19 @@
                         <label class="text-secondary" for="synopsis">Synopsis</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Runtime (Minutes)">
                     <span class="input-group-text">
                         <i class="bi bi-clock-history"></i>
                     </span>
                     <input type="text" class="form-control" id="runtimeMin" name="runtimeMin" placeholder="Runtime (Minutes)" pattern="^[0-9]{1,4}$" value="<?php echo $movieDetails['runtimeMin']; ?>" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Trailer URL">
                     <span class="input-group-text">
                         <i class="bi bi-link"></i>
                     </span>
                     <input type="text" class="form-control" id="" name="trailerURL" placeholder="Trailer URL" value="<?php echo $movieDetails['trailerURL']; ?>" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Start Date">
                     <span class="input-group-text">
                         <i class="bi bi-calendar3"></i>
                     </span>
@@ -73,7 +72,7 @@
                         <label class="text-secondary" for="startDate">Start Date</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="End Date">
                     <span class="input-group-text">
                         <i class="bi bi-calendar3"></i>
                     </span>
@@ -82,7 +81,7 @@
                         <label class="text-secondary" for="endDate">End Date</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Language">
                     <span class="input-group-text">
                         <i class="bi bi-translate"></i>
                     </span>
@@ -92,7 +91,7 @@
                         <?php } ?>
                     </select>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3"  title="Genre">
                     <span class="input-group-text">
                         <i class="bi bi-camera-reels"></i>
                     </span>
@@ -101,7 +100,7 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><button class="dropdown-item genre-btn" type="button" data-value="reset"><b>Reset</b></button></li>
                         <?php foreach ($genres as $genre) { ?>
-                        <li><button class="dropdown-item genre-btn" type="button" data-value="<?php echo $genre['genreName']; ?>"><?php echo $genre['genreName']; ?></button></li>
+                            <li><button class="dropdown-item genre-btn" type="button" data-value="<?php echo $genre['genreName']; ?>"><?php echo $genre['genreName']; ?></button></li>
                         <?php } ?>
                     </ul>
                 </div>
@@ -116,7 +115,7 @@
                 </div>
             </form>
             <div style="width:45%" class="d-flex justify-content-end">
-                <?php echo '<img id="posterImg" style="width:auto;height:700px;" src="data:image/png;base64,' . $movieDetails['poster'] . '" alt="Movie Poster" />'; ?>
+                <?php echo '<img id="posterImg" style="width:auto;height:700px;;max-width:-webkit-fill-available" src="data:image/png;base64,' . $movieDetails['poster'] . '" alt="Movie Poster" />'; ?>
             </div>
         </div>
     </div>

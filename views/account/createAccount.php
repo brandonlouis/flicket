@@ -31,10 +31,10 @@
     ?>
 
     <div class="container mt-4" style="margin-bottom: 80px">
-        <div class="content">
-            <h1>Account Details</h1>
+        <div class="content d-flex justify-content-evenly align-items-center">
             <form method="POST" action="../../controllers/account_contr.php" class="w-50">
-                <div class="input-group mt-4">
+                <h1>Account Details</h1>
+                <div class="input-group mt-4" title="User Type">
                     <span class="input-group-text">
                         <i class="bi bi-person-lines-fill"></i>
                     </span>
@@ -45,31 +45,31 @@
                         <?php } ?>
                     </select>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Full Name">
                     <span class="input-group-text">
                         <i class="bi bi-person"></i>
                     </span>
                     <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name" pattern="[a-zA-Z\s]*" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Email Address">
                     <span class="input-group-text">
                         <i class="bi bi-envelope"></i>
                     </span>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Phone Number">
                     <span class="input-group-text">
                         <i class="bi bi-phone"></i>
                     </span>
                     <input type="tel" class="form-control" id="phoneNo" name="phoneNo" placeholder="Phone" pattern="(6|8|9)\d{7}" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Password">
                     <span class="input-group-text">
                         <i class="bi bi-lock"></i>
                     </span>
                     <input type="password" class="form-control" id="password1" name="password1" placeholder="Password" required>
                 </div>
-                <div class="input-group mb-2 mt-3">
+                <div class="input-group mb-2 mt-3" title="Confirm Password">
                     <span class="input-group-text">
                         <i class="bi bi-lock-fill"></i>
                     </span>

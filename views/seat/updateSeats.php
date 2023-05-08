@@ -37,7 +37,7 @@
                 <table class="text-white my-4">
                     <tbody>
                         <tr>
-                            <td style="width:115px">Cinema Hall:</td>
+                            <td style="width:115px">Venue:</td>
                             <td><b><?php echo $hallDetails['name'] . ', Hall ' . $hallDetails['hallNumber']; ?></b></td>
                         </tr>
                         <tr>

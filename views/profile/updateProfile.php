@@ -31,16 +31,16 @@
     ?>
 
     <div class="container mt-4" style="margin-bottom: 80px">
-        <div class="content">
-            <h1>Profile Details</h1>
+        <div class="content d-flex justify-content-evenly align-items-center">
             <form method="POST" action="../../controllers/profile_contr.php?userType=<?php echo $profileDetails['userType']; ?>" class="w-50">
-                <div class="input-group mt-4">
+                <h1>Profile Details</h1>
+                <div class="input-group mt-4" title="User Type">
                     <span class="input-group-text">
                         <i class="bi bi-person-lines-fill"></i>
                     </span>
                     <input type="text" class="form-control" id="userType" name="userType" placeholder="User Type" value="<?php echo $profileDetails['userType']; ?>" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Description">
                     <span class="input-group-text">
                         <i class="bi bi-card-text"></i>
                     </span>
@@ -49,7 +49,7 @@
                         <label class="text-secondary" for="description">Description</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Access Type">
                     <span class="input-group-text">
                         <i class="bi bi-person-lock"></i>
                     </span>

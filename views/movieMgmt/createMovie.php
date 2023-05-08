@@ -35,13 +35,13 @@
         <div class="content d-flex justify-content-evenly align-items-center">
             <form method="POST" action="../../controllers/movie_contr.php" enctype="multipart/form-data" class="w-50">
                 <h1>Movie Details</h1>
-                <div class="input-group mt-4">
+                <div class="input-group mt-4" title="Movie Title">
                     <span class="input-group-text">
                         <i class="bi bi-card-heading"></i>
                     </span>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Synopsis">
                     <span class="input-group-text">
                         <i class="bi bi-book"></i>
                     </span>
@@ -50,19 +50,19 @@
                         <label class="text-secondary" for="synopsis">Synopsis</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Runtime (Minutes)">
                     <span class="input-group-text">
                         <i class="bi bi-clock-history"></i>
                     </span>
                     <input type="text" class="form-control" id="runtimeMin" name="runtimeMin" placeholder="Runtime (Minutes)" pattern="^[0-9]{1,4}$" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Trailer URL">
                     <span class="input-group-text">
                         <i class="bi bi-link"></i>
                     </span>
                     <input type="text" class="form-control" id="" name="trailerURL" placeholder="Trailer URL" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Start Date">
                     <span class="input-group-text">
                         <i class="bi bi-calendar3"></i>
                     </span>
@@ -71,7 +71,7 @@
                         <label class="text-secondary" for="startDate">Start Date</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="End Date">
                     <span class="input-group-text">
                         <i class="bi bi-calendar3"></i>
                     </span>
@@ -80,7 +80,7 @@
                         <label class="text-secondary" for="endDate">End Date</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Language">
                     <span class="input-group-text">
                         <i class="bi bi-translate"></i>
                     </span>
@@ -90,7 +90,7 @@
                         <?php } ?>
                     </select>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Genre">
                     <span class="input-group-text">
                         <i class="bi bi-camera-reels"></i>
                     </span>
@@ -103,7 +103,16 @@
                         <?php } ?>
                     </ul>
                 </div>
-
+                <div class="input-group mt-3" title="Session status">
+                    <span class="input-group-text">
+                        <i class="bi bi-gear"></i>
+                    </span>
+                    <select class="form-select" id="status" name="status" aria-label="Default select">
+                        <option hidden>Select a status for session</option>
+                        <option value="Available">Available</option>
+                        <option value="Suspended">Suspended</option>
+                    </select>
+                </div>
 
                 <div class="mt-4">
                     <label for="posterFile" class="form-label">Upload Poster Image (Maximum size: 2MB)</label>
@@ -115,7 +124,7 @@
                 </div>
             </form>
             <div style="width:45%" class="d-flex justify-content-end">
-                <img id="posterImg" src="" alt="Preview" style="display:none;width:auto;height:700px">
+                <img id="posterImg" src="" alt="Preview" style="display:none;width:auto;height:700px;max-width:-webkit-fill-available">
             </div>
         </div>
     </div>

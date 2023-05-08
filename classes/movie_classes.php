@@ -5,8 +5,6 @@ class Movie extends Dbh {
     private $id;
     private $title;
     private $synopsis;
-    private $totalScore;
-    private $totalRatingsReceived;
     private $runtimeMin;
     private $trailerURL;
     private $startDate;
@@ -14,6 +12,7 @@ class Movie extends Dbh {
     private $poster;
     private $language;
     private $genre;
+    private $status;
 
     
     public function retrieveAllMovies() {
@@ -100,7 +99,7 @@ class Movie extends Dbh {
         return $genres;
     }
 
-    public function createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster) {
+    public function createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster, $status) {
         session_start();
         $this->title = $title;
         $this->synopsis = $synopsis;
@@ -111,10 +110,15 @@ class Movie extends Dbh {
         $this->language = $language;
         $this->genre = $genre;
         $this->poster = $poster;
+        $this->status = $status;
 
-        $sql = "INSERT INTO movie (title, synopsis, runtimeMin, trailerURL, startDate, endDate, language, poster) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        if (strpos($this->status, 'Select') !== false) {
+            return array("Please select a Status", "danger");
+        }
+
+        $sql = "INSERT INTO movie (title, synopsis, runtimeMin, trailerURL, startDate, endDate, language, poster, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->title, $this->synopsis, $this->runtimeMin, $this->trailerURL, $this->startDate, $this->endDate, $this->language, $this->poster]);
+        $stmt->execute([$this->title, $this->synopsis, $this->runtimeMin, $this->trailerURL, $this->startDate, $this->endDate, $this->language, $this->poster, $this->status]);
 
         $sqlId = "SELECT id FROM movie WHERE title = ? AND poster = ?;";
         $stmt = $this->connect()->prepare($sqlId);
@@ -164,7 +168,6 @@ class Movie extends Dbh {
             $genreStmt = $this->connect()->prepare($genreSql);
             $genreStmt->execute([$this->id, $genreName]);
         }
-                
 
         $stmt = null;
         $genreStmt = null;

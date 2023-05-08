@@ -37,7 +37,7 @@
                 <table class="text-white my-4">
                     <tbody>
                         <tr>
-                            <td style="width:115px">Cinema Hall:</td>
+                            <td style="width:115px">Venue:</td>
                             <td><b><?php echo $hallDetails['name'] . ', Hall ' . $hallDetails['hallNumber']; ?></b></td>
                         </tr>
                         <tr>
@@ -45,13 +45,13 @@
                             <td><b><?php echo $hallDetails['totalSeats'] . '/' . $hallDetails['capacity']; ?></b></td>
                     </tbody>
                 </table>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Number of Rows">
                     <span class="input-group-text">
                         <i class="bi bi-arrow-bar-right"></i>
                     </span>
                     <input type="number" class="form-control" id="rowCount" name="rowCount" placeholder="Number of Rows" min="1" max="10" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Number of Seats per row">
                     <span class="input-group-text">
                         <i class="bi bi-123"></i>
                     </span>
