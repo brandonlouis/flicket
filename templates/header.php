@@ -23,7 +23,7 @@
                 <a class="nav-item nav-link <?php if ($_SERVER['REQUEST_URI'] == '/flicket/views/movies.php') echo 'active'; ?>" id="movies" href="/flicket/views/movies.php">Movies</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link <?php if ($_SERVER['REQUEST_URI'] == '/flicket/views/foodDrinks.php') echo 'active'; ?>" id="foodDrinks" href="/foodDrinks">Food & Drinks</a>
+                <a class="nav-item nav-link <?php if ($_SERVER['REQUEST_URI'] == '/flicket/views/foodDrinks.php') echo 'active'; ?>" id="foodDrinks" href="/flicket/views/foodDrinks.php">Food & Drinks</a>
             </li>
         </ul>
         <?php

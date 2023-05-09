@@ -15,6 +15,11 @@ class FnBItemContr {
         return $fnb->retrieveOneFnBItem($id);
     }
 
+    public function retrieveAllAvailableFnBItem() {
+        $ch = new FnBItem();
+        return $ch->retrieveAllAvailableFnBItem();
+    }
+
     public function createFnBItem($itemName, $description, $price, $category, $status, $image) {
         $fnb = new FnBItem();
         $fnbitem = $fnb->createFnBItem($itemName, $description, $price, $category, $status, $image);

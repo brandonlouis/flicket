@@ -41,6 +41,24 @@ class FnBItem extends Dbh {
         return $singleItem;
     }
 
+    public function retrieveAllAvailableFnBItem() {
+        $sql = "SELECT *
+                FROM fnbitem
+                WHERE status = 'Available'
+                GROUP BY id 
+                ORDER BY itemName";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+
+        $fnbitems = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $fnbitems[] = $row;
+        }
+
+        $stmt = null;
+        return $fnbitems;
+    }
+
     public function createFnBItem($itemName, $description, $price, $category, $status, $image) {
         session_start();
         $this->itemName = $itemName;
