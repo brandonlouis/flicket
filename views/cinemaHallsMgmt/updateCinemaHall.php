@@ -45,6 +45,7 @@
                         <i class="bi bi-translate"></i>
                     </span>
                     <select class="form-select" id="hallNumber" name="hallNumber">
+                        <option value ="<?php echo $cinemaHallDetails['name']; ?>" disabled selected hidden>Hall <?php echo $cinemaHallDetails['hallNumber']; ?></option>
                         <option value ="1">Hall 1</option>
                         <option value ="2">Hall 2</option>
                         <option value ="3">Hall 3</option>
