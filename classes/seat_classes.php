@@ -8,7 +8,7 @@ class Seat extends Dbh {
     private $seatNumber;
     private $status;
 
-    // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY 
+    // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TO MOVE TO CINEMAHALL
     public function retrieveAllHalls() {
         $sql = "SELECT ch.*, COUNT(s.id) AS totalSeats
                 FROM cinemahall ch 
@@ -42,7 +42,7 @@ class Seat extends Dbh {
         $stmt = null;
         return $hallDetails;
     }
-    // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY 
+    // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TO MOVE TO CINEMAHALL
 
 
 
@@ -176,22 +176,22 @@ class Seat extends Dbh {
         session_start();
 
         if ($filter == "None") {
-            $sql = "SELECT cinemahall.name, cinemahall.hallNumber, seat.*
-                    FROM cinemahall 
-                    INNER JOIN seat 
-                    ON cinemahall.id = seat.hallId 
-                    WHERE cinemahall.name LIKE ? OR cinemahall.hallNumber LIKE ? OR CONCAT(seat.rowLetter, seat.seatNumber) LIKE ? OR seat.status LIKE ?
-                    ORDER BY cinemahall.name, cinemahall.hallNumber, CONCAT(seat.rowLetter, seat.seatNumber);";
+            $sql = "SELECT ch.name, ch.hallNumber, s.*
+                    FROM cinemahall as ch
+                    INNER JOIN seat as s
+                    ON ch.id = s.hallId 
+                    WHERE ch.name LIKE ? OR ch.hallNumber LIKE ? OR CONCAT(s.rowLetter, s.seatNumber) LIKE ? OR s.status LIKE ?
+                    ORDER BY ch.name, ch.hallNumber, CONCAT(s.rowLetter, s.seatNumber);";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute(['%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%']);
 
         } else {
-            $sql = "SELECT cinemahall.name, cinemahall.hallNumber, seat.*, CONCAT(seat.rowLetter, seat.seatNumber) AS seatRowSeatNumber 
-                    FROM cinemahall 
-                    INNER JOIN seat 
-                    ON cinemahall.id = seat.hallId 
+            $sql = "SELECT ch.name, ch.hallNumber, s.*, CONCAT(s.rowLetter, s.seatNumber) AS seatRowSeatNumber 
+                    FROM cinemahall as ch
+                    INNER JOIN seat as s
+                    ON ch.id = s.hallId 
                     WHERE " . $filter . " LIKE ?
-                    ORDER BY cinemahall.name, cinemahall.hallNumber, seatRowSeatNumber;";
+                    ORDER BY ch.name, ch.hallNumber, seatRowSeatNumber;";
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute(['%' . $searchText . '%']);
         }

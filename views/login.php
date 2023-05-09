@@ -40,13 +40,13 @@
                         <?php setcookie('flash_message_type', '', time() - 3600, '/'); ?>
                         <?php endif; ?>
                         
-                        <div class="input-group mt-4">
+                        <div class="input-group mt-4" title="Email Address">
                             <span class="input-group-text">
                                 <i class="bi bi-envelope"></i>
                             </span>
                             <input type="email" class="form-control" id="loginEmail" name="loginEmail" placeholder="Email" value="<?php echo isset($_GET['email']) ? $_GET['email'] : ''; ?>" required>
                         </div>
-                        <div class="input-group mt-3">
+                        <div class="input-group mt-3" title="Password">
                             <span class="input-group-text">
                                 <i class="bi bi-lock"></i>
                             </span>
