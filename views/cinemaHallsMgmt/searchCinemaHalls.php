@@ -4,11 +4,6 @@
         header('Location: ../../index.php');
         exit;
     }
-
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/cinemahall_contr.php";
-
-    $mc = new CinemaHallContr();
-    $cinemahalls = $mc->retrieveAllCinemaHalls();
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +16,7 @@
     <link rel="stylesheet" href="/flicket/css/style.css">
 
  
-    <title>Manage Cinema Halls | flicket</title>
+    <title>Search Cinema Halls | flicket</title>
     <link rel="icon" type="image/x-icon" href="/flicket/img/favicon.ico">
 </head>
 
@@ -44,14 +39,14 @@
                                 <li><button class="dropdown-item" type="submit" name="filter" value="None"></button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="id">Cinema Hall ID</button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="name">Cinema Name</button></li>
-                                <li><button class="dropdown-item" type="submit" name="filter" value="hallNumber">Hall Number</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="hallNumber">Hall ID</button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="address">Address</button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="capacity">Capacity</button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="status">Status</button></li>
                             </ul>
                         </div>
                     </form>
-                    <a href="createCinemaHall.php" type="submit" class="btn btn-success bi bi-plus-lg fs-3 ms-4" title="Create Hall"></a>
+                    <a href="createCinemaHall.php" type="submit" class="btn btn-success bi bi-plus-lg fs-3 ms-4" title="Create Cinema Hall"></a>
                 </div>
             </div>
             <table class="table table-hover text-white mt-4">
@@ -66,7 +61,7 @@
                     <tr>
                 </thead>
                 <tbody class="align-middle">
-                    <?php foreach ($cinemahalls as $cinemahall) { ?>
+                    <?php foreach ($_SESSION['cinemaHalls'] as $cinemahall) { ?>
                     <tr class="clickable-row" data-bs-toggle="modal" data-bs-target="#view<?php echo $cinemahall['id']; ?>">
                         <td><?php echo $cinemahall['id']; ?></td>
                         <td title="<?php echo $cinemahall['name']; ?>"><?php echo $cinemahall['name']; ?></td>
@@ -75,12 +70,12 @@
                         <td><?php echo $cinemahall['capacity']; ?></td>
 
                         <td class="d-flex justify-content-evenly">
-                            <a href="updateCinemaHall.php?cinemaHallId=<?php echo $cinemahall['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Cinema Hall"></a>
+                            <a href="updateCinemaHall.php?movieId=<?php echo $cinemahall['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Cinema Hall"></a>
                             <?php
                                 if ($cinemahall['status'] == 'Available') {
-                                    echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Movie" data-bs-toggle="modal" data-bs-target="#suspend' . $cinemahall['id'] . '" onclick="event.stopPropagation();"></button>';
+                                    echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Cinema Hall" data-bs-toggle="modal" data-bs-target="#suspend' . $cinemahall['id'] . '" onclick="event.stopPropagation();"></button>';
                                 } else {
-                                    echo '<a href="../../controllers/cinemahall_contr.php?activateId=' . $cinemahall["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Movie"></a>';
+                                    echo '<a href="../../controllers/cinemahall_contr.php?activateId=' . $cinemahall["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Cinema Hall"></a>';
                                 }
                             ?>
                         </td>
@@ -96,14 +91,50 @@
                             <div class="modal-body">
                                 Suspend the following cinema hall?
                                 <br/><br/>
-                                <span>CinemaHall ID </span>: <?php echo $cinemahall['id']; ?><br/>
-                                <span>Name </span> &nbsp;: <?php echo $cinemahall['name']; ?><br/>
+                                <span>Cinema ID </span>: <?php echo $movie['id']; ?><br/>
+                                <span>Cinema Name </span> &nbsp;: <?php echo $cinemahall['name']; ?><br/>
                                 <span>Hall Number </span> &nbsp;: <?php echo $cinemahall['hallNumber']; ?><br/>
                             </div>
                             <div class="modal-footer">
                                 <a href="../../controllers/cinemahall_contr.php?suspendId=<?php echo $cinemahall['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                             </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="view<?php echo $cinemahall['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered mw-100 w-75">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel">View Movie</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <dl class="row">
+                                                <dt class="col-sm-4">Cinema Hall ID</dt>
+                                                <dd class="col-sm-8"><?php echo $cinemahall['id']; ?></dd>
+
+                                                <dt class="col-sm-4">Cinema Name</dt>
+                                                <dd class="col-sm-8"><?php echo $cinemahall['name']; ?></dd>
+
+                                                <dt class="col-sm-4">Hall Number</dt>
+                                                <dd class="col-sm-8">
+                                                    <p><?php echo $cinemahall['hallNumber']; ?></p>
+                                                </dd>
+
+                                                <dt class="col-sm-4">Address</dt>
+                                                <dd class="col-sm-8"><?php echo $cinemahall['address']; ?></dd>
+
+                                                <dt class="col-sm-4">Capacity</dt>
+                                                <dd class="col-sm-8"><?php echo $cinemahall['capacity']; ?></dd>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

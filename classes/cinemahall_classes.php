@@ -125,44 +125,30 @@ class CinemaHall extends Dbh {
         return array('Cinema Hall (ID: ' . $this->id . ') activated successfully!', "success");        
     }
 
-    // public function searchMovies($searchText, $filter) {
-    //     session_start();
+    public function searchCinemaHalls($searchText, $filter) {
+        session_start();
 
-    //     if ($filter == "None") {
-    //         $sql = "SELECT m.*, genres 
-    //                 FROM movie m 
-    //                 JOIN (
-    //                     SELECT movieId, GROUP_CONCAT(genreName ORDER BY genreName ASC SEPARATOR ', ') AS genres
-    //                     FROM moviegenre
-    //                     GROUP BY movieId
-    //                 ) mg ON m.id = mg.movieId
-    //                 WHERE m.id LIKE ? OR m.title LIKE ? OR m.synopsis LIKE ? OR m.runtimeMin LIKE ? OR m.trailerURL LIKE ? OR m.startDate LIKE ? OR m.endDate LIKE ? OR m.language LIKE ? OR genres LIKE ?
-    //                 GROUP BY m.id 
-    //                 ORDER BY m.title ASC";
-    //         $stmt = $this->connect()->prepare($sql);
-    //         $stmt->execute(['%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%']);
+        if ($filter == "None") {
+            $sql = "SELECT * 
+                    FROM cinemahall 
+                    WHERE id LIKE ? OR name LIKE ? OR hallNumber LIKE ? OR address LIKE ? OR capacity LIKE ?
+                    GROUP BY id 
+                    ORDER BY name ASC";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(['%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%']);
 
-    //     } else {
-    //         $sql = "SELECT m.*, genres 
-    //                 FROM movie m 
-    //                 JOIN (
-    //                     SELECT movieId, GROUP_CONCAT(genreName ORDER BY genreName ASC SEPARATOR ', ') AS genres
-    //                     FROM moviegenre
-    //                     GROUP BY movieId
-    //                 ) mg ON m.id = mg.movieId
-    //                 WHERE " . $filter . " LIKE ?
-    //                 GROUP BY m.id 
-    //                 ORDER BY m.title ASC;";
-    //         $stmt = $this->connect()->prepare($sql);
-    //         $stmt->execute(['%' . $searchText . '%']);    
-    //     }
+        } else {
+            $sql = "SELECT * FROM cinemahall WHERE " . $filter . " LIKE ? ORDER BY id ASC;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute(['%' . $searchText . '%']);
+        }
 
-    //     $movies = array();
-    //     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    //         $movies[] = $row;
-    //     }
+        $cinemahalls = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $cinemahalls[] = $row;
+        }
 
-    //     $stmt = null;
-    //     return $movies;
-    // }
+        $stmt = null;
+        return $cinemahalls;
+    }
 }
