@@ -35,13 +35,13 @@
                 <h1>Cinema Hall Details</h1>
                 <div class="input-group mt-4" title="Cinema Name">
                     <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
+                        <i class="bi bi-house"></i>
                     </span>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Cinema Name" required>
                 </div>
                 <div class="input-group mt-3" title="Hall Number">
                     <span class="input-group-text">
-                        <i class="bi bi-translate"></i>
+                        <i class="bi bi-projector"></i>
                     </span>
                     <select class="form-select" id="hallNumber" name="hallNumber" aria-label="Default select">
                         <option value ="1">Hall 1</option>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="input-group mt-3" title="Address">
                     <span class="input-group-text">
-                        <i class="bi bi-book"></i>
+                        <i class="bi bi-building"></i>
                     </span>
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Address" id="address" name="address" style="height: 100px" required></textarea>
@@ -62,13 +62,13 @@
                 </div>
                 <div class="input-group mt-4" title="Capacity">
                     <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
+                        <i class="bi bi-building"></i>
                     </span>
                     <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Capacity" required>
                 </div>
                 <div class="input-group mt-3" title="Hall status">
                     <span class="input-group-text">
-                        <i class="bi bi-gear"></i>
+                        <i class="bi bi-check-circle"></i>
                     </span>
                     <select class="form-select" id="status" name="status" aria-label="Default select">
                         <option hidden>Select a status for hall</option>

@@ -55,6 +55,7 @@
                         <th>Name</th>
                         <th>Price</th>
                         <th>Category</th>
+                        <th></th>
                     <tr>
                 </thead>
                 <tbody class="align-middle">
@@ -64,6 +65,9 @@
                         <td><?php echo $item['itemName']; ?></td>
                         <td>$<?php echo $item['price']; ?></td>
                         <td><?php echo $item['category']; ?></td>
+                        <td class="d-flex justify-content-evenly">
+                            <a href="updateFnBItem.php?fnbItemId=<?php echo $item['id']; ?>" type="submit" class="btn btn-outline-info bi" title="Purchase F&B Item">Purchase</a>
+                        </td>
                     </tr>
                     <div class="modal fade" id="view<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered mw-100 w-75">
@@ -113,6 +117,8 @@
                                                 <dd class="col-sm-8">
                                                     <span class="<?php echo $item['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $item['status']; ?></span>
                                                 </dd>
+
+
                                             </div>
                                             <div class="col">
                                                 <div class=" d-flex justify-content-center">
