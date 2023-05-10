@@ -30,6 +30,7 @@
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="d-flex justify-content-between align-items-center mb-5">
             <span>
+                
                 <h1>F&B Items</h1>
                 <p style="margin:0">Purchase your snacks & drinks before the show!</p>
             </span>
@@ -132,7 +133,7 @@
                         </div>
                     </div>
                     <!-- Purchase Screen -->
-                    <form method="POST" action="../../controllers/fnbitem_contr.php?fnbItemId=<?php echo $item['id'];?>" enctype="multipart/form-data" class="w-50">
+                    <form method="POST" action="../controllers/fnbitem_contr.php?fnbItemId=<?php echo $item['id'];?>" enctype="multipart/form-data" class="w-50">
                         <div class="modal fade" id="purchase<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered mw-100 w-75">
                                 <div class="modal-content">

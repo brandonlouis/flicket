@@ -135,7 +135,8 @@ if (isset($_GET['suspendId'])) {
 } else if (isset($_POST['purchaseFnBItem']) && isset($_GET['fnbItemId'])) {
     $buyerName = $_POST['buyerName'];
     $phoneNum = $_POST['phoneNum'];
+    $fnbItem = $_GET['fnbItemId'];
 
     $fnbc = new FnBItemContr();
-    $fnbc->purchaseFnBItem($_GET['fnbItemId'], $buyerName, $phoneNum);
+    $fnbc->purchaseFnBItem($fnbItem, $buyerName, $phoneNum);
 }
