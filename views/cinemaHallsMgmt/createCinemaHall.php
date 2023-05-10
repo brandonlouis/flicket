@@ -62,7 +62,7 @@
                 </div>
                 <div class="input-group mt-4" title="Capacity">
                     <span class="input-group-text">
-                        <i class="bi bi-building"></i>
+                        <i class="bi bi-people"></i>
                     </span>
                     <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Capacity" required>
                 </div>
