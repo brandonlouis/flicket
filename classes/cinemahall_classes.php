@@ -93,9 +93,19 @@ class CinemaHall extends Dbh {
         $this->capacity = $capacity;
         $this->status = $status;
 
-        $sql = "UPDATE cinemahall SET hallNumber = ?, name = ?, address = ?, capacity = ?, status = ? WHERE id = ?;";
+        $sql = "SELECT * FROM cinemahall WHERE name = ? && hallNumber = ?;"; // Check if cinema hall exists
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->hallNumber, $this->name, $this->address, $capacity, $this->status, $this->id]);
+        $stmt->execute([$this->name, $this->hallNumber]);
+
+        if ($stmt->rowCount() > 0) {
+            $stmt = null;
+            return array("Cinema hall already exists", "danger");
+
+        } else {
+            $sql = "UPDATE cinemahall SET hallNumber = ?, name = ?, address = ?, capacity = ?, status = ? WHERE id = ?;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$this->hallNumber, $this->name, $this->address, $capacity, $this->status, $this->id]);
+        }
 
         $stmt = null;
         return array('Cinema Hall (ID: ' . $this->id . ') updated successfully!', "success");
