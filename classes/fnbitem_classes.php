@@ -9,6 +9,9 @@ class FnBItem extends Dbh {
     private $category;
     private $status;
     private $image;
+    private $buyerName;
+    private $phoneNum;
+    private $fnbItemID;
     
     public function retrieveAllFnBitems() {
         $sql = "SELECT *
@@ -203,5 +206,19 @@ class FnBItem extends Dbh {
 
         $stmt = null;
         return $deals;
+    }
+
+    public function purchaseFnBItem($fnbItemID, $buyerName, $phoneNum) {
+        session_start();
+        $this->fnbItemID = $fnbItemID;
+        $this->buyerName = $buyerName;
+        $this->phoneNum = $phoneNum;
+
+        $sql = "INSERT INTO fnbpurchases (buyerName, phoneNum, fnbItemID) VALUES (?, ?, ?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$this->buyerName, $this->phoneNum, $this->fnbItemID]);
+
+        $stmt = null;
+        return array("FnB item successfully created!", "success");
     }
 }

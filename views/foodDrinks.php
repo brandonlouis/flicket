@@ -66,7 +66,7 @@
                         <td>$<?php echo $item['price']; ?></td>
                         <td><?php echo $item['category']; ?></td>
                         <td class="d-flex justify-content-evenly">
-                            <a href="updateFnBItem.php?fnbItemId=<?php echo $item['id']; ?>" type="submit" class="btn btn-outline-info bi" title="Purchase F&B Item">Purchase</a>
+                            <a type="submit" data-bs-toggle="modal" data-bs-target="#purchase<?php echo $item['id']; ?>" class="btn btn-outline-info bi" title="Purchase F&B Item">Purchase</a>
                         </td>
                     </tr>
                     <div class="modal fade" id="view<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
@@ -131,6 +131,76 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Purchase Screen -->
+                    <form method="POST" action="../../controllers/fnbitem_contr.php?fnbItemId=<?php echo $item['id'];?>" enctype="multipart/form-data" class="w-50">
+                        <div class="modal fade" id="purchase<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered mw-100 w-75">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel">Purchase <?php echo $item['itemName'];?></h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <dl class="row">
+                                                    <dt class="col-sm-4">Item Name</dt>
+                                                    <dd class="col-sm-8"><?php echo $item['itemName']; ?></dd>
+
+                                                    <dt class="col-sm-4">Description</dt>
+                                                    <dd class="col-sm-8">
+                                                        <p><?php echo $item['description']; ?></p>
+                                                    </dd>
+
+                                                    <dt class="col-sm-4">Price</dt>
+                                                    <dd class="col-sm-8">$<?php echo $item['price']; ?></dd>
+
+                                                    <dt class="col-sm-4">Deals included in:</dt>
+                                                    <dd class="col-sm-8">
+                                                        <?php 
+                                                            if($fnbc->checkFnBitemInDeal($item['id'])){
+                                                                $deals = $fnbc->getFnBItemDeals($item['id']);
+                                                                echo "<ul>";
+                                                                foreach($deals as $deal) {                                   
+                                                                    echo "<li>" . $deal['dealName'] . "</li>";
+                                                                } 
+                                                                echo "</ul>";
+                                                            } else {
+                                                                echo "None";
+                                                            }
+                                                        ?>
+                                                    </dd>
+                                                    <dt class="col-sm-4">Status</dt>
+                                                    <dd class="col-sm-8">
+                                                        <span class="<?php echo $item['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $item['status']; ?></span>
+                                                    </dd>
+                                                    <dt class="col-sm-4"><br></dt>
+                                                    <dd class="col-sm-8"><br></dd>
+                                                    <dt class="col-sm-4">Name</dt>
+                                                    <dd class="col-sm-8">
+                                                        <input type="text" class="form-control" id="buyerName" name="buyerName" pattern="[a-zA-Z\s]*" required>
+                                                    </dd>
+                                                    <dt class="col-sm-4">Contact</dt>
+                                                    <dd class="col-sm-8">
+                                                        <input type="tel" class="form-control" id="phoneNum" name="phoneNum" required>
+                                                    </dd>
+                                                    <div class="d-flex">
+                                                        <button type="submit" name="purchaseFnBItem" class="btn btn-danger my-4 me-3">Purchase</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class=" d-flex justify-content-center">
+                                                        <?php echo '<img src = "data:image/png;base64,' . $item['image'] . '" style="width:auto;height:300px;"/>'; ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <?php } ?>
                 </tbody>
             </table>
