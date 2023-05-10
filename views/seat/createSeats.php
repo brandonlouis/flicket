@@ -59,7 +59,7 @@
                 </div>
                 <div class="input-group mt-3" title="Seat status">
                     <span class="input-group-text">
-                        <i class="bi bi-gear"></i>
+                        <i class="bi bi-check-circle"></i>
                     </span>
                     <select class="form-select" id="status" name="status" aria-label="Default select">
                         <option hidden>Assign a status for seat(s)</option>

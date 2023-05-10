@@ -39,7 +39,7 @@
                                 <li><button class="dropdown-item" type="submit" name="filter" value="None"></button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="id">Cinema Hall ID</button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="name">Cinema Name</button></li>
-                                <li><button class="dropdown-item" type="submit" name="filter" value="hallNumber">Hall ID</button></li>
+                                <li><button class="dropdown-item" type="submit" name="filter" value="hallNumber">Hall Number</button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="address">Address</button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="capacity">Capacity</button></li>
                                 <li><button class="dropdown-item" type="submit" name="filter" value="status">Status</button></li>
@@ -57,6 +57,7 @@
                         <th>Hall Number</th>
                         <th>Address</th>
                         <th>Capacity</th>
+                        <th>Status</th>
                         <th></th>
                     <tr>
                 </thead>
@@ -68,9 +69,10 @@
                         <td title="<?php echo $cinemahall['hallNumber']; ?>"><?php echo $cinemahall['hallNumber']; ?></td>
                         <td><?php echo $cinemahall['address']; ?></td>
                         <td><?php echo $cinemahall['capacity']; ?></td>
+                        <td><span class="<?php echo $cinemahall['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $cinemahall['status']; ?></span></td>
 
                         <td class="d-flex justify-content-evenly">
-                            <a href="updateCinemaHall.php?movieId=<?php echo $cinemahall['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Cinema Hall"></a>
+                            <a href="updateCinemaHall.php?cinemaHallId=<?php echo $cinemahall['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Cinema Hall"></a>
                             <?php
                                 if ($cinemahall['status'] == 'Available') {
                                     echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Cinema Hall" data-bs-toggle="modal" data-bs-target="#suspend' . $cinemahall['id'] . '" onclick="event.stopPropagation();"></button>';
@@ -91,7 +93,7 @@
                             <div class="modal-body">
                                 Suspend the following cinema hall?
                                 <br/><br/>
-                                <span>Cinema ID </span>: <?php echo $movie['id']; ?><br/>
+                                <span>Cinema ID </span>: <?php echo $cinemahall['id']; ?><br/>
                                 <span>Cinema Name </span> &nbsp;: <?php echo $cinemahall['name']; ?><br/>
                                 <span>Hall Number </span> &nbsp;: <?php echo $cinemahall['hallNumber']; ?><br/>
                             </div>

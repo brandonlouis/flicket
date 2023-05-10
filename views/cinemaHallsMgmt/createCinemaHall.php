@@ -81,9 +81,6 @@
                     <a href="manageCinemaHalls.php" class="btn btn-outline-info my-4">Cancel</a>
                 </div>
             </form>
-            <div style="width:45%" class="d-flex justify-content-end">
-                <img id="posterImg" src="" alt="Preview" style="display:none;width:auto;height:700px;max-width:-webkit-fill-available">
-            </div>
         </div>
     </div>
 

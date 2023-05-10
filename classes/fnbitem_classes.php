@@ -10,8 +10,9 @@ class FnBItem extends Dbh {
     private $status;
     private $image;
     private $buyerName;
-    private $phoneNum;
+    private $email;
     private $fnbItemID;
+    private $fnbQty;
     
     public function retrieveAllFnBitems() {
         $sql = "SELECT *
@@ -208,17 +209,19 @@ class FnBItem extends Dbh {
         return $deals;
     }
 
-    public function purchaseFnBItem($fnbItemID, $buyerName, $phoneNum) {
+    public function purchaseFnBItem($fnbItemID, $fnbQty, $buyerName, $email) {
         session_start();
         $this->fnbItemID = $fnbItemID;
+        $this->fnbQty = $fnbQty;
         $this->buyerName = $buyerName;
-        $this->phoneNum = $phoneNum;
+        $this->email = $email;
 
-        $sql = "INSERT INTO fnbpurchases (buyerName, phoneNum, fnbItemID) VALUES (?, ?, ?);";
+
+        $sql = "INSERT INTO fnbpurchases (buyerName, email, fnbItemID, quantity) VALUES (?, ?, ?, ?);";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->buyerName, $this->phoneNum, $this->fnbItemID]);
+        $stmt->execute([$this->buyerName, $this->email, $this->fnbItemID, $this->fnbQty]);
 
         $stmt = null;
-        return array("FnB item successfully created!", "success");
+        return array("Purchase made successfully! Your purchase receipt will be sent to your email address", "success");
     }
 }

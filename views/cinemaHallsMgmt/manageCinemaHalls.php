@@ -62,6 +62,7 @@
                         <th>Hall Number</th>
                         <th>Address</th>
                         <th>Capacity</th>
+                        <th>Status</th>
                         <th></th>
                     <tr>
                 </thead>
@@ -73,6 +74,7 @@
                         <td title="<?php echo $cinemahall['hallNumber']; ?>"><?php echo $cinemahall['hallNumber']; ?></td>
                         <td><?php echo $cinemahall['address']; ?></td>
                         <td><?php echo $cinemahall['capacity']; ?></td>
+                        <td><span class="<?php echo $cinemahall['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $cinemahall['status']; ?></span></td>
 
                         <td class="d-flex justify-content-evenly">
                             <a href="updateCinemaHall.php?cinemaHallId=<?php echo $cinemahall['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Cinema Hall"></a>

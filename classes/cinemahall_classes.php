@@ -145,7 +145,7 @@ class CinemaHall extends Dbh {
                     GROUP BY id 
                     ORDER BY name ASC";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->execute(['%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%']);
+            $stmt->execute(['%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%', '%' . $searchText . '%']);
 
         } else {
             $sql = "SELECT * FROM cinemahall WHERE " . $filter . " LIKE ? ORDER BY id ASC;";
