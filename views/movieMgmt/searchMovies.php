@@ -31,7 +31,7 @@
                 <h1>Manage Movies</h1>
 
                 <div class="d-flex">
-                    <form method="POST" action="../../controllers/movie_contr.php" class="d-flex">
+                    <form method="POST" action="../../controllers/movie/searchMovie_contr.php" class="d-flex">
                         <div class="input-group">
                             <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
                             <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
@@ -86,7 +86,7 @@
                                 if ($movie['status'] == 'Available') {
                                     echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Movie" data-bs-toggle="modal" data-bs-target="#suspend' . $movie['id'] . '" onclick="event.stopPropagation();"></button>';
                                 } else {
-                                    echo '<a href="../../controllers/movie_contr.php?activateId=' . $movie["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Movie"></a>';
+                                    echo '<a href="../../controllers/movie/suspendMovie_contr.php?activateId=' . $movie["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Movie"></a>';
                                 }
                             ?>
                         </td>

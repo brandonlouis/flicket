@@ -5,11 +5,11 @@
         exit;
     }
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie/manageMovie_contr.php";
 
-    $mc = new MovieContr();
-    $languages = $mc->retrieveAllLanguages();
-    $genres = $mc->retrieveAllGenres();
+    $mmc = new ManageMovieContr();
+    $languages = $mmc->retrieveAllLanguages();
+    $genres = $mmc->retrieveAllGenres();
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +33,7 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../controllers/movie_contr.php" enctype="multipart/form-data" class="w-50">
+            <form method="POST" action="../../controllers/movie/createMovie_contr.php" enctype="multipart/form-data" class="w-50">
                 <h1>Movie Details</h1>
                 <div class="input-group mt-4" title="Movie Title">
                     <span class="input-group-text">
