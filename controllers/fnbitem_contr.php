@@ -15,6 +15,11 @@ class FnBItemContr {
         return $fnb->retrieveOneFnBItem($id);
     }
 
+    public function retrieveAllAvailableFnBItem() {
+        $ch = new FnBItem();
+        return $ch->retrieveAllAvailableFnBItem();
+    }
+
     public function createFnBItem($itemName, $description, $price, $category, $status, $image) {
         $fnb = new FnBItem();
         $fnbitem = $fnb->createFnBItem($itemName, $description, $price, $category, $status, $image);
@@ -80,6 +85,17 @@ class FnBItemContr {
         $fnb = new FnBItem();
         return $fnb->getFnBItemDeals($id);
     }
+
+    public function purchaseFnBItem($fnbItemID, $fnbQty, $buyerName, $email) {
+        $fnb = new FnBItem();
+        $fnbitem = $fnb->purchaseFnBItem($fnbItemID, $fnbQty, $buyerName, $email);
+        
+        setcookie('flash_message', $fnbitem[0], time() + 3, '/');
+        setcookie('flash_message_type', $fnbitem[1], time() + 3, '/');
+
+        header("location: ../views/foodDrinks.php");
+        exit();
+    }
 }
 
 
@@ -116,4 +132,12 @@ if (isset($_GET['suspendId'])) {
 
     $fnbc = new FnBItemContr();
     $fnbc->searchFnBItems($searchText, $filter);
-} 
+} else if (isset($_POST['purchaseFnBItem']) && isset($_GET['fnbItemId'])) {
+    $buyerName = $_POST['buyerName'];
+    $email = $_POST['email'];
+    $fnbItem = $_GET['fnbItemId'];
+    $fnbQty = $_POST['quantity'];
+
+    $fnbc = new FnBItemContr();
+    $fnbc->purchaseFnBItem($fnbItem, $fnbQty, $buyerName, $email);
+}

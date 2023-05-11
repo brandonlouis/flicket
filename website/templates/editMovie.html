@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Movie{% endblock %}
+
+{% block content %}
+
+<h1>Movie Details</h1>
+<form method="POST" class="w-50">
+    <div class="input-group mt-3">
+        <label>Title:</label>
+        <input type="text" class="form-control" id="title" name="title" value="{{ movie_details.title }}" required>
+    </div>
+
+    <div class="input-group mt-3 ">
+        <label>Spoken Language:</label>
+        <select class="form-control" id="spokenLanguage" name="spokenLanguage" required>
+            {% for spokenLang in spokenLanguages %}
+            {% if  spokenLang.langName == movie_details.spokenLanguage.langName %}
+            <option selected>{{ spokenLang.langName }}</option>
+            {% else %}
+            <option>{{ spokenLang.langName }}</option>
+            {% endif  %}
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="input-group mt-3">
+        <label>Genre 1:</label>
+        <select class="form-control" id="genre1" name="genre1" required>
+            {% for genre in genres %}
+            {% if  genre.genreName == movie_details.genres[0].genreName %}
+            <option selected>{{ genre.genreName }}</option>
+            {% else %}
+            <option>{{ genre.genreName }}</option>
+            {% endif  %}
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="input-group mt-3">
+        <label>Genre 2:</label>
+        <select class="form-control" id="genre2" name="genre2" required>
+            {% for genre in genres %}
+            {% if  genre.genreName == movie_details.genres[1].genreName %}
+            <option selected>{{ genre.genreName }}</option>
+            {% else %}
+            <option>{{ genre.genreName }}</option>
+            {% endif  %}
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="input-group mt-3">
+        <label>Runtime Hour(s):</label>
+        <input type="number" class="form-control" id="runtimeHour" name="runtimeHour" value="{{ runtimeHour }}"
+            required>
+        <label>Runtime Minutes(s):</label>
+        <input type="number" class="form-control" id="runtimeMin" name="runtimeMin" value="{{ runtimeMin }}" required>
+    </div>
+
+    <div class="input-group mt-3">
+        <label>Start Date:</label>
+        <input id="startDate" name="startDate" class="form-control" type="date" value="{{ startDate_str }}" required>
+    </div>
+
+    <div class="input-group mt-3">
+        <label>End Date:</label>
+        <input id="endDate" name="endDate" class="form-control" type="date" value="{{ endDate_str }}" required>
+    </div>
+
+    <div class="input-group mt-3">
+        <label>Sypnosis:</label>
+        <input id="sypnosis" name="sypnosis" class="form-control" type="text" value="{{ movie_details.sypnosis }}"
+            required>
+    </div>
+
+    <div class="input-group mt-3">
+        <label>Trailer Link:</label>
+        <input id="trailerLink" name="trailerLink" class="form-control" type="text"
+            value="{{ movie_details.trailerLink }}" required>
+    </div>
+    <div class="d-flex">
+        <button type="submit" class="btn btn-danger my-4 me-3">Edit Movie</button>
+        <a href="/manageMovies" class="btn btn-outline-info my-4">Cancel</a>
+    </div>
+</form>
+{% endblock %}

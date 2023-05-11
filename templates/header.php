@@ -23,7 +23,7 @@
                 <a class="nav-item nav-link <?php if ($_SERVER['REQUEST_URI'] == '/flicket/views/movies.php') echo 'active'; ?>" id="movies" href="/flicket/views/movies.php">Movies</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link <?php if ($_SERVER['REQUEST_URI'] == '/flicket/views/foodDrinks.php') echo 'active'; ?>" id="foodDrinks" href="/foodDrinks">Food & Drinks</a>
+                <a class="nav-item nav-link <?php if ($_SERVER['REQUEST_URI'] == '/flicket/views/foodDrinks.php') echo 'active'; ?>" id="foodDrinks" href="/flicket/views/foodDrinks.php">Food & Drinks</a>
             </li>
         </ul>
         <?php
@@ -39,7 +39,7 @@
                 } elseif ($_SESSION['userType'] == "cinemaManager") {
                     echo '<li><a class="dropdown-item" href="/flicket/views/movieMgmt/manageMovies.php">Manage Movies</a></li>
                         <li><a class="dropdown-item" href="/flicket/views/sessionMgmt/manageSessions.php">Manage Sessions</a></li>
-                        <li><a class="dropdown-item" href="/flicket/views/cinemaHalls/manageCinemaHalls.php">Manage Cinema Halls</a></li>
+                        <li><a class="dropdown-item" href="/flicket/views/cinemaHallsMgmt/manageCinemaHalls.php">Manage Cinema Halls</a></li>
                         <li><a class="dropdown-item" href="/flicket/views/seat/manageSeats.php">Manage Seats</a></li>
                         <li><a class="dropdown-item" href="/flicket/views/ticketType/manageTicketTypes.php">Manage Ticket Types</a></li>
                         <li><a class="dropdown-item" href="/flicket/views/fnbItemMgmt/manageFnBitems.php">Manage F&B Items</a></li>
@@ -48,14 +48,36 @@
                 } else {
                     echo '<li><a class="dropdown-item" href="#">Profile</a></li>';
                 }
-                // logout button
-                echo '<li><a class="dropdown-item" href="/flicket/controllers/logout_contr.php">Logout</a></li>
+                // logout & suspend button
+                echo '<li><a class="dropdown-item" href="/flicket/controllers/logout_contr.php">Logout</a></li>';
+
+                if ($_SESSION['userType'] == "customer") {
+                    echo '<li><a class="dropdown-item mt-3" name="deleteAccount" data-bs-toggle="modal" data-bs-target="#suspendConfirmation">Suspend Account</a></li>
                         </ul>
                     </div>';
+                }
             } else {
                 // user is not logged in
                 echo '<a href="/flicket/views/login.php" class="btn btn-danger">Login</a>';
             }
         ?>
+
+        <div class="modal fade" id="suspendConfirmation" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered mw-75 w-75">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Suspend Account</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to <b>permanently</b> suspend your account?
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/flicket/controllers/account_contr.php?deleteId=<?php echo $_SESSION['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </nav>

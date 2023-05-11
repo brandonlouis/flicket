@@ -36,6 +36,7 @@ class Login extends Dbh {
 
             $_SESSION['email'] = $user[0]['email']; // Set session variables for usage later
             $_SESSION['userType'] = $user[0]['userType'];
+            $_SESSION['id'] = $user[0]['id'];
 
             $stmt = null;
             return array('Logged in successfully. Welcome, ' . $user[0]['fullName'] . '!', "success");

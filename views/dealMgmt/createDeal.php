@@ -71,7 +71,7 @@
                 </div>
                 <div class="input-group mt-3" title="Status">
                     <span class="input-group-text">
-                        <i class="bi bi-gear"></i>
+                        <i class="bi bi-check-circle"></i>
                     </span>
                     <select class="form-select" id="status" name="status" aria-label="Default select">
                         <option hidden>Select a status for the Deal</option>

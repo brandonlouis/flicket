@@ -42,7 +42,7 @@
                         <th>Cinema Name</th>
                         <th>Hall Number</th>
                         <th>Seats Created</th>
-                        <th>Status</th>
+                        <th>Capacity</th>
                         <th></th>
                     <tr>
                 </thead>

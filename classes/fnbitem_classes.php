@@ -9,6 +9,10 @@ class FnBItem extends Dbh {
     private $category;
     private $status;
     private $image;
+    private $buyerName;
+    private $email;
+    private $fnbItemID;
+    private $fnbQty;
     
     public function retrieveAllFnBitems() {
         $sql = "SELECT *
@@ -39,6 +43,24 @@ class FnBItem extends Dbh {
 
         $stmt = null;
         return $singleItem;
+    }
+
+    public function retrieveAllAvailableFnBItem() {
+        $sql = "SELECT *
+                FROM fnbitem
+                WHERE status = 'Available'
+                GROUP BY id 
+                ORDER BY itemName";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+
+        $fnbitems = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $fnbitems[] = $row;
+        }
+
+        $stmt = null;
+        return $fnbitems;
     }
 
     public function createFnBItem($itemName, $description, $price, $category, $status, $image) {
@@ -185,5 +207,21 @@ class FnBItem extends Dbh {
 
         $stmt = null;
         return $deals;
+    }
+
+    public function purchaseFnBItem($fnbItemID, $fnbQty, $buyerName, $email) {
+        session_start();
+        $this->fnbItemID = $fnbItemID;
+        $this->fnbQty = $fnbQty;
+        $this->buyerName = $buyerName;
+        $this->email = $email;
+
+
+        $sql = "INSERT INTO fnbpurchases (buyerName, email, fnbItemID, quantity) VALUES (?, ?, ?, ?);";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$this->buyerName, $this->email, $this->fnbItemID, $this->fnbQty]);
+
+        $stmt = null;
+        return array("Purchase made successfully! Your purchase receipt will be sent to your email address", "success");
     }
 }
