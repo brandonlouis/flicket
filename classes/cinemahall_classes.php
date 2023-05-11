@@ -40,24 +40,6 @@ class CinemaHall extends Dbh {
         return $cinemaHallDetails;
     }
 
-    public function retrieveAllAvailableMovies() {
-        $sql = "SELECT *
-                FROM cinemahall
-                WHERE status = 'Available'
-                GROUP BY id 
-                ORDER BY name, hallNumber ASC";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute();
-
-        $cinemaHalls = array();
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $cinemaHalls[] = $row;
-        }
-
-        $stmt = null;
-        return $cinemaHalls;
-    }
-
     public function createCinemaHall($hallNumber, $name, $address, $capacity, $status) {
         session_start();
         $this->hallNumber = $hallNumber;

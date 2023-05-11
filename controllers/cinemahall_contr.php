@@ -19,16 +19,6 @@ class CinemaHallContr {
         $ch = new CinemaHall();
         return $ch->retrieveAllAvailableCinemaHalls();
     }
-    
-    public function retrieveAllLanguages() {
-        $ch = new CinemaHall();
-        return $ch->retrieveAllLanguages();
-    }
-
-    public function retrieveAllGenres() {
-        $ch = new CinemaHall();
-        return $ch->retrieveAllGenres();
-    }
 
     public function createCinemaHall($hallNumber, $name, $address, $capacity, $status) {
         $ch = new CinemaHall();
