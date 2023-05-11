@@ -50,7 +50,9 @@
                 }
                 // logout & suspend button
                 echo '<li><a class="dropdown-item" href="/flicket/controllers/logout_contr.php">Logout</a></li>
-                      <li><a class="dropdown-item" href="/flicket/controllers/account_contr.php">Suspend Account</a></li>
+                      <li><a class="dropdown-item" href="/flicket/controllers/account_contr.php?deleteId=';
+                echo $_SESSION['id'];
+                echo '" name="deleteAccount">Suspend Account</a></li>
                         </ul>
                     </div>';
             } else {

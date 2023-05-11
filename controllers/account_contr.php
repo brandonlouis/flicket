@@ -54,7 +54,11 @@ class AccountContr {
         setcookie('flash_message', $account[0], time() + 3, '/');
         setcookie('flash_message_type', $account[1], time() + 3, '/');
 
-        header("location: ../views/account/manageAccounts.php");
+        if($_SESSION['userType'] !== 'userAdmin') {
+            header("location: /flicket/controllers/logout_contr.php");
+        } else {
+            header("location: ../views/account/manageAccounts.php");
+        }
         exit();
     }
 
