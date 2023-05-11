@@ -32,7 +32,7 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../controllers/account_contr.php" class="w-50">
+            <form method="POST" action="../../controllers/account/createAccount_contr.php" class="w-50">
                 <h1>Account Details</h1>
                 <div class="input-group mt-4" title="User Type">
                     <span class="input-group-text">
