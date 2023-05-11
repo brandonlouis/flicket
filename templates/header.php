@@ -49,14 +49,35 @@
                     echo '<li><a class="dropdown-item" href="#">Profile</a></li>';
                 }
                 // logout & suspend button
-                echo '<li><a class="dropdown-item" href="/flicket/controllers/logout_contr.php">Logout</a></li>
-                      <li><a class="dropdown-item" href="/flicket/controllers/account_contr.php">Suspend Account</a></li>
+                echo '<li><a class="dropdown-item" href="/flicket/controllers/logout_contr.php">Logout</a></li>';
+
+                if ($_SESSION['userType'] == "customer") {
+                    echo '<li><a class="dropdown-item mt-3" name="deleteAccount" data-bs-toggle="modal" data-bs-target="#suspendConfirmation">Suspend Account</a></li>
                         </ul>
                     </div>';
+                }
             } else {
                 // user is not logged in
                 echo '<a href="/flicket/views/login.php" class="btn btn-danger">Login</a>';
             }
         ?>
+
+        <div class="modal fade" id="suspendConfirmation" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered mw-75 w-75">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Suspend Account</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to <b>permanently</b> suspend your account?
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/flicket/controllers/account_contr.php?deleteId=<?php echo $_SESSION['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </nav>

@@ -62,6 +62,7 @@
                         <th>Hall Number</th>
                         <th>Address</th>
                         <th>Capacity</th>
+                        <th>Status</th>
                         <th></th>
                     <tr>
                 </thead>
@@ -73,6 +74,7 @@
                         <td title="<?php echo $cinemahall['hallNumber']; ?>"><?php echo $cinemahall['hallNumber']; ?></td>
                         <td><?php echo $cinemahall['address']; ?></td>
                         <td><?php echo $cinemahall['capacity']; ?></td>
+                        <td><span class="<?php echo $cinemahall['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $cinemahall['status']; ?></span></td>
 
                         <td class="d-flex justify-content-evenly">
                             <a href="updateCinemaHall.php?cinemaHallId=<?php echo $cinemahall['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Cinema Hall"></a>
@@ -89,21 +91,21 @@
                     <div class="modal fade" id="suspend<?php echo $cinemahall['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">Suspend Cinema Hall</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Suspend the following cinema hall?
-                                <br/><br/>
-                                <span>CinemaHall ID </span>: <?php echo $cinemahall['id']; ?><br/>
-                                <span>Name </span> &nbsp;: <?php echo $cinemahall['name']; ?><br/>
-                                <span>Hall Number </span> &nbsp;: <?php echo $cinemahall['hallNumber']; ?><br/>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="../../controllers/cinemahall_contr.php?suspendId=<?php echo $cinemahall['id']; ?>" type="button" class="btn btn-danger">Yes</a>
-                                <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
-                            </div>
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel">Suspend Cinema Hall</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Suspend the following cinema hall?
+                                    <br/><br/>
+                                    <span>CinemaHall ID </span>: <?php echo $cinemahall['id']; ?><br/>
+                                    <span>Name </span> &nbsp;: <?php echo $cinemahall['name']; ?><br/>
+                                    <span>Hall Number </span> &nbsp;: <?php echo $cinemahall['hallNumber']; ?><br/>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="../../controllers/cinemahall_contr.php?suspendId=<?php echo $cinemahall['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
+                                </div>
                             </div>
                         </div>
                     </div>

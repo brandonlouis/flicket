@@ -86,9 +86,9 @@ class FnBItemContr {
         return $fnb->getFnBItemDeals($id);
     }
 
-    public function purchaseFnBItem($fnbItemID, $buyerName, $phoneNum) {
+    public function purchaseFnBItem($fnbItemID, $fnbQty, $buyerName, $email) {
         $fnb = new FnBItem();
-        $fnbitem = $fnb->purchaseFnBItem($fnbItemID, $buyerName, $phoneNum);
+        $fnbitem = $fnb->purchaseFnBItem($fnbItemID, $fnbQty, $buyerName, $email);
         
         setcookie('flash_message', $fnbitem[0], time() + 3, '/');
         setcookie('flash_message_type', $fnbitem[1], time() + 3, '/');
@@ -134,9 +134,10 @@ if (isset($_GET['suspendId'])) {
     $fnbc->searchFnBItems($searchText, $filter);
 } else if (isset($_POST['purchaseFnBItem']) && isset($_GET['fnbItemId'])) {
     $buyerName = $_POST['buyerName'];
-    $phoneNum = $_POST['phoneNum'];
+    $email = $_POST['email'];
     $fnbItem = $_GET['fnbItemId'];
+    $fnbQty = $_POST['quantity'];
 
     $fnbc = new FnBItemContr();
-    $fnbc->purchaseFnBItem($fnbItem, $buyerName, $phoneNum);
+    $fnbc->purchaseFnBItem($fnbItem, $fnbQty, $buyerName, $email);
 }

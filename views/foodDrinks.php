@@ -40,41 +40,93 @@
                     <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><button class="dropdown-item" type="submit" name="filter" value="None"></button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="id">F&B Item ID</button></li>
                         <li><button class="dropdown-item" type="submit" name="filter" value="itemName">Name</button></li>
                         <li><button class="dropdown-item" type="submit" name="filter" value="price">Price</button></li>
                         <li><button class="dropdown-item" type="submit" name="filter" value="category">Category</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="status">Status</button></li>
                     </ul>
                 </div>
             </form>
-        </div>    
-        <table class="table table-hover text-white mt-4">
-                <thead>
-                    <tr>
-                        <th>F&B Item ID</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Category</th>
-                        <th></th>
-                    <tr>
-                </thead>
-                <tbody class="align-middle">
-                    <?php foreach ($fnbitems as $item) { ?>
-                    <tr class="clickable-row" data-bs-toggle="modal" data-bs-target="#view<?php echo $item['id']; ?>">
-                        <td><?php echo $item['id']; ?></td>
-                        <td><?php echo $item['itemName']; ?></td>
-                        <td>$<?php echo $item['price']; ?></td>
-                        <td><?php echo $item['category']; ?></td>
-                        <td class="d-flex justify-content-evenly">
-                            <a type="submit" data-bs-toggle="modal" data-bs-target="#purchase<?php echo $item['id']; ?>" class="btn btn-outline-info bi" title="Purchase F&B Item">Purchase</a>
-                        </td>
-                    </tr>
-                    <div class="modal fade" id="view<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered mw-100 w-75">
+        </div> 
+        <div class="content" style="display:grid; grid-template-columns: repeat(4, 1fr); justify-items:center;">
+            <?php foreach ($fnbitems as $item) { ?>
+                <a href="#" class="text-decoration-none border-0 mb-5" style="width: 17rem;" data-bs-toggle="modal" data-bs-target="#view<?php echo $item['id']; ?>">
+                    <img src="data:image/png;base64,<?php echo $item['image']; ?>" class="card-img-top mb-3" style="height:400px; object-fit:cover;" alt="<?php echo $item['itemName'] ?>">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <h5 class="card-title text-white mb-2"><?php echo $item['itemName'] ?></h5>
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text text-white" style="font-size:12px;width: fit-content;padding: 2px 10px;background-color: #d74545;border-radius: 15px;">$<?php echo $item['price'] ?></p>
+                            <p class="card-text text-white-50" style="font-size:12px;"><?php echo $item['category'] ?></p>
+                        </div>
+                    </div>
+                </a>
+
+                <div class="modal fade" id="view<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered mw-100 w-75">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel">View F&B Item</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <dl class="row">
+                                            <dt class="col-sm-4">F&B Item ID</dt>
+                                            <dd class="col-sm-8"><?php echo $item['id']; ?></dd>
+
+                                            <dt class="col-sm-4">Name</dt>
+                                            <dd class="col-sm-8"><?php echo $item['itemName']; ?></dd>
+
+                                            <dt class="col-sm-4">Description</dt>
+                                            <dd class="col-sm-8">
+                                                <p><?php echo $item['description']; ?></p>
+                                            </dd>
+
+                                            <dt class="col-sm-4">Price</dt>
+                                            <dd class="col-sm-8">$<?php echo $item['price']; ?></dd>
+
+                                            <dt class="col-sm-4">Category</dt>
+                                            <dd class="col-sm-8"><?php echo $item['category']; ?></dd>
+
+                                            <dt class="col-sm-4">Deals included in:</dt>
+                                            <dd class="col-sm-8">
+                                                <?php 
+                                                    if($fnbc->checkFnBitemInDeal($item['id'])){
+                                                        $deals = $fnbc->getFnBItemDeals($item['id']);
+                                                        echo "<ul>";
+                                                        foreach($deals as $deal) {                                   
+                                                            echo "<li>" . $deal['dealName'] . "</li>";
+                                                        } 
+                                                        echo "</ul>";
+                                                    } else {
+                                                        echo "None";
+                                                    }
+                                                ?>
+                                            </dd>
+                                            <div class="d-flex mt-5">
+                                                <a type="submit" data-bs-toggle="modal" data-bs-target="#purchase<?php echo $item['id']; ?>" class="btn btn-danger bi d-flex justify-content-center" title="Purchase F&B Item">Purchase</a>
+                                            </div>
+
+                                        </div>
+                                        <div class="col">
+                                            <div class=" d-flex justify-content-center">
+                                                <?php echo '<img src = "data:image/png;base64,' . $item['image'] . '" style="width:auto;height:300px;"/>'; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="purchase<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered mw-100 w-75">
+                        <form method="POST" action="../controllers/fnbitem_contr.php?fnbItemId=<?php echo $item['id'];?>">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">View F&B Item</h5>
+                                <h5 class="modal-title" id="modalLabel">Purchase <?php echo $item['itemName'];?></h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -82,10 +134,7 @@
                                     <div class="row">
                                         <div class="col">
                                             <dl class="row">
-                                                <dt class="col-sm-4">F&B Item ID</dt>
-                                                <dd class="col-sm-8"><?php echo $item['id']; ?></dd>
-
-                                                <dt class="col-sm-4">Name</dt>
+                                                <dt class="col-sm-4">Item Name</dt>
                                                 <dd class="col-sm-8"><?php echo $item['itemName']; ?></dd>
 
                                                 <dt class="col-sm-4">Description</dt>
@@ -95,9 +144,6 @@
 
                                                 <dt class="col-sm-4">Price</dt>
                                                 <dd class="col-sm-8">$<?php echo $item['price']; ?></dd>
-
-                                                <dt class="col-sm-4">Category</dt>
-                                                <dd class="col-sm-8"><?php echo $item['category']; ?></dd>
 
                                                 <dt class="col-sm-4">Deals included in:</dt>
                                                 <dd class="col-sm-8">
@@ -114,97 +160,37 @@
                                                         }
                                                     ?>
                                                 </dd>
-                                                <dt class="col-sm-4">Status</dt>
-                                                <dd class="col-sm-8">
-                                                    <span class="<?php echo $item['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $item['status']; ?></span>
+                                                <dt class="col-sm-4 mt-5">Name</dt>
+                                                <dd class="col-sm-8 mt-5">
+                                                    <input type="text" class="form-control" id="buyerName" name="buyerName" pattern="[a-zA-Z\s]*" placeholder="Full Name" required>
                                                 </dd>
-
-
+                                                <dt class="col-sm-4">Email Address</dt>
+                                                <dd class="col-sm-8">
+                                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                                </dd>
+                                                <dt class="col-sm-4">Quantity</dt>
+                                                <dd class="col-sm-8">
+                                                    <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required>
+                                                </dd>
+                                                <div class="d-flex">
+                                                    <button style="position:absolute;bottom:2rem;" type="submit" name="purchaseFnBItem" class="btn btn-danger mt-5">Confirm Purchase</button>
+                                                </div>
                                             </div>
                                             <div class="col">
                                                 <div class=" d-flex justify-content-center">
-                                                    <?php echo '<img src = "data:image/png;base64,' . $item['image'] . '" style="width:auto;height:300px;"/>'; ?>
+                                                    <?php echo '<img src = "data:image/png;base64,' . $item['image'] . '" style="width:auto;height:500px;"/>'; ?>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                    <!-- Purchase Screen -->
-                    <form method="POST" action="../controllers/fnbitem_contr.php?fnbItemId=<?php echo $item['id'];?>" enctype="multipart/form-data" class="w-50">
-                        <div class="modal fade" id="purchase<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered mw-100 w-75">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="modalLabel">Purchase <?php echo $item['itemName'];?></h5>
-                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col">
-                                                <dl class="row">
-                                                    <dt class="col-sm-4">Item Name</dt>
-                                                    <dd class="col-sm-8"><?php echo $item['itemName']; ?></dd>
+                </div>
 
-                                                    <dt class="col-sm-4">Description</dt>
-                                                    <dd class="col-sm-8">
-                                                        <p><?php echo $item['description']; ?></p>
-                                                    </dd>
-
-                                                    <dt class="col-sm-4">Price</dt>
-                                                    <dd class="col-sm-8">$<?php echo $item['price']; ?></dd>
-
-                                                    <dt class="col-sm-4">Deals included in:</dt>
-                                                    <dd class="col-sm-8">
-                                                        <?php 
-                                                            if($fnbc->checkFnBitemInDeal($item['id'])){
-                                                                $deals = $fnbc->getFnBItemDeals($item['id']);
-                                                                echo "<ul>";
-                                                                foreach($deals as $deal) {                                   
-                                                                    echo "<li>" . $deal['dealName'] . "</li>";
-                                                                } 
-                                                                echo "</ul>";
-                                                            } else {
-                                                                echo "None";
-                                                            }
-                                                        ?>
-                                                    </dd>
-                                                    <dt class="col-sm-4">Status</dt>
-                                                    <dd class="col-sm-8">
-                                                        <span class="<?php echo $item['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $item['status']; ?></span>
-                                                    </dd>
-                                                    <dt class="col-sm-4"><br></dt>
-                                                    <dd class="col-sm-8"><br></dd>
-                                                    <dt class="col-sm-4">Name</dt>
-                                                    <dd class="col-sm-8">
-                                                        <input type="text" class="form-control" id="buyerName" name="buyerName" pattern="[a-zA-Z\s]*" required>
-                                                    </dd>
-                                                    <dt class="col-sm-4">Contact</dt>
-                                                    <dd class="col-sm-8">
-                                                        <input type="tel" class="form-control" id="phoneNum" name="phoneNum" required>
-                                                    </dd>
-                                                    <div class="d-flex">
-                                                        <button type="submit" name="purchaseFnBItem" class="btn btn-danger my-4 me-3">Purchase</button>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class=" d-flex justify-content-center">
-                                                        <?php echo '<img src = "data:image/png;base64,' . $item['image'] . '" style="width:auto;height:300px;"/>'; ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <?php } ?>
-                </tbody>
-            </table>
+            <?php } ?>
+        </div>
     </div>
 
 

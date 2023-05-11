@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2023 at 12:10 PM
+-- Generation Time: May 10, 2023 at 04:19 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -24,32 +24,31 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `deal`
+-- Table structure for table `fnbpurchases`
 --
 
 CREATE TABLE `fnbpurchases` (
   `id` int(11) NOT NULL,
   `buyerName` varchar(50) NOT NULL,
-  `phoneNum` varchar(8) NOT NULL,
-  `fnbItemID` int(11) NOT NULL
+  `email` varchar(50) NOT NULL,
+  `fnbItemID` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `deal`
+-- Dumping data for table `fnbpurchases`
 --
 
-INSERT INTO `fnbpurchases` (`id`, `buyerName`, `phoneNum`, `fnbItemID`) VALUES
-(1, 'Anne', 91181859, 1);
-
-INSERT INTO `fnbpurchases` (`id`, `buyerName`, `phoneNum`, `fnbItemID`) VALUES
-(2, 'Ben', 82684624, 2);
+INSERT INTO `fnbpurchases` (`id`, `buyerName`, `email`, `fnbItemID`, `quantity`) VALUES
+(1, 'Anne', 'anneRuOK@gmail.com', 1, 1),
+(2, 'Ben', 'benbenbenbenben@hotmail.com', 2, 1);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `deal`
+-- Indexes for table `fnbpurchases`
 --
 ALTER TABLE `fnbpurchases`
   ADD PRIMARY KEY (`id`),
@@ -60,7 +59,7 @@ ALTER TABLE `fnbpurchases`
 --
 
 --
--- AUTO_INCREMENT for table `deal`
+-- AUTO_INCREMENT for table `fnbpurchases`
 --
 ALTER TABLE `fnbpurchases`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
