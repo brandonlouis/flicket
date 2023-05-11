@@ -145,21 +145,6 @@
                                                 <dt class="col-sm-4">Price</dt>
                                                 <dd class="col-sm-8">$<?php echo $item['price']; ?></dd>
 
-                                                <dt class="col-sm-4">Deals included in:</dt>
-                                                <dd class="col-sm-8">
-                                                    <?php 
-                                                        if($fnbc->checkFnBitemInDeal($item['id'])){
-                                                            $deals = $fnbc->getFnBItemDeals($item['id']);
-                                                            echo "<ul>";
-                                                            foreach($deals as $deal) {                                   
-                                                                echo "<li>" . $deal['dealName'] . "</li>";
-                                                            } 
-                                                            echo "</ul>";
-                                                        } else {
-                                                            echo "None";
-                                                        }
-                                                    ?>
-                                                </dd>
                                                 <dt class="col-sm-4 mt-5">Name</dt>
                                                 <dd class="col-sm-8 mt-5">
                                                     <input type="text" class="form-control" id="buyerName" name="buyerName" pattern="[a-zA-Z\s]*" placeholder="Full Name" required>
