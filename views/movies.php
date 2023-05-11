@@ -5,7 +5,7 @@
     include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie_contr.php";
 
     $mc = new MovieContr();
-    $movies = $mc->retrieveAllMovies();
+    $movies = $mc->retrieveAllAvailableMovies();
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +19,7 @@
 
  
     <title>Movies | flicket</title>
-    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/flicket/img/favicon.ico">
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -53,7 +53,7 @@
         </div>    
         <div class="content" style="display:grid; grid-template-columns: repeat(4, 1fr); justify-items:center;">
             <?php foreach ($movies as $movie) { ?>
-                <a href="#" class="text-decoration-none border-0" style="width: 17rem;">
+                <a href="#" class="text-decoration-none border-0 mb-5" style="width: 17rem;">
                     <img src="data:image/png;base64,<?php echo $movie['poster']; ?>" class="card-img-top mb-3" style="height:400px; object-fit:cover;" alt="<?php echo $movie['title'] ?>">
                     <div class="card-body d-flex flex-column justify-content-between">
                         <h5 class="card-title text-white mb-2"><?php echo $movie['title'] ?></h5>

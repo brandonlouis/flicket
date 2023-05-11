@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="/flicket/css/style.css">
 
  
-    <title>Update Movie Session | flicket</title>
+    <title>Update Movie | flicket</title>
     <link rel="icon" type="image/x-icon" href="/flicket/img/favicon.ico">
 </head>
 
@@ -34,16 +34,15 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../controllers/movie_contr.php?movieId=<?php echo $movieDetails['id']; ?>" enctype="multipart/form-data" style="width:45%">
+            <form method="POST" action="../../controllers/movie_contr.php?movieId=<?php echo $movieDetails['id']; ?>" enctype="multipart/form-data" class="w-50">
                 <h1>Movie Details</h1>
-        
-                <div class="input-group mt-4">
+                <div class="input-group mt-4" title="Movie Title">
                     <span class="input-group-text">
                         <i class="bi bi-card-heading"></i>
                     </span>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="<?php echo $movieDetails['title']; ?>" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Synopsis">
                     <span class="input-group-text">
                         <i class="bi bi-book"></i>
                     </span>
@@ -52,19 +51,19 @@
                         <label class="text-secondary" for="synopsis">Synopsis</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Runtime (Minutes)">
                     <span class="input-group-text">
                         <i class="bi bi-clock-history"></i>
                     </span>
                     <input type="text" class="form-control" id="runtimeMin" name="runtimeMin" placeholder="Runtime (Minutes)" pattern="^[0-9]{1,4}$" value="<?php echo $movieDetails['runtimeMin']; ?>" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Trailer URL">
                     <span class="input-group-text">
                         <i class="bi bi-link"></i>
                     </span>
                     <input type="text" class="form-control" id="" name="trailerURL" placeholder="Trailer URL" value="<?php echo $movieDetails['trailerURL']; ?>" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Start Date">
                     <span class="input-group-text">
                         <i class="bi bi-calendar3"></i>
                     </span>
@@ -73,7 +72,7 @@
                         <label class="text-secondary" for="startDate">Start Date</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="End Date">
                     <span class="input-group-text">
                         <i class="bi bi-calendar3"></i>
                     </span>
@@ -82,7 +81,7 @@
                         <label class="text-secondary" for="endDate">End Date</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Language">
                     <span class="input-group-text">
                         <i class="bi bi-translate"></i>
                     </span>
@@ -92,34 +91,32 @@
                         <?php } ?>
                     </select>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3"  title="Genre">
                     <span class="input-group-text">
                         <i class="bi bi-camera-reels"></i>
                     </span>
-                    <input type="text" class="form-control bg-dark-subtle" id="genre" name="genre" placeholder='Genre (select using dropdown)' value="<?php echo $movieDetails['genres']; ?>" required onclick="this.blur();" onkeydown="return false;">
+                    <input type="text" class="form-control bg-dark-subtle pe-none" id="genre" name="genre" placeholder='Genre (select using dropdown)' value="<?php echo $movieDetails['genres']; ?>" required onkeydown="return false;">
                     <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Genres</button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><button class="dropdown-item genre-btn" type="button" data-value="reset"><b>Reset</b></button></li>
                         <?php foreach ($genres as $genre) { ?>
-                        <li><button class="dropdown-item genre-btn" type="button" data-value="<?php echo $genre['genreName']; ?>"><?php echo $genre['genreName']; ?></button></li>
+                            <li><button class="dropdown-item genre-btn" type="button" data-value="<?php echo $genre['genreName']; ?>"><?php echo $genre['genreName']; ?></button></li>
                         <?php } ?>
                     </ul>
                 </div>
 
                 <div class="mt-4">
                     <label for="posterFile" class="form-label">Upload Poster Image (Maximum size: 2MB)</label>
-                    <input type="file" class="form-control" id="posterFile" name="posterFile" onchange="previewPoster()" accept="image/*" max-size="2MB">
+                    <input type="file" class="form-control" id="posterFile" name="posterFile" onchange="previewPoster()" accept="image/*">
                 </div>
                 <div class="d-flex">
-                    <button type="submit" name="updateMovie" class="btn btn-danger my-4 me-3">Update movie session</button>
+                    <button type="submit" name="updateMovie" class="btn btn-danger my-4 me-3">Update movie</button>
                     <a href="manageMovies.php" class="btn btn-outline-info my-4">Cancel</a>
                 </div>
             </form>
-            <?php
-                $posterImg = '<img id="posterImg" style="width:45%" src="data:image/png;base64,' . $movieDetails['poster'] . '" alt="Movie Poster" />';
-                echo $posterImg;
-            ?>
-
+            <div style="width:45%" class="d-flex justify-content-end">
+                <?php echo '<img id="posterImg" style="width:auto;height:700px;;max-width:-webkit-fill-available" src="data:image/png;base64,' . $movieDetails['poster'] . '" alt="Movie Poster" />'; ?>
+            </div>
         </div>
     </div>
 
@@ -141,8 +138,8 @@
         btn.addEventListener('click', () => {
             const value = btn.getAttribute('data-value');
             if (value === "reset") {
-            genreInput.value = "";
-            return;
+                genreInput.value = "";
+                return;
             }
             if (genreInput.value.includes(value)) return;
             genreInput.value += (genreInput.value ? ', ' : '') + value;

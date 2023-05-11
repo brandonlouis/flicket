@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="/flicket/css/style.css">
 
  
-    <title>Create Movie Session | flicket</title>
+    <title>Create Movie | flicket</title>
     <link rel="icon" type="image/x-icon" href="/flicket/img/favicon.ico">
 </head>
 
@@ -35,13 +35,13 @@
         <div class="content d-flex justify-content-evenly align-items-center">
             <form method="POST" action="../../controllers/movie_contr.php" enctype="multipart/form-data" class="w-50">
                 <h1>Movie Details</h1>
-                <div class="input-group mt-4">
+                <div class="input-group mt-4" title="Movie Title">
                     <span class="input-group-text">
                         <i class="bi bi-card-heading"></i>
                     </span>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Synopsis">
                     <span class="input-group-text">
                         <i class="bi bi-book"></i>
                     </span>
@@ -50,19 +50,19 @@
                         <label class="text-secondary" for="synopsis">Synopsis</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Runtime (Minutes)">
                     <span class="input-group-text">
                         <i class="bi bi-clock-history"></i>
                     </span>
                     <input type="text" class="form-control" id="runtimeMin" name="runtimeMin" placeholder="Runtime (Minutes)" pattern="^[0-9]{1,4}$" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Trailer URL">
                     <span class="input-group-text">
                         <i class="bi bi-link"></i>
                     </span>
                     <input type="text" class="form-control" id="" name="trailerURL" placeholder="Trailer URL" required>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Start Date">
                     <span class="input-group-text">
                         <i class="bi bi-calendar3"></i>
                     </span>
@@ -71,7 +71,7 @@
                         <label class="text-secondary" for="startDate">Start Date</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="End Date">
                     <span class="input-group-text">
                         <i class="bi bi-calendar3"></i>
                     </span>
@@ -80,7 +80,7 @@
                         <label class="text-secondary" for="endDate">End Date</label>
                     </div>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Language">
                     <span class="input-group-text">
                         <i class="bi bi-translate"></i>
                     </span>
@@ -90,11 +90,11 @@
                         <?php } ?>
                     </select>
                 </div>
-                <div class="input-group mt-3">
+                <div class="input-group mt-3" title="Genre">
                     <span class="input-group-text">
                         <i class="bi bi-camera-reels"></i>
                     </span>
-                    <input type="text" class="form-control bg-dark-subtle" id="genre" name="genre" placeholder='Genre (select using dropdown)' required onclick="this.blur();" onkeydown="return false;">
+                    <input type="text" class="form-control bg-dark-subtle pe-none" id="genre" name="genre" placeholder='Genre (select using dropdown)' required onkeydown="return false;">
                     <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Genres</button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><button class="dropdown-item genre-btn" type="button" data-value="reset"><b>Reset</b></button></li>
@@ -103,19 +103,28 @@
                         <?php } ?>
                     </ul>
                 </div>
-
+                <div class="input-group mt-3" title="Session status">
+                    <span class="input-group-text">
+                        <i class="bi bi-check-circle"></i>
+                    </span>
+                    <select class="form-select" id="status" name="status" aria-label="Default select">
+                        <option hidden>Select a status for session</option>
+                        <option value="Available">Available</option>
+                        <option value="Suspended">Suspended</option>
+                    </select>
+                </div>
 
                 <div class="mt-4">
                     <label for="posterFile" class="form-label">Upload Poster Image (Maximum size: 2MB)</label>
                     <input type="file" class="form-control" id="posterFile" name="posterFile" onchange="previewPoster()" accept="image/*" required>
                 </div>
                 <div class="d-flex">
-                    <button type="submit" name="createMovie" class="btn btn-danger my-4 me-3">Create movie session</button>
+                    <button type="submit" name="createMovie" class="btn btn-danger my-4 me-3">Create movie</button>
                     <a href="manageMovies.php" class="btn btn-outline-info my-4">Cancel</a>
                 </div>
             </form>
-            <div style="width:45%">
-                <img id="posterImg" src="" alt="Preview" style="display:none;width:-webkit-fill-available;height:-webkit-fill-available">
+            <div style="width:45%" class="d-flex justify-content-end">
+                <img id="posterImg" src="" alt="Preview" style="display:none;width:auto;height:700px;max-width:-webkit-fill-available">
             </div>
         </div>
     </div>

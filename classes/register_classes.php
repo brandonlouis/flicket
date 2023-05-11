@@ -37,7 +37,7 @@ class Register extends Dbh {
             $stmt = $this->connect()->prepare($sql);
             
             $hashedPwd = password_hash($this->password2, PASSWORD_DEFAULT);
-            $stmt->execute([$this->fullName, $this->email, $this->fullName, $hashedPwd]);
+            $stmt->execute([$this->fullName, $this->email, $this->phoneNo, $hashedPwd]);
     
             $stmt = null;
             return array("Account created. Please login to continue", "success");

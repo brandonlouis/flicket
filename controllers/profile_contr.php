@@ -39,7 +39,7 @@ class ProfileContr {
         setcookie('flash_message_type', $profile[1], time() + 3, '/');
 
         if ($profile[1] == "danger") {
-            header("location: ../views/profile/createProfile.php");
+            header("location: ../views/profile/updateProfile.php?userType=" . $oldUserType);
             exit();
         } else {
             header("location: ../views/profile/manageProfiles.php");
