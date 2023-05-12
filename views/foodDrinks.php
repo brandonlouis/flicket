@@ -34,7 +34,7 @@
                 <h1>F&B Items</h1>
                 <p style="margin:0">Purchase your snacks & drinks before the show!</p>
             </span>
-            <form method="POST" action="../../controllers/fnbitem_contr.php" class="d-flex">
+            <form method="POST" action="../controllers/fnbitem_contr.php" class="d-flex">
                 <div class="input-group">
                     <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
                     <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
@@ -145,21 +145,6 @@
                                                 <dt class="col-sm-4">Price</dt>
                                                 <dd class="col-sm-8">$<?php echo $item['price']; ?></dd>
 
-                                                <dt class="col-sm-4">Deals included in:</dt>
-                                                <dd class="col-sm-8">
-                                                    <?php 
-                                                        if($fnbc->checkFnBitemInDeal($item['id'])){
-                                                            $deals = $fnbc->getFnBItemDeals($item['id']);
-                                                            echo "<ul>";
-                                                            foreach($deals as $deal) {                                   
-                                                                echo "<li>" . $deal['dealName'] . "</li>";
-                                                            } 
-                                                            echo "</ul>";
-                                                        } else {
-                                                            echo "None";
-                                                        }
-                                                    ?>
-                                                </dd>
                                                 <dt class="col-sm-4 mt-5">Name</dt>
                                                 <dd class="col-sm-8 mt-5">
                                                     <input type="text" class="form-control" id="buyerName" name="buyerName" pattern="[a-zA-Z\s]*" placeholder="Full Name" required>

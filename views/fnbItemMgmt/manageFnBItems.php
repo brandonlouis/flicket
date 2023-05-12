@@ -133,22 +133,7 @@
 
                                                 <dt class="col-sm-4">Category</dt>
                                                 <dd class="col-sm-8"><?php echo $item['category']; ?></dd>
-
-                                                <dt class="col-sm-4">Deals included in:</dt>
-                                                <dd class="col-sm-8">
-                                                    <?php 
-                                                        if($fnbc->checkFnBitemInDeal($item['id'])){
-                                                            $deals = $fnbc->getFnBItemDeals($item['id']);
-                                                            echo "<ul>";
-                                                            foreach($deals as $deal) {                                   
-                                                                echo "<li>" . $deal['dealName'] . "</li>";
-                                                            } 
-                                                            echo "</ul>";
-                                                        } else {
-                                                            echo "None";
-                                                        }
-                                                    ?>
-                                                </dd>
+                                                
                                                 <dt class="col-sm-4">Status</dt>
                                                 <dd class="col-sm-8">
                                                     <span class="<?php echo $item['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $item['status']; ?></span>
