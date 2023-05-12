@@ -5,10 +5,10 @@
         exit;
     }
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/cinemahall_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/cinemahall/manageCinemaHall_contr.php";
 
-    $mc = new CinemaHallContr();
-    $cinemahalls = $mc->retrieveAllCinemaHalls();
+    $mch = new ManageCinemaHallContr();
+    $cinemahalls = $mch->retrieveAllCinemaHalls();
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +36,7 @@
                 <h1>Manage Cinema Halls</h1>
 
                 <div class="d-flex">
-                    <form method="POST" action="../../controllers/cinemahall_contr.php" class="d-flex">
+                    <form method="POST" action="../../controllers/cinemahall/searchCinemaHall_contr.php" class="d-flex">
                         <div class="input-group">
                             <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
                             <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
@@ -82,7 +82,7 @@
                                 if ($cinemahall['status'] == 'Available') {
                                     echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Movie" data-bs-toggle="modal" data-bs-target="#suspend' . $cinemahall['id'] . '" onclick="event.stopPropagation();"></button>';
                                 } else {
-                                    echo '<a href="../../controllers/cinemahall_contr.php?activateId=' . $cinemahall["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Movie"></a>';
+                                    echo '<a href="../../controllers/cinemahall/suspendCinemaHall_contr.php?activateId=' . $cinemahall["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Movie"></a>';
                                 }
                             ?>
                         </td>
@@ -103,7 +103,7 @@
                                     <span>Hall Number </span> &nbsp;: <?php echo $cinemahall['hallNumber']; ?><br/>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="../../controllers/cinemahall_contr.php?suspendId=<?php echo $cinemahall['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                                    <a href="../../controllers/cinemahall/suspendCinemaHall_contr.php?suspendId=<?php echo $cinemahall['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                                     <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                                 </div>
                             </div>
