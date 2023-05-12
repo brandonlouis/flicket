@@ -73,7 +73,7 @@
                         Are you sure you want to <b>permanently</b> suspend your account?
                     </div>
                     <div class="modal-footer">
-                        <a href="/flicket/controllers/account_contr.php?deleteId=<?php echo $_SESSION['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                        <a href="/flicket/controllers/account/deleteAccount_contr.php?deleteId=<?php echo $_SESSION['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                         <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                     </div>
                 </div>
