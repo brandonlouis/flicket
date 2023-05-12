@@ -9,9 +9,11 @@ class CinemaHall extends Dbh {
     private $status;
 
     public function retrieveAllCinemaHalls() {
-        $sql = "SELECT *
-                FROM cinemahall
-                ORDER BY name, hallNumber ASC";
+        $sql = "SELECT ch.*, COUNT(s.id) AS totalSeats
+                FROM cinemahall ch 
+                LEFT JOIN seat s ON ch.id = s.hallId 
+                GROUP BY ch.id
+                ORDER BY ch.name, ch.hallNumber ASC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
 
@@ -27,10 +29,11 @@ class CinemaHall extends Dbh {
     public function retrieveOneCinemaHall($id) {
         $this->id = $id;
 
-        $sql = "SELECT *
-                FROM cinemahall
-                WHERE id = ?
-                GROUP BY id";
+        $sql = "SELECT ch.*, COUNT(s.id) AS totalSeats
+                FROM cinemahall ch
+                LEFT JOIN seat s ON ch.id = s.hallId 
+                WHERE ch.id = ?
+                GROUP BY ch.id";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->id]);
 
@@ -66,14 +69,13 @@ class CinemaHall extends Dbh {
         return array("Cinema hall successfully created!", "success");
     }
 
-    public function updateCinemaHall($id, $hallNumber, $name, $address, $capacity, $status) {
+    public function updateCinemaHall($id, $hallNumber, $name, $address, $capacity) {
         session_start();
         $this->id = $id;
         $this->hallNumber = $hallNumber;
         $this->name = $name;
         $this->address = $address;
         $this->capacity = $capacity;
-        $this->status = $status;
 
         $sql = "SELECT * FROM cinemahall WHERE name = ? && hallNumber = ?;"; // Check if cinema hall exists
         $stmt = $this->connect()->prepare($sql);
@@ -84,9 +86,9 @@ class CinemaHall extends Dbh {
             return array("Cinema hall already exists", "danger");
 
         } else {
-            $sql = "UPDATE cinemahall SET hallNumber = ?, name = ?, address = ?, capacity = ?, status = ? WHERE id = ?;";
+            $sql = "UPDATE cinemahall SET hallNumber = ?, name = ?, address = ?, capacity = ? WHERE id = ?;";
             $stmt = $this->connect()->prepare($sql);
-            $stmt->execute([$this->hallNumber, $this->name, $this->address, $capacity, $this->status, $this->id]);
+            $stmt->execute([$this->hallNumber, $this->name, $this->address, $capacity, $this->id]);
         }
 
         $stmt = null;

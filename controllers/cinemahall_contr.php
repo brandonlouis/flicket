@@ -36,9 +36,9 @@ class CinemaHallContr {
         }
     }
 
-    public function updateCinemaHall($id, $hallNumber, $name, $address, $capacity, $status) {
+    public function updateCinemaHall($id, $hallNumber, $name, $address, $capacity) {
         $ch = new CinemaHall();
-        $cinemahall = $ch->updateCinemaHall($id, $hallNumber, $name, $address, $capacity, $status);
+        $cinemahall = $ch->updateCinemaHall($id, $hallNumber, $name, $address, $capacity);
 
         setcookie('flash_message', $cinemahall[0], time() + 3, '/');
         setcookie('flash_message_type', $cinemahall[1], time() + 3, '/');
