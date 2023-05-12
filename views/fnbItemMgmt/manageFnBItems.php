@@ -5,9 +5,9 @@
         exit;
     }
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/fnbitem_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/fnbitem/manageFnBItem_contr.php";
 
-    $fnbc = new FnBItemContr();
+    $fnbc = new ManageFnBItemContr();
     $fnbitems = $fnbc->retrieveAllFnBitems();
 ?>
 
@@ -35,7 +35,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h1>Manage F&B Items</h1>
                 <div class="d-flex">
-                    <form method="POST" action="../../controllers/fnbitem_contr.php" class="d-flex">
+                    <form method="POST" action="../../controllers/fnbitem/searchFnBItem_contr.php" class="d-flex">
                         <div class="input-group">
                             <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
                             <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
@@ -78,7 +78,7 @@
                                 if ($item['status'] == 'Available') {
                                     echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend F&B Item" data-bs-toggle="modal" data-bs-target="#suspend' . $item['id'] . '" onclick="event.stopPropagation();"></button>';
                                 } else {
-                                    echo '<a href="../../controllers/fnbitem_contr.php?activateId=' . $item["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate F&B Item"></a>';
+                                    echo '<a href="../../controllers/fnbitem/suspendFnBItem_contr.php?activateId=' . $item["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate F&B Item"></a>';
                                 }
                             ?>
                         </td>
@@ -98,7 +98,7 @@
                                 <span>Name </span> &nbsp;: <?php echo $item['itemName']; ?><br/>
                             </div>
                             <div class="modal-footer">
-                                <a href="../../controllers/fnbitem_contr.php?suspendId=<?php echo $item['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                                <a href="../../controllers/fnbitem/suspendFnBItem_contr.php?suspendId=<?php echo $item['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                             </div>
                             </div>

@@ -2,9 +2,9 @@
     session_start();
 
     include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/dbh_classes.php";
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/fnbitem_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/fnbitem/manageFnBItem_contr.php";
 
-    $fnbc = new FnBItemContr();
+    $fnbc = new ManageFnBItemContr();
     $fnbitems = $fnbc->retrieveAllAvailableFnBItem();
 ?>
 
@@ -34,18 +34,6 @@
                 <h1>F&B Items</h1>
                 <p style="margin:0">Purchase your snacks & drinks before the show!</p>
             </span>
-            <form method="POST" action="../controllers/fnbitem_contr.php" class="d-flex">
-                <div class="input-group">
-                    <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
-                    <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><button class="dropdown-item" type="submit" name="filter" value="None"></button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="itemName">Name</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="price">Price</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="category">Category</button></li>
-                    </ul>
-                </div>
-            </form>
         </div> 
         <div class="content" style="display:grid; grid-template-columns: repeat(4, 1fr); justify-items:center;">
             <?php foreach ($fnbitems as $item) { ?>
@@ -89,21 +77,6 @@
                                             <dt class="col-sm-4">Category</dt>
                                             <dd class="col-sm-8"><?php echo $item['category']; ?></dd>
 
-                                            <dt class="col-sm-4">Deals included in:</dt>
-                                            <dd class="col-sm-8">
-                                                <?php 
-                                                    if($fnbc->checkFnBitemInDeal($item['id'])){
-                                                        $deals = $fnbc->getFnBItemDeals($item['id']);
-                                                        echo "<ul>";
-                                                        foreach($deals as $deal) {                                   
-                                                            echo "<li>" . $deal['dealName'] . "</li>";
-                                                        } 
-                                                        echo "</ul>";
-                                                    } else {
-                                                        echo "None";
-                                                    }
-                                                ?>
-                                            </dd>
                                             <div class="d-flex mt-5">
                                                 <a type="submit" data-bs-toggle="modal" data-bs-target="#purchase<?php echo $item['id']; ?>" class="btn btn-danger bi d-flex justify-content-center" title="Purchase F&B Item">Purchase</a>
                                             </div>
@@ -123,7 +96,7 @@
 
                 <div class="modal fade" id="purchase<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered mw-100 w-75">
-                        <form method="POST" action="../controllers/fnbitem_contr.php?fnbItemId=<?php echo $item['id'];?>">
+                        <form method="POST" action="../controllers/fnbitem/purchaseFnBItem_contr.php?fnbItemId=<?php echo $item['id'];?>">
                             <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="modalLabel">Purchase <?php echo $item['itemName'];?></h5>
