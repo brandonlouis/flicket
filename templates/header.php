@@ -45,6 +45,9 @@
                         <li><a class="dropdown-item" href="/flicket/views/fnbItemMgmt/manageFnBitems.php">Manage F&B Items</a></li>
                         <li><a class="dropdown-item" href="/flicket/views/dealMgmt/manageDeals.php">Manage Deals</a></li>';
 
+                } elseif ($_SESSION['userType'] == 'cinemaOwner') {
+                    echo '<li><a class="dropdown-item" href="/flicket/views/ticketSalesReport/genTicketSalesReport.php">Ticket Sales Report</a></li>
+                    <li><a class="dropdown-item" href="/flicket/views/cinemaUtilReport/genCinemaUtilReport.php">Cinema Utilization Report</a></li>';
                 } else {
                     echo '<li><a class="dropdown-item" href="#">Profile</a></li>';
                 }
