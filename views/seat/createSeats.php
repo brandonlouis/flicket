@@ -5,10 +5,10 @@
         exit;
     }
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/flicket/controllers/seat_contr.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/flicket/controllers/cinemahall/manageCinemaHall_contr.php';
 
-    $sc = new SeatContr();
-    $hallDetails = $sc->retrieveOneHall($_GET['hallId']);
+    $sc = new ManageCinemaHallContr();
+    $hallDetails = $sc->retrieveOneCinemaHall($_GET['hallId']);
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +32,7 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../controllers/seat_contr.php?hallId=<?php echo $hallDetails['id']; ?>" class="w-50" id="form">
+            <form method="POST" action="../../controllers/seat/createSeat_contr.php?hallId=<?php echo $hallDetails['id']; ?>" class="w-50" id="form">
                 <h1>Seat Details</h1>
                 <table class="text-white my-4">
                     <tbody>

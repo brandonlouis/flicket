@@ -5,9 +5,9 @@
         exit;
     }
 
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/flicket/controllers/seat_contr.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/flicket/controllers/seat/manageSeat_contr.php';
 
-    $sc = new SeatContr();
+    $sc = new ManageSeatContr();
     $hallDetails = $sc->retrieveAllSeats($_GET['hallId']);
 ?>
 
@@ -32,7 +32,7 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../controllers/seat_contr.php?hallId=<?php echo $hallDetails['id']; ?>" class="w-50" id="form">
+            <form method="POST" action="../../controllers/seat/updateSeat_contr.php?hallId=<?php echo $hallDetails['id']; ?>" class="w-50" id="form">
                 <h1>Seat Details</h1>
                 <table class="text-white my-4">
                     <tbody>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="d-flex">
                     <button type="submit" name="updateSeat" class="btn btn-danger my-4 me-3">Update seat</button>
-                    <a href="<?php echo isset($_GET['selectedSeat']) ? '../../controllers/seat_contr.php?search=true' : 'manageSeats.php'; ?>" class="btn btn-outline-info my-4">Back</a>
+                    <a href="<?php echo isset($_GET['selectedSeat']) ? '../../controllers/seat/manageSeat_contr.php?search=true' : 'manageSeats.php'; ?>" class="btn btn-outline-info my-4">Back</a>
                 </div>
             </form>
             <div class="d-flex justify-content-center flex-column align-items-center" style="width:45%">

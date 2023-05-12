@@ -5,10 +5,10 @@
         exit;
     }
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/seat_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/cinemahall/manageCinemaHall_contr.php";
 
-    $sc = new SeatContr();
-    $halls = $sc->retrieveAllHalls();
+    $sc = new ManageCinemaHallContr();
+    $halls = $sc->retrieveAllCinemaHalls();
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +34,7 @@
         <div class="content">
             <div class="d-flex justify-content-between align-items-center">
                 <h1>Manage Seats</h1>
-                <a href="../../controllers/seat_contr.php?search=true" type="submit" class="btn btn-outline-light bi bi-search">&nbsp; Search Seats</a>
+                <a href="../../controllers/seat/searchSeat_contr.php?search=true" type="submit" class="btn btn-outline-light bi bi-search">&nbsp; Search Seats</a>
             </div>
             <table class="table table-hover text-white mt-4">
                 <thead>
