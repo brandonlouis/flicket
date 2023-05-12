@@ -2,9 +2,9 @@
     session_start();
 
     include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/dbh_classes.php";
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie/manageMovie_contr.php";
 
-    $mc = new MovieContr();
+    $mc = new ManageMovieContr();
     $movies = $mc->retrieveAllAvailableMovies();
 ?>
 
@@ -33,7 +33,7 @@
                 <h1>Movies</h1>
                 <p style="margin:0">Discover new movies, book your seats, and enjoy the show</p>
             </span>
-            <form method="POST" action="../../controllers/movie_contr.php" class="d-flex">
+            <form method="POST" action="../../controllers/movie/searchMovie_contr.php" class="d-flex">
                 <div class="input-group">
                     <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
                     <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>

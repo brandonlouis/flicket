@@ -80,9 +80,9 @@
                             <a href="updateCinemaHall.php?cinemaHallId=<?php echo $cinemahall['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Cinema Hall"></a>
                             <?php
                                 if ($cinemahall['status'] == 'Available') {
-                                    echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Movie" data-bs-toggle="modal" data-bs-target="#suspend' . $cinemahall['id'] . '" onclick="event.stopPropagation();"></button>';
+                                    echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Cinema Hall" data-bs-toggle="modal" data-bs-target="#suspend' . $cinemahall['id'] . '" onclick="event.stopPropagation();"></button>';
                                 } else {
-                                    echo '<a href="../../controllers/cinemahall/suspendCinemaHall_contr.php?activateId=' . $cinemahall["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Movie"></a>';
+                                    echo '<a href="../../controllers/cinemahall/suspendCinemaHall_contr.php?activateId=' . $cinemahall["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Cinema Hall"></a>';
                                 }
                             ?>
                         </td>

@@ -1,9 +1,9 @@
 <?php
     session_start();
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie/manageMovie_contr.php";
 
-    $mc = new MovieContr();
+    $mc = new ManageMovieContr();
     $movies = $mc->retrieveAllAvailableMovies();
     $random_number = rand(0,count($movies)-1);
 ?>

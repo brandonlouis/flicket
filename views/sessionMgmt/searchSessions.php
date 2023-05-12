@@ -31,7 +31,7 @@
                 <h1>Manage Sessions</h1>
 
                 <div class="d-flex">
-                    <form method="POST" action="../../controllers/session_contr.php" class="d-flex">
+                    <form method="POST" action="../../controllers/session/searchSession_contr.php" class="d-flex">
                         <div class="input-group">
                             <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
                             <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
@@ -80,7 +80,7 @@
                                 if ($session['status'] == 'Available') {
                                     echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Session" data-bs-toggle="modal" data-bs-target="#suspend' . $session['id'] . '" onclick="event.stopPropagation();"></button>';
                                 } else {
-                                    echo '<a href="../../controllers/session_contr.php?activateId=' . $session["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Session"></a>';
+                                    echo '<a href="../../controllers/session/suspendSession_contr.php?activateId=' . $session["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Session"></a>';
                                 }
                             ?>
                         </td>
@@ -104,7 +104,7 @@
                                     <span>End Time </span> : <?php echo $session['endTime']; ?><br/>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="../../controllers/session_contr.php?suspendId=<?php echo $session['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                                    <a href="../../controllers/session/suspendSession_contr.php?suspendId=<?php echo $session['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                                     <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                                 </div>
                             </div>

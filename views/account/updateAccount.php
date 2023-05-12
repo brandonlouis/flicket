@@ -5,13 +5,13 @@
         exit;
     }
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/account_contr.php";
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/profile_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/account/manageAccount_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/profile/manageProfile_contr.php";
 
-    $amc = new AccountContr();
+    $amc = new ManageAccountContr();
     $accountDetails = $amc->retrieveOneAccount($_GET['id']);
 
-    $pc = new ProfileContr();
+    $pc = new ManageProfileContr();
     $profiles = $pc->retrieveAllProfiles();
 ?>
 

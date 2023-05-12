@@ -5,13 +5,13 @@
         exit;
     }
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie_contr.php";
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/seat_contr.php"; // TEMPORARY TO CHANGE TO CINEMAHALL CONTR
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie/manageMovie_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/cinemahall/manageCinemaHall_contr.php";
 
-    $mc = new MovieContr();
-    $sc = new SeatContr(); // TEMPORARY TO CHANGE TO CINEMAHALL CONTR
+    $mc = new ManageMovieContr();
+    $sc = new ManageCinemaHallContr();
     $movies = $mc->retrieveAllMovies();
-    $halls = $sc->retrieveAllHalls(); // TEMPORARY TO CHANGE TO CINEMAHALL CONTR
+    $halls = $sc->retrieveAllCinemaHalls();
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +35,7 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../controllers/session_contr.php" class="w-50">
+            <form method="POST" action="../../controllers/session/createSession_contr.php" class="w-50">
                 <h1>Session Details</h1>
                 <div class="input-group mt-3" title="Movie Title">
                     <span class="input-group-text">

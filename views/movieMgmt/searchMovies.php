@@ -106,7 +106,7 @@
                                 <span>Title </span> &nbsp;: <?php echo $movie['title']; ?><br/>
                             </div>
                             <div class="modal-footer">
-                                <a href="../../controllers/movie_contr.php?suspendId=<?php echo $movie['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                                <a href="../../controllers/movie/suspendMovie_contr.php?suspendId=<?php echo $movie['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                             </div>
                             </div>
