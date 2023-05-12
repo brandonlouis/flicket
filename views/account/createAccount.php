@@ -5,9 +5,9 @@
         exit;
     }
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/profile_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/profile/manageProfile_contr.php";
 
-    $pc = new ProfileContr();
+    $pc = new ManageProfileContr();
     $profiles = $pc->retrieveAllProfiles();
 ?>
 
