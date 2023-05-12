@@ -5,9 +5,9 @@
         exit;
     }
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/ticketType_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/tickettype/manageTicketType_contr.php";
 
-    $ttc = new TicketTypeContr();
+    $ttc = new ManageTicketTypeContr();
     $ticketTypeDetails = $ttc->retrieveOneTicketType($_GET['ticketTypeId']);
 ?>
 
@@ -32,7 +32,7 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../controllers/ticketType_contr.php?ticketTypeId=<?php echo $ticketTypeDetails['id']; ?>" class="w-50">
+            <form method="POST" action="../../controllers/tickettype/updateTicketType_contr.php?ticketTypeId=<?php echo $ticketTypeDetails['id']; ?>" class="w-50">
                 <h1>Ticket Type Details</h1>
         
                 <div class="input-group mt-4">
