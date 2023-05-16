@@ -49,7 +49,7 @@ class MovieBooking extends Dbh {
         return $cinemaHallDetails;
     }
 
-    public function bookMovie($fullName, $email, $movieId, $sessionId, $movieQty) {
+    public function createMovieBooking($fullName, $email, $movieId, $sessionId, $movieQty) {
         session_start();
         $this->fullName = $fullName;
         $this->email = $email;
