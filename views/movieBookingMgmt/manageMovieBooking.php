@@ -40,7 +40,6 @@
                         <th>Hall Number</th>
                         <th>Start Time</th>
                         <th>End Time</th>
-                        <th>Quantity</th>
                         <th></th>
                     <tr>
                 </thead>
@@ -53,7 +52,6 @@
                         <td>Hall <?php echo $movieBooking['hallNumber']; ?></td>
                         <td><?php echo $movieBooking['startTime']; ?></td>
                         <td><?php echo $movieBooking['endTime']; ?></td>
-                        <td><?php echo $movieBooking['quantity']; ?></td>
                         
                         <td class="d-flex justify-content-evenly">
                             <button type="button" href="#" class="btn btn-danger fs-5" title="Delete Movie Booking" data-bs-toggle="modal" data-bs-target="#delete<?php echo $movieBooking['id']; ?>" >Delete</button>
@@ -73,10 +71,9 @@
                                 <span>Movie Booking ID </span>: <?php echo $movieBooking['id']; ?><br/>
                                 <span>Title </span> &nbsp;: <?php echo $movieBooking['title']; ?><br/>
                                 <span>Cinema Name </span> &nbsp;: <?php echo $movieBooking['cinemaName']; ?><br/>
-                                <span>Hall Number </span> &nbsp;: <?php echo $movieBooking['hallNumber']; ?><br/>
+                                <span>Hall Number </span> &nbsp;: Hall <?php echo $movieBooking['hallNumber']; ?><br/>
                                 <span>Start Time </span> &nbsp;: <?php echo $movieBooking['startTime']; ?><br/>
                                 <span>End Time </span> &nbsp;: <?php echo $movieBooking['endTime']; ?><br/>
-                                <span>Quantity </span> &nbsp;: <?php echo $movieBooking['quantity']; ?><br/>
                             </div>
                             <div class="modal-footer">
                                 <a href="../../controllers/bookmovie/deleteMovieBooking_contr.php?deleteId=<?php echo $movieBooking['id']; ?>" type="button" class="btn btn-danger">Yes</a>
@@ -110,16 +107,13 @@
                                                 </dd>
 
                                                 <dt class="col-sm-4">Hall Number</dt>
-                                                <dd class="col-sm-8"><?php echo $movieBooking['hallNumber']; ?></dd>
+                                                <dd class="col-sm-8">Hall <?php echo $movieBooking['hallNumber']; ?></dd>
 
                                                 <dt class="col-sm-4">Start Time</dt>
                                                 <dd class="col-sm-8"><?php echo $movieBooking['startTime']; ?></dd>
 
                                                 <dt class="col-sm-4">End Time</dt>
                                                 <dd class="col-sm-8"><?php echo $movieBooking['endTime']; ?></dd>
-
-                                                <dt class="col-sm-4">Quantity</dt>
-                                                <dd class="col-sm-8"><?php echo $movieBooking['quantity']; ?></dd>
 
                                             </div>
                                             <div class="col">
