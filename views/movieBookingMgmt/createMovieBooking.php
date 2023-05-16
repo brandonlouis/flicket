@@ -3,12 +3,20 @@
 
     include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie/manageMovie_contr.php";
     include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/session/manageSession_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/cinemahall/manageCinemaHall_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/tickettype/manageTicketType_contr.php";
 
     $mmc = new ManageMovieContr();
     $movieDetails = $mmc->retrieveOneMovie($_GET['movieId']);
 
     $sc = new ManageSessionContr();
-    $sessions = $sc->retrieveAllSessions($_GET['movieId']);
+    $sessions = $sc->retrieveAllSessions();
+
+    $chc = new ManageCinemaHallContr();
+    $cinemaHalls = $chc->retrieveAllCinemaHalls();
+
+    $ttc = new ManageTicketTypeContr();
+    $ticketTypes = $ttc->retrieveAllTicketTypes();
 ?>
 
 <!DOCTYPE html>
@@ -32,41 +40,40 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../controllers/bookmovie/createMovieBooking_contr.php?movieId=<?php echo $movieDetails['id']; ?>" enctype="multipart/form-data" class="w-50">
+            <form method="POST" action="../../controllers/bookmovie/createMovieBooking_contr.php" enctype="multipart/form-data" class="w-50">
                 <h1>Book: <?php echo $movieDetails['title']?></h1>
                 <p>Synopsis: <?php echo $movieDetails['synopsis']?></p>
-                <p>Runtime: <?php echo $movieDetails['runtimeMin']?> mins</p>
-                <div class="input-group mt-4" title="Full Name">
-                    <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
-                    </span>
-                    <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Full Name" required>
-                </div>
-                <div class="input-group mt-4" title="Email">
-                    <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
-                    </span>
-                    <input type="text" class="form-control" id="email" name="email" placeholder="E-mail" value="<?php echo $_SESSION['email']?>" required>
-                </div>
+                <p>Runtime: <?php echo $movieDetails['runtimeMin'] ?> mins</p>
                 <div class="input-group mt-3" title="Session">
                     <span class="input-group-text">
                         <i class="bi bi-film"></i>
                     </span>
                     <select class="form-select" id="sessionId" name="sessionId" aria-label="Default select">
                         <?php foreach ($sessions as $session) { 
-                            if ($session['movieId'] == $movieDetails['id']) { ?>
-                                <option value="<?php echo $session['id']; ?>" ><?php echo $session['startTime']; ?> - <?php echo $session['endTime'];?></option>
-                        <?php } else {
+                            if ($session['movieId'] == $movieDetails['id']) {
+                                foreach ($cinemaHalls as $cinemaHall) {
+                                    if ($cinemaHall['id'] == $session['hallId']) {?>
+                                    <option value="<?php echo $session['id']; ?>" ><?php echo $cinemaHall['name']?> | <?php echo $session['startTime']; ?> - <?php echo $session['endTime'];?></option>
+                            <?php   } else {
+                                        continue;
+                                    }
+                                } 
+                            } else {
                                 continue;
                             }
-                        } ?>
+                        }?>
                     </select>
                 </div>
-                <div class="input-group mt-4" title="Email">
+
+                <div class="input-group mt-3" title="Ticket Type">
                     <span class="input-group-text">
-                        <i class="bi bi-card-heading"></i>
+                        <i class="bi bi-film"></i>
                     </span>
-                    <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required>
+                    <select class="form-select" id="ticketType" name="ticketType" aria-label="Default select">
+                        <?php foreach ($ticketTypes as $ticketType) {?>
+                            <option value="<?php echo $ticketType['name']; ?>" ><?php echo $ticketType['name']; ?> | $<?php echo $ticketType['price']?></option>
+                        <?php }?>
+                    </select>
                 </div>
 
                 <div class="d-flex">
@@ -88,10 +95,6 @@
     <?php
         include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/footer.php';
     ?>
-
-
-<script>
-</script>
 </body>
 
 </html>

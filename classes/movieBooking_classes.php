@@ -49,17 +49,14 @@ class MovieBooking extends Dbh {
         return $cinemaHallDetails;
     }
 
-    public function createMovieBooking($fullName, $email, $movieId, $sessionId, $movieQty) {
+    public function createMovieBooking($sessionId, $ticketType) {
         session_start();
-        $this->fullName = $fullName;
-        $this->email = $email;
-        $this->movieId = $movieId;
         $this->sessionId = $sessionId;
-        $this->movieQty = $movieQty;
+        $this->ticketType = $ticketType;
 
-        $sql = "INSERT INTO bookmovie (fullName, email, movieId, sessionId, quantity) VALUES (?, ?, ?, ?, ?);";
+        $sql = "INSERT INTO ticket (sessionID, seatId, ticketType, accountId, status) VALUES (?, ?, ?, ?, ?);";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->fullName, $this->email, $this->movieId, $this->sessionId, $this->movieQty]);
+        $stmt->execute([$this->sessionId, '1', $this->ticketType, $_SESSION['id'], 'Available']);
         
         $stmt = null;
         return array("Booking made successfully! Your purchase receipt will be sent to your email address", "success");
@@ -69,7 +66,7 @@ class MovieBooking extends Dbh {
         session_start();
         $this->id = $id;
 
-        $sql = "DELETE FROM bookmovie WHERE id = ?;"; 
+        $sql = "DELETE FROM ticket WHERE id = ?;"; 
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->id]);
 
