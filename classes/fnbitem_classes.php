@@ -170,45 +170,6 @@ class FnBItem extends Dbh {
         return $fnbItems;
     }
 
-    public function checkFnBitemInDeal($id){
-        $this->id = $id;
-
-        $sql = "SELECT COUNT(*) FROM fnbitemdeal WHERE fnbItem_id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->id]);
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($result["COUNT(*)"] == 0) {
-            return false;
-        } else{
-            return true;
-        }
-    }
-
-    public function getFnBItemDeals($id){
-        $this->id = $id;
-
-        $sql = "SELECT dealName
-                FROM fnbitem JOIN fnbitemdeal
-                ON fnbitem.id = fnbitemdeal.fnbItem_id
-                JOIN deal
-                ON fnbitemdeal.deal_id = deal.id
-                WHERE fnbitem.id = ?
-                GROUP BY deal.id
-                ORDER BY deal.dealName";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->id]);
-
-        $deals = array();
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $deals[] = $row;
-        }
-
-        $stmt = null;
-        return $deals;
-    }
-
     public function purchaseFnBItem($fnbItemID, $fnbQty, $buyerName, $email) {
         session_start();
         $this->fnbItemID = $fnbItemID;

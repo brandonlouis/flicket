@@ -4,9 +4,9 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/dbh_classes.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/movie_classes.php";
 
 class CreateMovieContr {
-    public function createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster, $status) {
+    public function createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $ticketType, $poster, $status) {
         $m = new Movie();
-        $movie = $m->createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster, $status);
+        $movie = $m->createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $ticketType, $poster, $status);
         
         setcookie('flash_message', $movie[0], time() + 3, '/');
         setcookie('flash_message_type', $movie[1], time() + 3, '/');
@@ -29,6 +29,7 @@ $startDate = $_POST["startDate"];
 $endDate = $_POST["endDate"];
 $language = $_POST["language"];
 $genre = explode(", ", $_POST["genre"]);
+$ticketType = explode(", ", $_POST["ticketType"]);
 $poster = null;
 if (isset($_FILES["posterFile"]) && $_FILES["posterFile"]["error"] !== UPLOAD_ERR_NO_FILE) {
     $posterContents = file_get_contents($_FILES["posterFile"]["tmp_name"]);
@@ -37,4 +38,4 @@ if (isset($_FILES["posterFile"]) && $_FILES["posterFile"]["error"] !== UPLOAD_ER
 
 $cmc = new CreateMovieContr();
 $status = $_POST["status"];
-$cmc->createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster, $status);
+$cmc->createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $ticketType, $poster, $status);

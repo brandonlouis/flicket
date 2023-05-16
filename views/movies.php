@@ -33,23 +33,6 @@
                 <h1>Movies</h1>
                 <p style="margin:0">Discover new movies, book your seats, and enjoy the show</p>
             </span>
-            <form method="POST" action="../../controllers/movie/searchMovie_contr.php" class="d-flex">
-                <div class="input-group">
-                    <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
-                    <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><button class="dropdown-item" type="submit" name="filter" value="None"></button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="id">Movie ID</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="title">Title</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="synopsis">Synopsis</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="runtimeMin">Runtime (Minutes)</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="startDate">Start Date</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="endDate">End Date</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="language">Language</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="genres">Genre</button></li>
-                    </ul>
-                </div>
-            </form>
         </div>    
         <div class="content" style="display:grid; grid-template-columns: repeat(4, 1fr); justify-items:center;">
             <?php foreach ($movies as $movie) { ?>
