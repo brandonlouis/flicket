@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/flicket/css/style.css">
  
-    <title>Generate Ticket Sales Report | flicket</title>
+    <title>Generate Cinema Utilization Report | flicket</title>
     <link rel="icon" type="image/x-icon" href="/flicket/img/favicon.ico">
 </head>
 
@@ -32,9 +32,9 @@
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content">
             <div class="d-flex justify-content-between align-items-center">
-                <h1>Generate Ticket Sales Report</h1>
+                <h1>Generate Cinema Utilization Report</h1>
             </div>
-            <form method="POST" action="../../controllers/ticketSales/genTicketSales_contr.php" class="row">
+            <form method="POST" action="../../controllers/cinemaUtil/genCinemaUtil_contr.php" class="row">
                 <div class="mb-3">
                     <input type="hidden" name="timeLevel" value="session">
                     <label for="sessionID">Session:</label>
@@ -49,7 +49,7 @@
                 <button type="submit" class="btn btn-primary" style="width:25%">Generate Session Report</button>
             </form>
 
-            <form method="POST" action="../../controllers/ticketSales/genTicketSales_contr.php" class="row">
+            <form method="POST" action="../../controllers/cinemaUtil/genCinemaUtil_contr.php" class="row">
                 <div class="mb-3">
                     <input type="hidden" name="timeLevel" value="day">
                     <label for="dayDate">Day:</label>
@@ -58,7 +58,7 @@
                 <button type="submit" class="btn btn-primary" style="width:25%">Generate Daily Report</button>
             </form>
 
-            <form method="POST" action="../../controllers/ticketSales/genTicketSales_contr.php" class="row">
+            <form method="POST" action="../../controllers/cinemaUtil/genCinemaUtil_contr.php" class="row">
                 <div class="mb-3">
                     <input type="hidden" name="timeLevel" value="week">
                     <label for="weekDate">Week:</label>
