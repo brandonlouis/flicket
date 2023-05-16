@@ -1,11 +1,11 @@
 <?php
 
 include_once $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/dbh_classes.php";
-include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/movie_classes.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/movieBooking_classes.php";
 
 class BookMovieContr {
     public function bookMovie($fullName, $email, $movieId, $sessionId, $movieQty) {
-        $movie = new Movie();
+        $movie = new MovieBooking();
         $movieBooking = $movie->bookMovie($fullName, $email, $movieId, $sessionId, $movieQty);
         
         setcookie('flash_message', $movieBooking[0], time() + 3, '/');

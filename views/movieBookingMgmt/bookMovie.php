@@ -32,7 +32,7 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../controllers/movie/bookMovie_contr.php?movieId=<?php echo $movieDetails['id']; ?>" enctype="multipart/form-data" class="w-50">
+            <form method="POST" action="../../controllers/bookmovie/bookMovie_contr.php?movieId=<?php echo $movieDetails['id']; ?>" enctype="multipart/form-data" class="w-50">
                 <h1>Book: <?php echo $movieDetails['title']?></h1>
                 <p>Synopsis: <?php echo $movieDetails['synopsis']?></p>
                 <p>Runtime: <?php echo $movieDetails['runtimeMin']?> mins</p>

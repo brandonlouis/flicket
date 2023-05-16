@@ -122,7 +122,7 @@
                                                     <?php echo '<img id="posterImg" style="width:auto;height:500px;" src="data:image/png;base64,' . $movie['poster'] . '" alt="Movie Poster" />'; ?>
                                                 </div>
                                                 <div class="d-flex">
-                                                    <a href="movieMgmt/bookMovie.php?movieId=<?php echo $movie['id']; ?>" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Book Now</a>
+                                                    <a href="movieBookingMgmt/bookMovie.php?movieId=<?php echo $movie['id']; ?>" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Book Now</a>
                                                 </div>
                                             </div>
                                         </div>
