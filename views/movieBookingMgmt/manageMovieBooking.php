@@ -56,31 +56,30 @@
                         <td><?php echo $movieBooking['quantity']; ?></td>
                         
                         <td class="d-flex justify-content-evenly">
-                            <?php
-                                if ($movie['status'] == 'Available') {
-                                    echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Movie" data-bs-toggle="modal" data-bs-target="#suspend' . $movie['id'] . '" onclick="event.stopPropagation();"></button>';
-                                } else {
-                                    echo '<a href="../../controllers/movie/suspendMovie_contr.php?activateId=' . $movie["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Movie"></a>';
-                                }
-                            ?>
+                            <button type="button" href="#" class="btn btn-danger fs-5" title="Delete Movie Booking" data-bs-toggle="modal" data-bs-target="#delete<?php echo $movieBooking['id']; ?>" >Delete</button>
                         </td>
                     </tr>
                     
-                    <div class="modal fade" id="suspend<?php echo $movie['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal fade" id="delete<?php echo $movieBooking['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">Suspend Movie</h5>
+                                <h5 class="modal-title" id="modalLabel">Delete Movie Booking</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                Suspend the following movie?
+                                Delete the following movie booking?
                                 <br/><br/>
-                                <span>Movie ID </span>: <?php echo $movie['id']; ?><br/>
-                                <span>Title </span> &nbsp;: <?php echo $movie['title']; ?><br/>
+                                <span>Movie Booking ID </span>: <?php echo $movieBooking['id']; ?><br/>
+                                <span>Title </span> &nbsp;: <?php echo $movieBooking['title']; ?><br/>
+                                <span>Cinema Name </span> &nbsp;: <?php echo $movieBooking['cinemaName']; ?><br/>
+                                <span>Hall Number </span> &nbsp;: <?php echo $movieBooking['hallNumber']; ?><br/>
+                                <span>Start Time </span> &nbsp;: <?php echo $movieBooking['startTime']; ?><br/>
+                                <span>End Time </span> &nbsp;: <?php echo $movieBooking['endTime']; ?><br/>
+                                <span>Quantity </span> &nbsp;: <?php echo $movieBooking['quantity']; ?><br/>
                             </div>
                             <div class="modal-footer">
-                                <a href="../../controllers/movie/suspendMovie_contr.php?suspendId=<?php echo $movie['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                                <a href="../../controllers/bookmovie/deleteMovieBooking_contr.php?deleteId=<?php echo $movieBooking['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                             </div>
                             </div>

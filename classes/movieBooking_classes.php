@@ -64,4 +64,16 @@ class MovieBooking extends Dbh {
         $stmt = null;
         return array("Booking made successfully! Your purchase receipt will be sent to your email address", "success");
     }
+
+    public function deleteMovieBooking($id) {
+        session_start();
+        $this->id = $id;
+
+        $sql = "DELETE FROM bookmovie WHERE id = ?;"; 
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$this->id]);
+
+        $stmt = null;
+        return array('Movie Booking (ID: ' . $this->id . ') deleted successfully!', "success");
+    }
 }
