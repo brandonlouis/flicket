@@ -55,7 +55,8 @@
                 echo '<li><a class="dropdown-item" href="/flicket/controllers/logout_contr.php">Logout</a></li>';
 
                 if ($_SESSION['userType'] == "customer") {
-                    echo '<li><a class="dropdown-item mt-3" name="deleteAccount" data-bs-toggle="modal" data-bs-target="#suspendConfirmation">Suspend Account</a></li>
+                        echo '<li><a class="dropdown-item" href="/flicket/views/movieBookingMgmt/manageMovieBooking.php">Manage Bookings</a></li>
+                            <li><a class="dropdown-item mt-3" name="deleteAccount" data-bs-toggle="modal" data-bs-target="#suspendConfirmation">Suspend Account</a></li>
                         </ul>
                     </div>';
                 }
