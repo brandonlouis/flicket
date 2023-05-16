@@ -6,10 +6,14 @@
     }
 
     include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie/manageMovie_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/ticketType/manageTicketType_contr.php";
 
     $mmc = new ManageMovieContr();
     $languages = $mmc->retrieveAllLanguages();
     $genres = $mmc->retrieveAllGenres();
+
+    $ttc = new ManageTicketTypeContr();
+    $ticketTypes = $ttc->retrieveAllTicketTypes();
 ?>
 
 <!DOCTYPE html>
@@ -103,6 +107,19 @@
                         <?php } ?>
                     </ul>
                 </div>
+                <div class="input-group mt-3" title="Ticket Type(s)">
+                    <span class="input-group-text">
+                        <i class="bi bi-ticket-perforated"></i>
+                    </span>
+                    <input type="text" class="form-control bg-dark-subtle pe-none" id="ticketType" name="ticketType" placeholder='Ticket Type (select using dropdown)' required onkeydown="return false;">
+                    <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">Ticket Types</button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><button class="dropdown-item ticketType-btn" type="button" data-value="reset"><b>Reset</b></button></li>
+                        <?php foreach ($ticketTypes as $ticketType) { ?>
+                        <li><button class="dropdown-item ticketType-btn" type="button" data-value="<?php echo $ticketType['name']; ?>"><?php echo $ticketType['name']; ?></button></li>
+                        <?php } ?>
+                    </ul>
+                </div>
                 <div class="input-group mt-3" title="Session status">
                     <span class="input-group-text">
                         <i class="bi bi-check-circle"></i>
@@ -152,6 +169,21 @@
             }
             if (genreInput.value.includes(value)) return;
             genreInput.value += (genreInput.value ? ', ' : '') + value;
+        });
+    });
+
+    const ticketTypeBtns = document.querySelectorAll('.ticketType-btn');
+    const ticketTypeInput = document.querySelector('#ticketType');
+
+    ticketTypeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const value = btn.getAttribute('data-value');
+            if (value === "reset") {
+                ticketTypeInput.value = "";
+            return;
+            }
+            if (ticketTypeInput.value.includes(value)) return;
+            ticketTypeInput.value += (ticketTypeInput.value ? ', ' : '') + value;
         });
     });
 

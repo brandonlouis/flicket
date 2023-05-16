@@ -53,7 +53,7 @@
                 </div>
                 <div class="input-group mt-3" title="Seat status">
                     <span class="input-group-text">
-                        <i class="bi bi-gear"></i>
+                        <i class="bi bi-check-circle"></i>
                     </span>
                     <select class="form-select" id="seatStatus" name="seatStatus" aria-label="Default select">
                         <option hidden>Assign a status for selected seat(s)</option>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="d-flex">
                     <button type="submit" name="updateSeat" class="btn btn-danger my-4 me-3">Update seat</button>
-                    <a href="<?php echo isset($_GET['selectedSeat']) ? '../../controllers/seat/manageSeat_contr.php?search=true' : 'manageSeats.php'; ?>" class="btn btn-outline-info my-4">Back</a>
+                    <a href="<?php echo isset($_GET['selectedSeat']) ? '../../controllers/seat/searchSeat_contr.php' : 'manageSeats.php'; ?>" class="btn btn-outline-info my-4">Back</a>
                 </div>
             </form>
             <div class="d-flex justify-content-center flex-column align-items-center" style="width:45%">
