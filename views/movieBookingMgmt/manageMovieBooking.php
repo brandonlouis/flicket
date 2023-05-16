@@ -4,7 +4,7 @@
     include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/bookmovie/manageMovieBooking_contr.php";
 
     $mbc = new ManageMovieBookingContr();
-    $movieBookings = $mbc->retrieveAllMovieBookings($_SESSION['email']);
+    $movieBookings = $mbc->retrieveAllMovieBookings($_SESSION['id']);
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +50,7 @@
                         <td><?php echo $movieBooking['id']; ?></td>
                         <td title="<?php echo $movieBooking['title']; ?>"><?php echo $movieBooking['title']; ?></td>
                         <td title="<?php echo $movieBooking['cinemaName']; ?>"><?php echo $movieBooking['cinemaName']; ?></td>
-                        <td><?php echo $movieBooking['hallNumber']; ?></td>
+                        <td>Hall <?php echo $movieBooking['hallNumber']; ?></td>
                         <td><?php echo $movieBooking['startTime']; ?></td>
                         <td><?php echo $movieBooking['endTime']; ?></td>
                         <td><?php echo $movieBooking['quantity']; ?></td>

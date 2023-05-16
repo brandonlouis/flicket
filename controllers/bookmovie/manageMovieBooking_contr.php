@@ -5,9 +5,9 @@ include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/movieBooking_classes.php";
 
 class ManageMovieBookingContr {
 
-    public function retrieveAllMovieBookings($email) {
+    public function retrieveAllMovieBookings($id) {
         $mb = new MovieBooking();
-        return $mb->retrieveAllMovieBookings($email);
+        return $mb->retrieveAllMovieBookings($id);
     }
 
     public function retrieveOneMovieBooking($id) {
