@@ -12,7 +12,12 @@ class DeleteAccountContr {
         setcookie('flash_message_type', $account[1], time() + 3, '/');
 
         if($_SESSION['userType'] !== 'userAdmin') {
-            header("location: /flicket/controllers/logout_contr.php");
+            session_start();
+            session_unset();
+            session_destroy();
+
+            setcookie('flash_message', 'Account suspended successfully!', time() + 3, '/');
+            header("location: ../../index.php");
         } else {
             header("location: ../../views/account/manageAccounts.php");
         }
