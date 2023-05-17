@@ -105,7 +105,11 @@
                                                     <?php echo '<img id="posterImg" style="width:auto;height:500px;" src="data:image/png;base64,' . $movie['poster'] . '" alt="Movie Poster" />'; ?>
                                                 </div>
                                                 <div class="d-flex">
-                                                    <a href="movieBookingMgmt/createMovieBooking.php?movieId=<?php echo $movie['id']; ?>" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Book Now</a>
+                                                    <?php if (isset($_SESSION['email'])) {?>
+                                                        <a href="movieBookingMgmt/createMovieBooking.php?movieId=<?php echo $movie['id']; ?>" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Book Now</a>
+                                                    <?php } else { ?>
+                                                        <a href="login.php" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Log in</a>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                         </div>
