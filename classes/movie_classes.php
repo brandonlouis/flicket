@@ -37,15 +37,17 @@ class Movie extends Dbh {
     public function retrieveOneMovie($id) {
         $this->id = $id;
 
-        $sql = "SELECT m.*, GROUP_CONCAT(g.genreName SEPARATOR ', ') as genres, GROUP_CONCAT(tt.name SEPARATOR ', ') as ticketTypes
+        $sql = "SELECT m.*,
+                (SELECT GROUP_CONCAT(g.genreName SEPARATOR ', ')
+                FROM moviegenre mg
+                JOIN genre g ON mg.genreName = g.genreName
+                WHERE mg.movieId = m.id) AS genres,
+                (SELECT GROUP_CONCAT(tt.name SEPARATOR ', ')
+                FROM movietickettype mtt
+                JOIN ticketType tt ON mtt.ticketTypeId = tt.id
+                WHERE mtt.movieId = m.id) AS ticketTypes
                 FROM movie m
-                LEFT JOIN moviegenre mg ON m.id = mg.movieId
-                LEFT JOIN genre g ON mg.genreName = g.genreName
-                LEFT JOIN movietickettype mtt ON m.id = mtt.movieId
-                LEFT JOIN ticketType tt ON mtt.ticketTypeId = tt.id
-                WHERE m.id = ?
-                GROUP BY m.id";
-
+                WHERE m.id = ?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->id]);
 

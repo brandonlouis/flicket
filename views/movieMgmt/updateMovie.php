@@ -61,11 +61,11 @@
                     </span>
                     <input type="text" class="form-control" id="runtimeMin" name="runtimeMin" placeholder="Runtime (Minutes)" pattern="^[0-9]{1,4}$" value="<?php echo $movieDetails['runtimeMin']; ?>" required>
                 </div>
-                <div class="input-group mt-3" title="Trailer URL">
+                <div class="input-group mt-3" title="Trailer URL (Embed)">
                     <span class="input-group-text">
                         <i class="bi bi-link"></i>
                     </span>
-                    <input type="text" class="form-control" id="" name="trailerURL" placeholder="Trailer URL" value="<?php echo $movieDetails['trailerURL']; ?>" required>
+                    <input type="text" class="form-control" id="trailerURL" name="trailerURL" placeholder="Trailer URL (Embed)" value="<?php echo $movieDetails['trailerURL']; ?>" required>
                 </div>
                 <div class="input-group mt-3" title="Start Date">
                     <span class="input-group-text">

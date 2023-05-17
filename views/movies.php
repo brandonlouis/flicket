@@ -1,11 +1,18 @@
 <?php
     session_start();
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/dbh_classes.php";
     include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie/manageMovie_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/session/manageSession_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/cinemahall/manageCinemaHall_contr.php";
 
     $mc = new ManageMovieContr();
     $movies = $mc->retrieveAllAvailableMovies();
+    
+    $sc = new ManageSessionContr();
+    $sessions = $sc->retrieveAllSessions();
+
+    $chc = new ManageCinemaHallContr();
+    $cinemaHalls = $chc->retrieveAllCinemaHalls();
 ?>
 
 <!DOCTYPE html>
@@ -59,9 +66,6 @@
                                     <div class="row">
                                         <div class="col">
                                             <dl class="row">
-                                                <dt class="col-sm-4">Movie ID</dt>
-                                                <dd class="col-sm-8"><?php echo $movie['id']; ?></dd>
-
                                                 <dt class="col-sm-4">Title</dt>
                                                 <dd class="col-sm-8"><?php echo $movie['title']; ?></dd>
 
@@ -73,12 +77,6 @@
                                                 <dt class="col-sm-4">Runtime (Minutes)</dt>
                                                 <dd class="col-sm-8"><?php echo $movie['runtimeMin']; ?></dd>
 
-                                                <dt class="col-sm-4">Start Date</dt>
-                                                <dd class="col-sm-8"><?php echo $movie['startDate']; ?></dd>
-
-                                                <dt class="col-sm-4">End Date</dt>
-                                                <dd class="col-sm-8"><?php echo $movie['endDate']; ?></dd>
-
                                                 <dt class="col-sm-4">Language</dt>
                                                 <dd class="col-sm-8"><?php echo $movie['language']; ?></dd>
 
@@ -86,16 +84,9 @@
                                                 <dd class="col-sm-8">
                                                     <?php echo $movie['genres']; ?>
                                                 </dd>
-
-                                                <dt class="col-sm-4">Trailer URL</dt>
+                                                
                                                 <dd class="col-sm-8">
-                                                    <a href="<?php echo $movie['trailerURL']; ?>">
-                                                        <?php echo $movie['trailerURL']; ?>
-                                                    </a>
-                                                </dd>
-                                                <dt class="col-sm-4">Trailer Video</dt>
-                                                <dd class="col-sm-8">
-                                                    <iframe width="560" height="315"
+                                                    <iframe width="700" height="393"
                                                     src="<?php echo $movie['trailerURL']; ?>">
                                                     </iframe>
                                                 </dd>
@@ -104,11 +95,32 @@
                                                 <div class=" d-flex justify-content-end">
                                                     <?php echo '<img id="posterImg" style="width:auto;height:500px;" src="data:image/png;base64,' . $movie['poster'] . '" alt="Movie Poster" />'; ?>
                                                 </div>
+                                                <div class="input-group mt-3" title="Session">
+                                                    <span class="input-group-text">
+                                                        <i class="bi bi-clock"></i>
+                                                    </span>
+                                                    <select class="form-select" id="sessionId" name="sessionId" aria-label="Default select">
+                                                        <option hidden selected value="">Select a Session</option>
+                                                        <?php foreach ($sessions as $session) {
+                                                            if ($session['movieId'] == $movie['id']) {
+                                                                foreach ($cinemaHalls as $cinemaHall) {
+                                                                    if ($cinemaHall['id'] == $session['hallId']) {?>
+                                                                        <option value="<?php echo $session['id'] . '|' . $session['hallId']; ?>"><?php echo $cinemaHall['name']?> | <?php echo $session['startTime']; ?> - <?php echo $session['endTime'];?></option>
+                                                                <?php   } else {
+                                                                            continue;
+                                                                        }
+                                                                    }
+                                                                } else {
+                                                                    continue;
+                                                                }
+                                                            }?>
+                                                    </select>
+                                                </div>
                                                 <div class="d-flex">
                                                     <?php if (isset($_SESSION['email'])) {?>
-                                                        <a href="movieBookingMgmt/createMovieBooking.php?movieId=<?php echo $movie['id']; ?>" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Book Now</a>
+                                                        <a href="movieBookingMgmt/createMovieBooking.php?movieId=<?php echo $movie['id']; ?>&hallId=" id="bookNowButton" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Book now</a>
                                                     <?php } else { ?>
-                                                        <a href="login.php" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Log in</a>
+                                                        <a href="login.php" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Login to make a booking</a>
                                                     <?php } ?>
                                                 </div>
                                             </div>
@@ -130,6 +142,37 @@
     <?php
         include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/footer.php';
     ?>
+
+
+<script>
+    const selectSession = document.getElementById("sessionId");
+    const bookNowButton = document.getElementById("bookNowButton");
+
+    selectSession.addEventListener('change', function() {
+        const sessionId = selectSession.value.split('|')[0];
+        const hallId = selectSession.value.split('|')[1];
+        const hrefParts = bookNowButton.href.split('?');
+        const newHref = `${hrefParts[0]}?${hrefParts[1].replace(/hallId=[^&]*/, `hallId=${hallId}&sessionId=${sessionId}`)}`;
+
+        bookNowButton.href = newHref;
+    });
+
+    const bookNowButtons = document.querySelectorAll('#bookNowButton');
+    const selectSessions = document.querySelectorAll('#sessionId');
+
+    for (let i = 0; i < bookNowButtons.length; i++) {
+        const bnb = bookNowButtons[i];
+        const ss = selectSessions[i];
+
+        bnb.addEventListener('click', function(event) {
+            if (ss.value == '') {
+                event.preventDefault();
+                alert('Please select a Session');
+            }
+        });
+    }
+</script>
+
 </body>
 
 </html>
