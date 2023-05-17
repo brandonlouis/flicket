@@ -5,13 +5,13 @@
         exit;
     }
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/account_contr.php";
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/profile_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/account/manageAccount_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/profile/manageProfile_contr.php";
 
-    $amc = new AccountContr();
+    $amc = new ManageAccountContr();
     $accountDetails = $amc->retrieveOneAccount($_GET['id']);
 
-    $pc = new ProfileContr();
+    $pc = new ManageProfileContr();
     $profiles = $pc->retrieveAllProfiles();
 ?>
 
@@ -36,7 +36,7 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../controllers/account_contr.php?id=<?php echo $accountDetails['id']; ?>" class="w-50">
+            <form method="POST" action="../../controllers/account/updateAccount_contr.php?id=<?php echo $accountDetails['id']; ?>" class="w-50">
                 <h1>Account Details</h1>
                 <div class="input-group mt-4"  title="User Type">
                     <span class="input-group-text">

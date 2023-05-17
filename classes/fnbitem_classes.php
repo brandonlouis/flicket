@@ -9,6 +9,10 @@ class FnBItem extends Dbh {
     private $category;
     private $status;
     private $image;
+    private $buyerName;
+    private $email;
+    private $fnbItemID;
+    private $fnbQty;
     
     public function retrieveAllFnBitems() {
         $sql = "SELECT *
@@ -39,6 +43,24 @@ class FnBItem extends Dbh {
 
         $stmt = null;
         return $singleItem;
+    }
+
+    public function retrieveAllAvailableFnBItem() {
+        $sql = "SELECT *
+                FROM fnbitem
+                WHERE status = 'Available'
+                GROUP BY id 
+                ORDER BY itemName";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+
+        $fnbitems = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $fnbitems[] = $row;
+        }
+
+        $stmt = null;
+        return $fnbitems;
     }
 
     public function createFnBItem($itemName, $description, $price, $category, $status, $image) {
@@ -148,42 +170,19 @@ class FnBItem extends Dbh {
         return $fnbItems;
     }
 
-    public function checkFnBitemInDeal($id){
-        $this->id = $id;
+    public function purchaseFnBItem($fnbItemID, $fnbQty, $buyerName, $email) {
+        session_start();
+        $this->fnbItemID = $fnbItemID;
+        $this->fnbQty = $fnbQty;
+        $this->buyerName = $buyerName;
+        $this->email = $email;
 
-        $sql = "SELECT COUNT(*) FROM fnbitemdeal WHERE fnbItem_id = ?";
+
+        $sql = "INSERT INTO fnbpurchases (buyerName, email, fnbItemID, quantity) VALUES (?, ?, ?, ?);";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->id]);
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($result["COUNT(*)"] == 0) {
-            return false;
-        } else{
-            return true;
-        }
-    }
-
-    public function getFnBItemDeals($id){
-        $this->id = $id;
-
-        $sql = "SELECT dealName
-                FROM fnbitem JOIN fnbitemdeal
-                ON fnbitem.id = fnbitemdeal.fnbItem_id
-                JOIN deal
-                ON fnbitemdeal.deal_id = deal.id
-                WHERE fnbitem.id = ?
-                GROUP BY deal.id
-                ORDER BY deal.dealName";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->id]);
-
-        $deals = array();
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $deals[] = $row;
-        }
+        $stmt->execute([$this->buyerName, $this->email, $this->fnbItemID, $this->fnbQty]);
 
         $stmt = null;
-        return $deals;
+        return array("Purchase made successfully! Your purchase receipt will be sent to your email address", "success");
     }
 }

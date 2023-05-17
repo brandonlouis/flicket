@@ -5,10 +5,10 @@
         exit;
     }
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/profile_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/profile/manageProfile_contr.php";
 
-    $pc = new ProfileContr();
-    $profileDetails = $pc->retrieveOneProfile($_GET['userType']);
+    $mpc = new ManageProfileContr();
+    $profileDetails = $mpc->retrieveOneProfile($_GET['userType']);
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +32,7 @@
 
     <div class="container mt-4" style="margin-bottom: 80px">
         <div class="content d-flex justify-content-evenly align-items-center">
-            <form method="POST" action="../../controllers/profile_contr.php?userType=<?php echo $profileDetails['userType']; ?>" class="w-50">
+            <form method="POST" action="../../controllers/profile/updateProfile_contr.php?userType=<?php echo $profileDetails['userType']; ?>" class="w-50">
                 <h1>Profile Details</h1>
                 <div class="input-group mt-4" title="User Type">
                     <span class="input-group-text">

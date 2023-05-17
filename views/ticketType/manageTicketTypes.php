@@ -5,9 +5,9 @@
         exit;
     }
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/ticketType_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/tickettype/manageTicketType_contr.php";
 
-    $ttc = new TicketTypeContr();
+    $ttc = new ManageTicketTypeContr();
     $ticketTypes = $ttc->retrieveAllTicketTypes();
 ?>
 
@@ -36,7 +36,7 @@
                 <h1>Manage Ticket Types</h1>
 
                 <div class="d-flex">
-                    <form method="POST" action="../../controllers/ticketType_contr.php" class="d-flex">
+                    <form method="POST" action="../../controllers/tickettype/searchTicketType_contr.php" class="d-flex">
                         <div class="input-group">
                             <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
                             <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
@@ -90,7 +90,7 @@
                                 <span>Name </span> &nbsp;: <?php echo $ticketType['name']; ?><br/>
                             </div>
                             <div class="modal-footer">
-                                <a href="../../controllers/ticketType_contr.php?deleteId=<?php echo $ticketType['id']; ?>" type="button" class="btn btn-danger">Yes</a>
+                                <a href="../../controllers/tickettype/deleteTicketType_contr.php?deleteId=<?php echo $ticketType['id']; ?>" type="button" class="btn btn-danger">Yes</a>
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">No</button>
                             </div>
                             </div>

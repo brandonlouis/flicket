@@ -1,9 +1,9 @@
 <?php
     session_start();
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie/manageMovie_contr.php";
 
-    $mc = new MovieContr();
+    $mc = new ManageMovieContr();
     $movies = $mc->retrieveAllAvailableMovies();
     $random_number = rand(0,count($movies)-1);
 ?>
@@ -35,7 +35,7 @@
                     <h1><?php echo $movies[$random_number]['title']; ?></h1>
                     <p><?php echo $movies[$random_number]['synopsis']; ?></p>
                     <div class="mt-5">
-                        <a href="#" type="button" class="btn btn-danger">Book Now</a>
+                        <a href="views/movieBookingMgmt/createMovieBooking.php?movieId=<?php echo $movies[$random_number]['id']?>" type="button" class="btn btn-danger">Book Now</a>
                         <a href="#" type="button" class="ms-4 btn btn-outline-light">See Details</a>
                     </div>
                 </div>

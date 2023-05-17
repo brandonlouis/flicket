@@ -2,9 +2,9 @@
     session_start();
 
     include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/dbh_classes.php";
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie/manageMovie_contr.php";
 
-    $mc = new MovieContr();
+    $mc = new ManageMovieContr();
     $movies = $mc->retrieveAllAvailableMovies();
 ?>
 
@@ -33,27 +33,10 @@
                 <h1>Movies</h1>
                 <p style="margin:0">Discover new movies, book your seats, and enjoy the show</p>
             </span>
-            <form method="POST" action="../../controllers/movie_contr.php" class="d-flex">
-                <div class="input-group">
-                    <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
-                    <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><button class="dropdown-item" type="submit" name="filter" value="None"></button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="id">Movie ID</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="title">Title</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="synopsis">Synopsis</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="runtimeMin">Runtime (Minutes)</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="startDate">Start Date</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="endDate">End Date</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="language">Language</button></li>
-                        <li><button class="dropdown-item" type="submit" name="filter" value="genres">Genre</button></li>
-                    </ul>
-                </div>
-            </form>
         </div>    
         <div class="content" style="display:grid; grid-template-columns: repeat(4, 1fr); justify-items:center;">
             <?php foreach ($movies as $movie) { ?>
-                <a href="#" class="text-decoration-none border-0 mb-5" style="width: 17rem;">
+                <a href="#" class="text-decoration-none border-0 mb-5" style="width: 17rem;" data-bs-toggle="modal" data-bs-target="#view<?php echo $movie['id']; ?>">
                     <img src="data:image/png;base64,<?php echo $movie['poster']; ?>" class="card-img-top mb-3" style="height:400px; object-fit:cover;" alt="<?php echo $movie['title'] ?>">
                     <div class="card-body d-flex flex-column justify-content-between">
                         <h5 class="card-title text-white mb-2"><?php echo $movie['title'] ?></h5>
@@ -63,6 +46,78 @@
                         </div>
                     </div>
                 </a>
+
+                <div class="modal fade" id="view<?php echo $movie['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered mw-100 w-75">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel">View Session</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <dl class="row">
+                                                <dt class="col-sm-4">Movie ID</dt>
+                                                <dd class="col-sm-8"><?php echo $movie['id']; ?></dd>
+
+                                                <dt class="col-sm-4">Title</dt>
+                                                <dd class="col-sm-8"><?php echo $movie['title']; ?></dd>
+
+                                                <dt class="col-sm-4">Synopsis</dt>
+                                                <dd class="col-sm-8">
+                                                    <p><?php echo $movie['synopsis']; ?></p>
+                                                </dd>
+
+                                                <dt class="col-sm-4">Runtime (Minutes)</dt>
+                                                <dd class="col-sm-8"><?php echo $movie['runtimeMin']; ?></dd>
+
+                                                <dt class="col-sm-4">Start Date</dt>
+                                                <dd class="col-sm-8"><?php echo $movie['startDate']; ?></dd>
+
+                                                <dt class="col-sm-4">End Date</dt>
+                                                <dd class="col-sm-8"><?php echo $movie['endDate']; ?></dd>
+
+                                                <dt class="col-sm-4">Language</dt>
+                                                <dd class="col-sm-8"><?php echo $movie['language']; ?></dd>
+
+                                                <dt class="col-sm-4">Genres</dt>
+                                                <dd class="col-sm-8">
+                                                    <?php echo $movie['genres']; ?>
+                                                </dd>
+
+                                                <dt class="col-sm-4">Trailer URL</dt>
+                                                <dd class="col-sm-8">
+                                                    <a href="<?php echo $movie['trailerURL']; ?>">
+                                                        <?php echo $movie['trailerURL']; ?>
+                                                    </a>
+                                                </dd>
+                                                <dt class="col-sm-4">Trailer Video</dt>
+                                                <dd class="col-sm-8">
+                                                    <iframe width="560" height="315"
+                                                    src="<?php echo $movie['trailerURL']; ?>">
+                                                    </iframe>
+                                                </dd>
+                                            </div>
+                                            <div class="col">
+                                                <div class=" d-flex justify-content-end">
+                                                    <?php echo '<img id="posterImg" style="width:auto;height:500px;" src="data:image/png;base64,' . $movie['poster'] . '" alt="Movie Poster" />'; ?>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <?php if (isset($_SESSION['email'])) {?>
+                                                        <a href="movieBookingMgmt/createMovieBooking.php?movieId=<?php echo $movie['id']; ?>" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Book Now</a>
+                                                    <?php } else { ?>
+                                                        <a href="login.php" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Log in</a>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             <?php } ?>
         </div>
     </div>

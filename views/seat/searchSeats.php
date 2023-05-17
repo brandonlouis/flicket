@@ -32,7 +32,7 @@
 
                 <div class="d-flex">
                     <a href="manageSeats.php" type="submit" class="btn btn-outline-light fs-6 me-4">&#11148; Back</a>
-                    <form method="POST" action="../../controllers/seat_contr.php" class="d-flex">
+                    <form method="POST" action="../../controllers/seat/searchSeat_contr.php" class="d-flex">
                         <div class="input-group">
                             <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Search...">
                             <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Filter by</button>

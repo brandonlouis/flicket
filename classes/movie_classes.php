@@ -12,6 +12,7 @@ class Movie extends Dbh {
     private $poster;
     private $language;
     private $genre;
+    private $ticketType;
     private $status;
 
     
@@ -36,12 +37,15 @@ class Movie extends Dbh {
     public function retrieveOneMovie($id) {
         $this->id = $id;
 
-        $sql = "SELECT m.*, GROUP_CONCAT(g.genreName SEPARATOR ', ') as genres
+        $sql = "SELECT m.*, GROUP_CONCAT(g.genreName SEPARATOR ', ') as genres, GROUP_CONCAT(tt.name SEPARATOR ', ') as ticketTypes
                 FROM movie m
                 LEFT JOIN moviegenre mg ON m.id = mg.movieId
                 LEFT JOIN genre g ON mg.genreName = g.genreName
+                LEFT JOIN movietickettype mtt ON m.id = mtt.movieId
+                LEFT JOIN ticketType tt ON mtt.ticketTypeId = tt.id
                 WHERE m.id = ?
                 GROUP BY m.id";
+
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$this->id]);
 
@@ -99,7 +103,7 @@ class Movie extends Dbh {
         return $genres;
     }
 
-    public function createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster, $status) {
+    public function createMovie($title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $ticketType, $poster, $status) {
         session_start();
         $this->title = $title;
         $this->synopsis = $synopsis;
@@ -109,6 +113,7 @@ class Movie extends Dbh {
         $this->endDate = $endDate;
         $this->language = $language;
         $this->genre = $genre;
+        $this->ticketType = $ticketType;
         $this->poster = $poster;
         $this->status = $status;
 
@@ -131,12 +136,23 @@ class Movie extends Dbh {
             $genreStmt->execute([$genreName, $movieId]);
         }
 
+        foreach ($this->ticketType as $ticketTypeName) {
+            $sqlTicket = "SELECT id FROM tickettype WHERE name = ?;";
+            $stmt = $this->connect()->prepare($sqlTicket);
+            $stmt->execute([$ticketTypeName]);
+            $ticketId = $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+
+            $ticketTypeSql = "INSERT INTO movietickettype (movieId, ticketTypeId) VALUES (?, ?);";
+            $ticketTypeStmt = $this->connect()->prepare($ticketTypeSql);
+            $ticketTypeStmt->execute([$movieId, $ticketId]);
+        }
+
         $stmt = null;
         $genreStmt = null;
         return array("Movie successfully created!", "success");
     }
 
-    public function updateMovie($id, $title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $poster) {
+    public function updateMovie($id, $title, $synopsis, $runtimeMin, $trailerURL, $startDate, $endDate, $language, $genre, $ticketType, $poster) {
         session_start();
         $this->id = $id;
         $this->title = $title;
@@ -147,6 +163,7 @@ class Movie extends Dbh {
         $this->endDate = $endDate;
         $this->language = $language;
         $this->genre = $genre;
+        $this->ticketType = $ticketType;
         $this->poster = $poster;
 
         if ($this->poster == null) {
@@ -169,8 +186,24 @@ class Movie extends Dbh {
             $genreStmt->execute([$this->id, $genreName]);
         }
 
+        $deleteTicketTypeSql = "DELETE FROM movietickettype WHERE movieId = ?";
+        $deleteTicketTypeStmt = $this->connect()->prepare($deleteTicketTypeSql);
+        $deleteTicketTypeStmt->execute([$this->id]);
+
+        foreach ($this->ticketType as $ticketTypeName) {
+            $sqlTicket = "SELECT id FROM tickettype WHERE name = ?;";
+            $ticketIdstmt = $this->connect()->prepare($sqlTicket);
+            $ticketIdstmt->execute([$ticketTypeName]);
+            $ticketId = $ticketIdstmt->fetch(PDO::FETCH_ASSOC)['id'];
+
+            $ticketTypeSql = "INSERT INTO movietickettype (movieId, ticketTypeId) VALUES (?, ?);";
+            $ticketTypeStmt = $this->connect()->prepare($ticketTypeSql);
+            $ticketTypeStmt->execute([$this->id, $ticketId]);
+        }
+
         $stmt = null;
         $genreStmt = null;
+        $ticketTypeStmt = null;
         return array('Movie (ID: ' . $this->id . ') updated successfully!', "success");
     }
 
