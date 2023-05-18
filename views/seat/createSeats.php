@@ -78,9 +78,9 @@
                 <div id="seatingLayout"><div class="row screen"><div class="screen col-label">Screen</div></div></div>
                 <div id="seatingLegend">
                     <div class="row legend pe-none mt-4 mb-0">
-                        <div class="legend label">Available</div><div class="legendseat available mx-3 ms-1"></div>
-                        <div class="legend label">Occupied</div><div class="legendseat occupied mx-3 ms-1"></div>
-                        <div class="legend label">Suspended</div><div class="legendseat suspended mx-3 ms-1"></div>
+                        <div class="legend label">Available</div><div class="seat available mx-3 ms-1"></div>
+                        <div class="legend label">Occupied</div><div class="seat occupied mx-3 ms-1"></div>
+                        <div class="legend label">Suspended</div><div class="seat suspended mx-3 ms-1"></div>
                     </div>
                 </div>
             </div>
@@ -128,8 +128,10 @@
         const divs = document.querySelectorAll('.row .seat');
         const seatData = [];
         divs.forEach(div => {
-            const seat = div.dataset.seat;
-            seatData.push(seat);
+            if (div.hasAttribute('data-seat')) {
+                const seat = div.getAttribute('data-seat');
+                seatData.push(seat);
+            }
         });
 
         const seatDataInput = document.getElementById('seatData');

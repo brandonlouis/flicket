@@ -1,11 +1,18 @@
 <?php
     session_start();
 
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/dbh_classes.php";
     include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie/manageMovie_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/session/manageSession_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/cinemahall/manageCinemaHall_contr.php";
 
     $mc = new ManageMovieContr();
     $movies = $mc->retrieveAllAvailableMovies();
+    
+    $sc = new ManageSessionContr();
+    $sessions = $sc->retrieveAllSessions();
+
+    $chc = new ManageCinemaHallContr();
+    $cinemaHalls = $chc->retrieveAllCinemaHalls();
 ?>
 
 <!DOCTYPE html>
@@ -48,67 +55,54 @@
                 </a>
 
                 <div class="modal fade" id="view<?php echo $movie['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered mw-100 w-75">
-                            <div class="modal-content">
+                    <div class="modal-dialog modal-dialog-centered" style="max-width:800px;">
+                        <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">View Session</h5>
+                                <h5 class="modal-title" id="modalLabel">Movie Details</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body pb-5">
                                 <div class="container">
-                                    <div class="row">
-                                        <div class="col">
-                                            <dl class="row">
-                                                <dt class="col-sm-4">Movie ID</dt>
-                                                <dd class="col-sm-8"><?php echo $movie['id']; ?></dd>
-
-                                                <dt class="col-sm-4">Title</dt>
-                                                <dd class="col-sm-8"><?php echo $movie['title']; ?></dd>
-
-                                                <dt class="col-sm-4">Synopsis</dt>
-                                                <dd class="col-sm-8">
-                                                    <p><?php echo $movie['synopsis']; ?></p>
-                                                </dd>
-
-                                                <dt class="col-sm-4">Runtime (Minutes)</dt>
-                                                <dd class="col-sm-8"><?php echo $movie['runtimeMin']; ?></dd>
-
-                                                <dt class="col-sm-4">Start Date</dt>
-                                                <dd class="col-sm-8"><?php echo $movie['startDate']; ?></dd>
-
-                                                <dt class="col-sm-4">End Date</dt>
-                                                <dd class="col-sm-8"><?php echo $movie['endDate']; ?></dd>
-
-                                                <dt class="col-sm-4">Language</dt>
-                                                <dd class="col-sm-8"><?php echo $movie['language']; ?></dd>
-
-                                                <dt class="col-sm-4">Genres</dt>
-                                                <dd class="col-sm-8">
-                                                    <?php echo $movie['genres']; ?>
-                                                </dd>
-
-                                                <dt class="col-sm-4">Trailer URL</dt>
-                                                <dd class="col-sm-8">
-                                                    <a href="<?php echo $movie['trailerURL']; ?>">
-                                                        <?php echo $movie['trailerURL']; ?>
-                                                    </a>
-                                                </dd>
-                                                <dt class="col-sm-4">Trailer Video</dt>
-                                                <dd class="col-sm-8">
-                                                    <iframe width="560" height="315"
-                                                    src="<?php echo $movie['trailerURL']; ?>">
-                                                    </iframe>
-                                                </dd>
+                                    <iframe height="393" style="width: -webkit-fill-available;"
+                                        src="<?php echo $movie['trailerURL']; ?>">
+                                    </iframe>
+                                    <div class="d-flex mt-4">
+                                        <div>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <p class="card-text text-white" style="font-size:12px;width: fit-content;padding: 2px 10px;background-color: #d74545;border-radius: 15px;"><?php echo $movie['genres']; ?></p>
+                                                <p class="d-flex mx-5" style="font-size:14px;"><i class="bi bi-clock-history"></i>&nbsp;&nbsp;<?php echo $movie['runtimeMin']; ?> minutes</p>
+                                                <p class="d-flex" style="font-size:14px;"><i class="bi bi-translate"></i>&nbsp;&nbsp;<?php echo $movie['language']; ?></p>
                                             </div>
-                                            <div class="col">
-                                                <div class=" d-flex justify-content-end">
-                                                    <?php echo '<img id="posterImg" style="width:auto;height:500px;" src="data:image/png;base64,' . $movie['poster'] . '" alt="Movie Poster" />'; ?>
+                                            <h2><?php echo $movie['title']; ?></h2>
+                                            <p><?php echo $movie['synopsis']; ?></p>
+                                            
+                                            <div class="d-flex justify-content-center mt-5">
+                                                <div class="input-group w-75" title="Session">
+                                                    <span class="input-group-text">
+                                                        <i class="bi bi-clock"></i>
+                                                    </span>
+                                                    <select class="form-select" id="sessionId" name="sessionId" aria-label="Default select">
+                                                        <option hidden selected value="">Select a Session</option>
+                                                        <?php foreach ($sessions as $session) {
+                                                            if ($session['movieId'] == $movie['id']) {
+                                                                foreach ($cinemaHalls as $cinemaHall) {
+                                                                    if ($cinemaHall['id'] == $session['hallId']) {?>
+                                                                        <option value="<?php echo $session['id'] . '|' . $session['hallId']; ?>"><?php echo $cinemaHall['name']?> | <?php echo $formattedDate = date('j F', strtotime($session['date'])); ?>, <?php echo $session['startTime']; ?> - <?php echo $session['endTime'];?></option>
+                                                                <?php   } else {
+                                                                            continue;
+                                                                        }
+                                                                    }
+                                                                } else {
+                                                                    continue;
+                                                                }
+                                                            }?>
+                                                    </select>
                                                 </div>
-                                                <div class="d-flex">
+                                                <div class="d-flex ms-5">
                                                     <?php if (isset($_SESSION['email'])) {?>
-                                                        <a href="movieBookingMgmt/createMovieBooking.php?movieId=<?php echo $movie['id']; ?>" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Book Now</a>
+                                                        <a href="movieBookingMgmt/createMovieBooking.php?movieId=<?php echo $movie['id']; ?>&hallId=" id="bookNowButton" type="button" class="btn btn-danger">Book now</a>
                                                     <?php } else { ?>
-                                                        <a href="login.php" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Log in</a>
+                                                        <a href="login.php" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Login to book</a>
                                                     <?php } ?>
                                                 </div>
                                             </div>
@@ -118,6 +112,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
             <?php } ?>
         </div>
     </div>
@@ -130,6 +125,34 @@
     <?php
         include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/footer.php';
     ?>
+
+
+<script>
+    const bookNowButtons = document.querySelectorAll('#bookNowButton');
+    const selectSessions = document.querySelectorAll('#sessionId');
+
+    for (let i = 0; i < bookNowButtons.length; i++) {
+        const bnb = bookNowButtons[i];
+        const ss = selectSessions[i];
+
+        bnb.addEventListener('click', function(event) {
+            if (ss.value == '') {
+                event.preventDefault();
+                alert('Please select a Session');
+            }
+        });
+
+        ss.addEventListener('change', function() {
+            const sessionId = ss.value.split('|')[0];
+            const hallId = ss.value.split('|')[1];
+            const hrefParts = bnb.href.split('?');
+            const newHref = `${hrefParts[0]}?${hrefParts[1].replace(/hallId=[^&]*/, `hallId=${hallId}&sessionId=${sessionId}`)}`;
+
+            bnb.href = newHref;
+        });
+    }
+</script>
+
 </body>
 
 </html>
