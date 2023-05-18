@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="../css/style.css">
 
  
-    <title>F&B Items | flicket</title>
+    <title>Food & Drinks | flicket</title>
     <link rel="icon" type="image/x-icon" href="/flicket/img/favicon.ico">
 </head>
 

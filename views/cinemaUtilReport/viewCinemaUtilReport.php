@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/flicket/css/style.css">
 
  
-    <title>Manage Sessions | flicket</title>
+    <title>View Utility Report | flicket</title>
     <link rel="icon" type="image/x-icon" href="/flicket/img/favicon.ico">
 </head>
 
@@ -29,13 +29,13 @@
         <div class="content">
             <div class="d-flex justify-content-between align-items-center">
                 <?php if($_SESSION['timeLevel'] == 'Session'){ ?>
-                    <h1>View Cinema Utilization For <?php echo $_SESSION['timeLevel']; ?>: <?php echo $_SESSION['sessionID']; ?></h1>
+                    <h1>Cinema Utilization Report for <?php echo $_SESSION['timeLevel']; ?>: <?php echo $_SESSION['sessionID']; ?></h1>
                 <?php } ?>
                 <?php if($_SESSION['timeLevel'] == 'Day') { ?>
-                    <h1>View Ticket Sales Report For <?php echo $_SESSION['timeLevel']; ?>: <?php echo $_SESSION['dayDate']; ?></h1>
+                    <h1>Cinema Utilization Report for <?php echo $_SESSION['timeLevel']; ?>: <?php echo $_SESSION['dayDate']; ?></h1>
                 <?php } ?>
                 <?php if($_SESSION['timeLevel'] == 'Week'){ ?>
-                    <h1>View Ticket Sales Report For <?php echo $_SESSION['timeLevel']; ?>: <?php echo $_SESSION['startDate'];?> to <?php echo $_SESSION['endDate'];?></h1>
+                    <h1>Cinema Utilization Report for <?php echo $_SESSION['timeLevel']; ?>: <?php echo $_SESSION['startDate'];?> to <?php echo $_SESSION['endDate'];?></h1>
                 <?php } ?>
             </div>
             <table class="table table-hover text-white mt-4">
