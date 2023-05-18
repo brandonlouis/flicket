@@ -52,9 +52,11 @@
                         <i class="bi bi-geo-alt"></i>
                     </span>
                     <select class="form-select" id="hallId" name="hallId" aria-label="Default select">
-                        <?php foreach ($halls as $hall) { ?>
+                        <?php foreach ($halls as $hall) { 
+                            if ($hall['totalSeats'] > 0) { ?>
                             <option value="<?php echo $hall['id'] ?>" ><?php echo $hall['name'] . ', Hall ' . $hall['hallNumber']; ?></option>
-                        <?php } ?>
+                        <?php }
+                        } ?>
                     </select>
                 </div>
                 <div class="input-group mt-3">

@@ -119,37 +119,37 @@
                     <div class="modal fade" id="view<?php echo $session['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" style="min-width:50%">
                             <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">View Session</h5>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col">
-                                            <dl class="row">
-                                                <dt class="col-sm-4">Session ID</dt>
-                                                <dd class="col-sm-8"><?php echo $session['id']; ?></dd>
-
-                                                <dt class="col-sm-4">Title</dt>
-                                                <dd class="col-sm-8"><?php echo $session['title']; ?></dd>
-
-                                                <dt class="col-sm-4">Runtime (Minutes)</dt>
-                                                <dd class="col-sm-8"><?php echo $session['runtimeMin']; ?></dd>
-
-                                                <dt class="col-sm-4">Date</dt>
-                                                <dd class="col-sm-8"><?php echo $session['date']; ?></dd>
-
-                                                <dt class="col-sm-4">Start Time</dt>
-                                                <dd class="col-sm-8"><?php echo $session['startTime']; ?></dd>
-
-                                                <dt class="col-sm-4">Start Time</dt>
-                                                <dd class="col-sm-8"><?php echo $session['endTime']; ?></dd>
-                                            </div>
-                                            <div class="col">
-                                                <div class=" d-flex justify-content-end">
-                                                    <?php echo '<img id="posterImg" style="width:auto;height:300px;" src="data:image/png;base64,' . $session['poster'] . '" alt="Session Poster" />'; ?>
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel">View Session</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body pb-4">
+                                    <div class="container">
+                                        <div class="d-flex justify-content-around align-items-center">
+                                            <div class="d-flex">
+                                                <div class="me-5">
+                                                    <p><span class="fw-bold">Session ID</span> :</p>
+                                                    <p><span class="fw-bold">Title</span> :</p>
+                                                    <p><span class="fw-bold">Runtime</span> :</p>
+                                                    <p><span class="fw-bold">Venue</span> :</p>
+                                                    <p><span class="fw-bold">Date</span> :</p>
+                                                    <p><span class="fw-bold">Start Time</span> :</p>
+                                                    <p><span class="fw-bold">End Time</span> :</p>
+                                                    <p><span class="fw-bold">Status</span> :</p>
                                                 </div>
+                                                <div>
+                                                    <p><?php echo $session['id']; ?></p>
+                                                    <p><?php echo $session['title']; ?></p>
+                                                    <p><?php echo $session['runtimeMin']; ?> minutes</p>
+                                                    <p><?php echo $session['venue']; ?></p>
+                                                    <p><?php echo $session['date']; ?></p>
+                                                    <p><?php echo $session['startTime']; ?></p>
+                                                    <p><?php echo $session['endTime']; ?></p>
+                                                    <span class="<?php echo $session['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $session['status']; ?></span>
+                                                </div>
+                                            </div>
+                                            <div class=" d-flex justify-content-end">
+                                                <?php echo '<img id="posterImg" style="width:auto;height:300px;" src="data:image/png;base64,' . $session['poster'] . '" alt="Session Poster" />'; ?>
                                             </div>
                                         </div>
                                     </div>

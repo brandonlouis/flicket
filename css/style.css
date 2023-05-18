@@ -98,7 +98,7 @@ a {
     margin-bottom: 30px;
 }
 
-.seat, .legendseat {
+.seat {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -112,17 +112,17 @@ a {
     cursor: pointer;
 }
 
-.seat.available, .legendseat.available {
+.seat.available{
     background-color: #d66666;
     border-color: #d66666;
 }
 
-.seat.occupied, .legendseat.occupied {
+.seat.occupied {
     background-color: #444;
     border-color: #444;
 }
 
-.seat.suspended, .legendseat.suspended {
+.seat.suspended {
     background-color: transparent;
     border-color: gray;
 }
@@ -161,7 +161,16 @@ a {
 
 
 
-
+/* CREATE MOVIE BOOKING CREATE MOVIE BOOKING CREATE MOVIE BOOKING CREATE MOVIE BOOKING CREATE MOVIE BOOKING  */
+.background-image {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: -webkit-fill-available;
+    background-size: cover;
+    z-index: -1;
+    opacity: 0.15;
+}
 
 
 

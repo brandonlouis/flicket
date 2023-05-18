@@ -60,11 +60,11 @@
                     </span>
                     <input type="text" class="form-control" id="runtimeMin" name="runtimeMin" placeholder="Runtime (Minutes)" pattern="^[0-9]{1,4}$" required>
                 </div>
-                <div class="input-group mt-3" title="Trailer URL">
+                <div class="input-group mt-3" title="Trailer URL (Embed)">
                     <span class="input-group-text">
                         <i class="bi bi-link"></i>
                     </span>
-                    <input type="text" class="form-control" id="" name="trailerURL" placeholder="Trailer URL" required>
+                    <input type="text" class="form-control" id="trailerURL" name="trailerURL" placeholder="Trailer URL (Embed)" required>
                 </div>
                 <div class="input-group mt-3" title="Start Date">
                     <span class="input-group-text">

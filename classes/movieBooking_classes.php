@@ -6,6 +6,8 @@ class MovieBooking extends Dbh {
     private $movieId;
     private $sessionId;
     private $movieQty;
+    private $seatLocation;
+    private $hallId;
 
     public function retrieveAllMovieBookings($id) {
         $this->id = $id;
@@ -31,14 +33,31 @@ class MovieBooking extends Dbh {
         return $movieBookings;
     }
 
-    public function createMovieBooking($sessionId, $ticketType) {
+    public function createMovieBooking($hallId, $sessionId, $ticketType, $seatLocation) {
         session_start();
+        $this->hallId = $hallId;
         $this->sessionId = $sessionId;
         $this->ticketType = $ticketType;
+        $this->seatLocation = $seatLocation;
 
-        $sql = "INSERT INTO ticket (sessionID, seatId, ticketType, accountId, status) VALUES (?, ?, ?, ?, ?);";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->sessionId, '1', $this->ticketType, $_SESSION['id'], 'Available']);
+        foreach ($seatLocation as $seat) {
+            preg_match('/([A-Z]+)(\d+)/', $seat, $matches);
+            $rowLetter = $matches[1];
+            $seatNumber = $matches[2];
+
+            $sql = "SELECT id FROM seat WHERE hallId = ? AND rowLetter = ? AND seatNumber = ?;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$this->hallId, $rowLetter, $seatNumber]);
+            $id = $stmt->fetchColumn();
+
+            $sql = "INSERT INTO ticket (sessionID, seatId, ticketType, accountId, status) VALUES (?, ?, ?, ?, ?);";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$this->sessionId, $id, $this->ticketType, $_SESSION['id'], 'Available']);
+
+            $sql = "UPDATE seat SET status = 'Occupied' WHERE id = ?;";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$id]);
+        }
         
         $stmt = null;
         return array("Booking made successfully! Your purchase receipt will be sent to your email address", "success");

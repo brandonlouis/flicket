@@ -4,9 +4,9 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/dbh_classes.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/movieBooking_classes.php";
 
 class CreateMovieBookingContr {
-    public function createMovieBooking($sessionId, $ticketType) {
+    public function createMovieBooking($hallId, $sessionId, $ticketType, $seatLocation) {
         $movie = new MovieBooking();
-        $movieBooking = $movie->createMovieBooking($sessionId, $ticketType);
+        $movieBooking = $movie->createMovieBooking($hallId, $sessionId, $ticketType, $seatLocation);
         
         setcookie('flash_message', $movieBooking[0], time() + 3, '/');
         setcookie('flash_message_type', $movieBooking[1], time() + 3, '/');
@@ -16,8 +16,10 @@ class CreateMovieBookingContr {
     }
 }
 
-$sessionId = $_POST['sessionId'];
-$ticketType = $_POST['ticketType'];
+$hallId = $_GET['hallId'];
+$sessionId = $_GET['sessionId'];
+$ticketType = explode('|', $_POST['ticketType'])[0];
+$seatLocation = explode(', ', $_POST['seatLocation']);
 
 $bmc = new CreateMovieBookingContr();
-$bmc->createMovieBooking($sessionId, $ticketType);
+$bmc->createMovieBooking($hallId, $sessionId, $ticketType, $seatLocation);

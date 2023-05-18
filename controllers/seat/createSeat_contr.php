@@ -21,10 +21,6 @@ class CreateSeatContr {
     }
 }
 
-$nameHallNumber = explode(", Hall ", $_POST['nameHallNumber']);
-
-$cinemaName = $nameHallNumber[0];
-$hallNumber = $nameHallNumber[1];
 $seatData = json_decode($_POST['seatData'], true);
 $status = $_POST['status'];
 

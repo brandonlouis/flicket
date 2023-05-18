@@ -86,12 +86,12 @@
                         <td><span class="<?php echo $movie['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $movie['status']; ?></span></td>
 
                         <td class="d-flex justify-content-evenly">
-                            <a href="updateMovie.php?movieId=<?php echo $movie['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Movie"></a>
+                            <a href="updateMovie.php?movieId=<?php echo $movie['id']; ?>" type="submit" class="btn btn-outline-info bi bi-pencil fs-5" title="Edit Movie" onclick="event.stopPropagation();"></a>
                             <?php
                                 if ($movie['status'] == 'Available') {
                                     echo '<button type="button" href="#" class="btn btn-danger bi bi-pause-fill fs-5" title="Suspend Movie" data-bs-toggle="modal" data-bs-target="#suspend' . $movie['id'] . '" onclick="event.stopPropagation();"></button>';
                                 } else {
-                                    echo '<a href="../../controllers/movie/suspendMovie_contr.php?activateId=' . $movie["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Movie"></a>';
+                                    echo '<a href="../../controllers/movie/suspendMovie_contr.php?activateId=' . $movie["id"] . '" class="btn btn-success bi bi-play-fill fs-5" title="Activate Movie" onclick="event.stopPropagation();"></a>';
                                 }
                             ?>
                         </td>

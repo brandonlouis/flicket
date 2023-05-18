@@ -2,10 +2,18 @@
     session_start();
 
     include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie/manageMovie_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/session/manageSession_contr.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/cinemahall/manageCinemaHall_contr.php";
 
     $mc = new ManageMovieContr();
     $movies = $mc->retrieveAllAvailableMovies();
     $random_number = rand(0,count($movies)-1);
+
+    $sc = new ManageSessionContr();
+    $sessions = $sc->retrieveAllSessions();
+
+    $chc = new ManageCinemaHallContr();
+    $cinemaHalls = $chc->retrieveAllCinemaHalls();
 ?>
 
 <!DOCTYPE html>
@@ -35,8 +43,8 @@
                     <h1><?php echo $movies[$random_number]['title']; ?></h1>
                     <p><?php echo $movies[$random_number]['synopsis']; ?></p>
                     <div class="mt-5">
-                        <a href="views/movieBookingMgmt/createMovieBooking.php?movieId=<?php echo $movies[$random_number]['id']?>" type="button" class="btn btn-danger">Book Now</a>
-                        <a href="#" type="button" class="ms-4 btn btn-outline-light">See Details</a>
+                        <a href="views/movies.php" type="button" class="btn btn-danger">Book Now</a>
+                        <a href="views/movies.php" type="button" class="ms-4 btn btn-outline-light">See Details</a>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end" style="width:60%">
@@ -61,7 +69,7 @@
             <hr>
             <div class="mt-5 align-items-center" style="display:grid; grid-template-columns: repeat(4, 1fr); justify-items:center;">
                 <?php foreach ($mv as $movie) { ?>
-                    <a href="#" class="text-decoration-none border-0 mb-5" style="width: 17rem;">
+                    <a href="#" class="text-decoration-none border-0 mb-5" style="width: 17rem;" data-bs-toggle="modal" data-bs-target="#view<?php echo $movie['id']; ?>">
                         <img src="data:image/png;base64,<?php echo $movie['poster']; ?>" class="card-img-top mb-3" style="height:400px; object-fit:cover;" alt="<?php echo $movie['title'] ?>">
                         <div class="card-body d-flex flex-column justify-content-between">
                             <h5 class="card-title text-white mb-2"><?php echo $movie['title'] ?></h5>
@@ -71,6 +79,66 @@
                             </div>
                         </div>
                     </a>
+
+                    <div class="modal fade" id="view<?php echo $movie['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" style="max-width:800px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel">Movie Details</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body pb-5">
+                                    <div class="container">
+                                        <iframe height="393" style="width: -webkit-fill-available;"
+                                            src="<?php echo $movie['trailerURL']; ?>">
+                                        </iframe>
+                                        <div class="d-flex mt-4">
+                                            <div>
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <p class="card-text text-white" style="font-size:12px;width: fit-content;padding: 2px 10px;background-color: #d74545;border-radius: 15px;"><?php echo $movie['genres']; ?></p>
+                                                    <p class="d-flex mx-5" style="font-size:14px;"><i class="bi bi-clock-history"></i>&nbsp;&nbsp;<?php echo $movie['runtimeMin']; ?> minutes</p>
+                                                    <p class="d-flex" style="font-size:14px;"><i class="bi bi-translate"></i>&nbsp;&nbsp;<?php echo $movie['language']; ?></p>
+                                                </div>
+                                                <h2><?php echo $movie['title']; ?></h2>
+                                                <p><?php echo $movie['synopsis']; ?></p>
+                                                
+                                                <div class="d-flex justify-content-center mt-5">
+                                                    <div class="input-group w-75" title="Session">
+                                                        <span class="input-group-text">
+                                                            <i class="bi bi-clock"></i>
+                                                        </span>
+                                                        <select class="form-select" id="sessionId" name="sessionId" aria-label="Default select">
+                                                            <option hidden selected value="">Select a Session</option>
+                                                            <?php foreach ($sessions as $session) {
+                                                                if ($session['movieId'] == $movie['id']) {
+                                                                    foreach ($cinemaHalls as $cinemaHall) {
+                                                                        if ($cinemaHall['id'] == $session['hallId']) {?>
+                                                                            <option value="<?php echo $session['id'] . '|' . $session['hallId']; ?>"><?php echo $cinemaHall['name']?> | <?php echo $formattedDate = date('j F', strtotime($session['date'])); ?>, <?php echo $session['startTime']; ?> - <?php echo $session['endTime'];?></option>
+                                                                    <?php   } else {
+                                                                                continue;
+                                                                            }
+                                                                        }
+                                                                    } else {
+                                                                        continue;
+                                                                    }
+                                                                }?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="d-flex ms-5">
+                                                        <?php if (isset($_SESSION['email'])) {?>
+                                                            <a href="views/movieBookingMgmt/createMovieBooking.php?movieId=<?php echo $movie['id']; ?>&hallId=" id="bookNowButton" type="button" class="btn btn-danger">Book now</a>
+                                                        <?php } else { ?>
+                                                            <a href="views/login.php" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Login to make a booking</a>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <?php } ?>
             </div>
         </div>
@@ -84,6 +152,34 @@
     <?php
         include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/footer.php';
     ?>
+
+
+<script>
+    const bookNowButtons = document.querySelectorAll('#bookNowButton');
+    const selectSessions = document.querySelectorAll('#sessionId');
+
+    for (let i = 0; i < bookNowButtons.length; i++) {
+        const bnb = bookNowButtons[i];
+        const ss = selectSessions[i];
+
+        bnb.addEventListener('click', function(event) {
+            if (ss.value == '') {
+                event.preventDefault();
+                alert('Please select a Session');
+            }
+        });
+
+        ss.addEventListener('change', function() {
+            const sessionId = ss.value.split('|')[0];
+            const hallId = ss.value.split('|')[1];
+            const hrefParts = bnb.href.split('?');
+            const newHref = `${hrefParts[0]}?${hrefParts[1].replace(/hallId=[^&]*/, `hallId=${hallId}&sessionId=${sessionId}`)}`;
+
+            bnb.href = newHref;
+        });
+    }
+</script>
+
 </body>
 
 </html>
