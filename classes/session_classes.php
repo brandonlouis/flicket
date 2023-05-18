@@ -28,6 +28,24 @@ class Session extends Dbh {
         return $sessions;
     }
 
+    public function retrieveAllAvailableSessions() {
+        $sql = "SELECT s.*, ch.name, DATE(s.startTime) AS date, DATE_FORMAT(s.startTime, '%h:%i %p') AS startTime, DATE_FORMAT(s.endTime, '%h:%i %p') AS endTime
+                FROM session s
+                JOIN movie m ON s.movieId = m.id
+                JOIN cinemahall ch ON s.hallId = ch.id
+                WHERE s.status = 'Available' AND ch.status = 'Available' AND DATE(s.startTime) >= CURDATE();";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+
+        $sessions = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $sessions[] = $row;
+        }
+
+        $stmt = null;
+        return $sessions;
+    }
+
     public function retrieveOneSession($id) {
         $this->id = $id;
 

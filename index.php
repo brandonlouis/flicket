@@ -3,17 +3,13 @@
 
     include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/movie/manageMovie_contr.php";
     include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/session/manageSession_contr.php";
-    include $_SERVER['DOCUMENT_ROOT'] . "/flicket/controllers/cinemahall/manageCinemaHall_contr.php";
 
     $mc = new ManageMovieContr();
     $movies = $mc->retrieveAllAvailableMovies();
     $random_number = rand(0,count($movies)-1);
 
     $sc = new ManageSessionContr();
-    $sessions = $sc->retrieveAllSessions();
-
-    $chc = new ManageCinemaHallContr();
-    $cinemaHalls = $chc->retrieveAllCinemaHalls();
+    $sessions = $sc->retrieveAllAvailableSessions();
 ?>
 
 <!DOCTYPE html>
@@ -110,18 +106,10 @@
                                                         <select class="form-select" id="sessionId" name="sessionId" aria-label="Default select">
                                                             <option hidden selected value="">Select a Session</option>
                                                             <?php foreach ($sessions as $session) {
-                                                                if ($session['movieId'] == $movie['id']) {
-                                                                    foreach ($cinemaHalls as $cinemaHall) {
-                                                                        if ($cinemaHall['id'] == $session['hallId']) {?>
-                                                                            <option value="<?php echo $session['id'] . '|' . $session['hallId']; ?>"><?php echo $cinemaHall['name']?> | <?php echo $formattedDate = date('j F', strtotime($session['date'])); ?>, <?php echo $session['startTime']; ?> - <?php echo $session['endTime'];?></option>
-                                                                    <?php   } else {
-                                                                                continue;
-                                                                            }
-                                                                        }
-                                                                    } else {
-                                                                        continue;
-                                                                    }
-                                                                }?>
+                                                                if ($session['movieId'] == $movie['id']) {?>
+                                                                    <option value="<?php echo $session['id'] . '|' . $session['hallId']; ?>"><?php echo $session['name']?> | <?php echo $formattedDate = date('j F', strtotime($session['date'])); ?>, <?php echo $session['startTime']; ?> - <?php echo $session['endTime'];?></option>
+                                                            <?php }
+                                                            } ?>
                                                         </select>
                                                     </div>
                                                     <div class="d-flex ms-5">
