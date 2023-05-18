@@ -30,39 +30,39 @@
     ?>
 
     <div class="container mt-4" style="margin-bottom: 80px">
-        <div class="content">
-            <div class="d-flex justify-content-between align-items-center">
+        <div class="content d-flex justify-content-center">
+            <div class="w-50">
                 <h1>Generate Cinema Utilization Report</h1>
-            </div>
-            <form method="POST" action="../../controllers/cinemaUtil/genSessionCinemaUtil_contr.php" class="row">
-                <div class="mb-3">
-                        <label for="sessionID">Select session:</label> 
-                        <select class="form-select" name="sessionID" aria-label="Session for report:" style="width:40%">             
+                <form method="POST" action="../../controllers/cinemaUtil/genSessionCinemaUtil_contr.php" class="p-4 mt-4 border border-danger rounded-3 border border-danger rounded-3 d-flex align-items-center flex-column">
+                    <h2 class="fw-bold mb-3">By Session</h2> 
+                    <div class="w-100">
+                        <select class="form-select" name="sessionID" aria-label="Session for report:">             
                             <?php foreach($sessions as $s){ ?>
                                 <option value="<?php echo $s['id'] ?>">
                                     <?php echo "sessionID: " . $s['id'] . " (movieID: " . $s['movieId'] . ", Time: " . $s['startTime'] . "-" . $s['startTime'] . ")";?>
                                 </option>
                             <?php } ?>
                         </select>
-                </div>
-                    <button type="submit" class="btn btn-primary" style="width:25%">Generate Session Report</button>
-            </form>
+                        <button type="submit" class="btn btn-danger w-100 mt-3">Generate Session Report</button>
+                    </div>
+                </form>
 
-            <form method="POST" action="../../controllers/cinemaUtil/genDailyCinemaUtil_contr.php" class="row">
-                <div class="mb-3">
-                    <label for="dayDate">Select day:</label>
-                    <input type="date" class="form-control" id="dayDate" name="dayDate" style="width:40%">  
-                </div>
-                <button type="submit" class="btn btn-primary" style="width:25%">Generate Daily Report</button>
-            </form>
+                <form method="POST" action="../../controllers/cinemaUtil/genDailyCinemaUtil_contr.php" class="p-4 my-4 border border-danger rounded-3 border border-danger rounded-3 d-flex align-items-center flex-column">
+                    <h2 class="fw-bold mb-3">By Day</h2> 
+                    <div class="w-100">
+                        <input type="date" class="form-control" id="dayDate" name="dayDate">
+                        <button type="submit" class="btn btn-danger w-100 mt-3">Generate Daily Report</button> 
+                    </div>
+                </form>
 
-            <form method="POST" action="../../controllers/cinemaUtil/genWeeklyCinemaUtil_contr.php" class="row">
-                <div class="mb-3">
-                    <label for="weekDate">Select the start of the week:</label>
-                    <input type="date" class="form-control" id="weekDate" name="weekDate" style="width:40%">  
-                </div>
-                <button type="submit" class="btn btn-primary" style="width:25%">Generate Weekly Report</button>
-            </form>
+                <form method="POST" action="../../controllers/cinemaUtil/genWeeklyCinemaUtil_contr.php" class="p-4 mt-4 border border-danger rounded-3 border border-danger rounded-3 d-flex align-items-center flex-column">
+                    <h2 class="fw-bold mb-3">By Week (first day of the week)</h2> 
+                    <div class="w-100">
+                        <input type="date" class="form-control" id="weekDate" name="weekDate">
+                        <button type="submit" class="btn btn-danger w-100 mt-3">Generate Weekly Report</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
