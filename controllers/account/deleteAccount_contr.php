@@ -16,7 +16,7 @@ class DeleteAccountContr {
             session_unset();
             session_destroy();
 
-            setcookie('flash_message', 'Account suspended successfully!', time() + 3, '/');
+            setcookie('flash_message', 'Account deleted successfully!', time() + 3, '/');
             header("location: ../../index.php");
         } else {
             header("location: ../../views/account/manageAccounts.php");

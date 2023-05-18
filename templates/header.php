@@ -54,7 +54,7 @@
 
                 if ($_SESSION['userType'] == "customer") {
                         echo '<li><a class="dropdown-item" href="/flicket/views/movieBookingMgmt/manageMovieBooking.php">Manage Bookings</a></li>
-                            <li><a class="dropdown-item mt-3" name="deleteAccount" data-bs-toggle="modal" data-bs-target="#suspendConfirmation">Suspend Account</a></li>
+                            <li><a class="dropdown-item mt-3" name="deleteAccount" data-bs-toggle="modal" data-bs-target="#deleteConfirmation">Delete Account</a></li>
                         </ul>
                     </div>';
                 }
@@ -64,15 +64,15 @@
             }
         ?>
 
-        <div class="modal fade" id="suspendConfirmation" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal fade" id="deleteConfirmation" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered mw-75 w-75">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Suspend Account</h5>
+                        <h5 class="modal-title" id="modalLabel">Delete Account</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Are you sure you want to <b>permanently</b> suspend your account?
+                        Are you sure you want to <b>permanently</b> delete your account?
                     </div>
                     <div class="modal-footer">
                         <a href="/flicket/controllers/account/deleteAccount_contr.php?deleteId=<?php echo $_SESSION['id']; ?>" type="button" class="btn btn-danger">Yes</a>
