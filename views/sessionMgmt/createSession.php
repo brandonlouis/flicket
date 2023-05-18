@@ -43,7 +43,7 @@
                     </span>
                     <select class="form-select" id="movieId" name="movieId" aria-label="Default select">
                         <?php foreach ($movies as $movie) { ?>
-                            <option value="<?php echo $movie['id']; ?>" ><?php echo $movie['title']; ?></option>
+                            <option value="<?php echo $movie['id'] .'|'. $movie['startDate'] .'|'. $movie['endDate']; ?>" ><?php echo $movie['title']; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -64,7 +64,7 @@
                         <i class="bi bi-calendar3"></i>
                     </span>
                     <div class="form-floating">
-                        <input type="date" class="form-control" id="date" name="date" placeholder="Date" min="<?php echo $movie['startDate']; ?>" max="<?php echo $movie['endDate']; ?>" required>
+                        <input type="date" class="form-control" id="date" name="date" placeholder="Date" required>
                         <label class="text-secondary" for="date">Date</label>
                     </div>
                 </div>
@@ -113,6 +113,26 @@
     <?php
         include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/footer.php';
     ?>
+
+
+<script>
+    $(document).ready(function() {
+        var selectedOption = $('#movieId').find('option:selected');
+        var values = selectedOption.val().split('|');
+        $('#date').attr('min', values[1]);
+        $('#date').attr('max', values[2]);
+
+        $('#movieId').change(function() {
+            var selectedOption = $(this).find('option:selected');
+            var values = selectedOption.val().split('|');
+
+            $('#date').attr('min', values[1]);
+            $('#date').attr('max', values[2]);
+        });
+    });
+
+</script>
+
 </body>
 
 </html>

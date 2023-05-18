@@ -81,7 +81,7 @@
                     <div class="modal-dialog modal-dialog-centered" style="max-width:500px;">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h5 class="modal-title" id="modalLabel">Purchase Payment</h5>
+                            <h5 class="modal-title" id="modalLabel">Booking Payment</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body pb-5 px-4">
@@ -138,7 +138,7 @@
                                                     <img src="../../img/amex.png">
                                                 </div>
                                             </div>
-                                            <button type="submit" name="purchaseFnBItem" class="btn btn-danger mt-4 w-100">Confirm purchase</button>
+                                            <button type="submit" name="purchaseFnBItem" class="btn btn-danger mt-4 w-100">Confirm booking</button>
                                         </div>
                                     </div>
                                 </div>
