@@ -4,13 +4,13 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/dbh_classes.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/cinemaUtil_classes.php";
 
 class GenWeeklyCinemaUtilContr {
-    public function genWeeklyCinemaUtil($weekDate) {
+    public function genWeeklyCinemaUtil($startDate) {
         $cu = new CinemaUtil();
 
-        $_SESSION['cinemaUtil'] = $cu->retrieveWeeklyCinemaUtil($weekDate);
+        $_SESSION['cinemaUtil'] = $cu->retrieveWeeklyCinemaUtil($startDate);
         $_SESSION['timeLevel'] = "Week";
-        $_SESSION['startDate'] = $weekDate;
-        $_SESSION['endDate'] = date('Y-m-d', strtotime("+1 week",strtotime($weekDate)));
+        $_SESSION['startDate'] = $startDate;
+        $_SESSION['endDate'] = date('Y-m-d', strtotime("+1 week",strtotime($startDate)));
         
         
 
@@ -18,6 +18,6 @@ class GenWeeklyCinemaUtilContr {
         exit();
     }
 }
-$weekDate = $_POST['weekDate'];
+$startDate = $_POST['startDate'];
 $gwcuc = new GenWeeklyCinemaUtilContr();
-$gwcuc->genWeeklyCinemaUtil($weekDate);
+$gwcuc->genWeeklyCinemaUtil($startDate);

@@ -58,7 +58,7 @@
                 <form method="POST" action="../../controllers/ticketSales/genWeeklyTicketSales_contr.php" class="p-4 mt-4 border border-danger rounded-3 border border-danger rounded-3 d-flex align-items-center flex-column">
                     <h2 class="fw-bold mb-3">By Week (first day of the week)</h2> 
                     <div class="w-100">
-                        <input type="date" class="form-control" id="weekDate" name="weekDate">
+                        <input type="date" class="form-control" id="startDate" name="startDate">
                         <button type="submit" class="btn btn-danger w-100 mt-3">Generate Weekly Report</button>
                     </div>
                 </form>

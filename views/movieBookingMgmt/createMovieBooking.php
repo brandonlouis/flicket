@@ -138,7 +138,7 @@
                                                     <img src="../../img/amex.png">
                                                 </div>
                                             </div>
-                                            <button type="submit" name="purchaseFnBItem" class="btn btn-danger mt-4 w-100">Confirm booking</button>
+                                            <button type="submit" name="bookMovieSession" class="btn btn-danger mt-4 w-100">Confirm booking</button>
                                         </div>
                                     </div>
                                 </div>
@@ -270,23 +270,6 @@
         const priceString = selectedOption.value.split('|')[1].trim();
         return parseFloat(priceString);
     }
-
-
-
-    // const myForm = document.getElementById("bookMovie");
-    // const submitButton = myForm.querySelector("button[type='submit']");
-
-    // submitButton.addEventListener("click", function(event) {
-    //     event.preventDefault();
-        
-    //     if (myForm.checkValidity()) {
-    //         $('#purchase').modal('show');
-    //     } else {
-    //         alert("Please fill in all required fields.");
-    //         $('#purchase').modal('dispose');
-    //     }
-    // });
-
 
 </script>
 
