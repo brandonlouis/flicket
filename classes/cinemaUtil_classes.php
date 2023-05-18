@@ -15,7 +15,7 @@ class CinemaUtil extends Dbh {
     private $startDate;
     private $endDate;
 
-    public function retrieveSessionUtil($id) {
+    public function retrieveSessionCinemaUtil($id) {
         session_start();
         $this->id = $id;
 
@@ -39,7 +39,7 @@ class CinemaUtil extends Dbh {
         return $cinemaUtil;
     }
 
-    public function retrieveDailyUtil($dayDate) {
+    public function retrieveDailyCinemaUtil($dayDate) {
         session_start();
         $this->dayDate = $dayDate;
 
@@ -65,7 +65,7 @@ class CinemaUtil extends Dbh {
         return $cinemaUtil;
     }
 
-    public function retrieveWeeklyUtil($startDate) {
+    public function retrieveWeeklyCinemaUtil($startDate) {
         session_start();
         $this->startDate = $startDate;
         $this->endDate = date('Y-m-d', strtotime("+1 week",strtotime($startDate)));;
