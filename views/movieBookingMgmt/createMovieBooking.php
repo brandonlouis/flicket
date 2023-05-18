@@ -35,11 +35,9 @@
     ?>
 
     <div class="container mt-4" style="margin-bottom: 80px">
-        <div style="width:45%" class="d-flex">
-            <img src="data:image/png;base64,<?php echo $movieDetails['poster']; ?>" style="width:-webkit-fill-available;position:absolute;z-index:-1;opacity:0.15;clip-path:inset(0 0 50% 0);left:0;right:0;" alt="<?php echo $movies[$random_number]['title'] ?>">
-        </div>  
+        <div class="background-image" style="background-image: url('data:image/png;base64,<?php echo $movieDetails['poster']; ?>');"></div>
         <div class="content d-flex justify-content-evenly align-items-center mt-5">
-            <form method="POST" action="../../controllers/bookmovie/createMovieBooking_contr.php?hallId=<?php echo $_GET['hallId'] ?>&sessionId=<?php echo $_GET['sessionId'] ?>" enctype="multipart/form-data" class="w-50">  
+            <form id="bookMovie" method="POST" action="../../controllers/bookmovie/createMovieBooking_contr.php?hallId=<?php echo $_GET['hallId'] ?>&sessionId=<?php echo $_GET['sessionId'] ?>" class="w-50">  
                 <h1><?php echo $movieDetails['title']?></h1>
                 <p><?php echo $movieDetails['synopsis']?></p>
                 <p>Runtime: <?php echo $movieDetails['runtimeMin'] ?> mins</p>
@@ -59,7 +57,7 @@
                         $subsetTicketTypes = explode(', ', $movieDetails['ticketTypes']);
                         foreach ($ticketTypes as $ticketType) {
                             if (in_array($ticketType['name'], $subsetTicketTypes)) { ?>
-                            <option value="<?php echo $ticketType['name'] . '|' . $ticketType['price']; ?>" selected>
+                            <option value="<?php echo $ticketType['name'] . '|' . $ticketType['price']; ?>">
                                 <?php echo $optionLabel = $ticketType['name']; ?> | $<?php echo $ticketType['price']; ?>
                             </option>
                         <?php
@@ -75,8 +73,78 @@
                 </div>
 
                 <div class="d-flex">
-                    <button type="submit" name="createMovieBooking" class="btn btn-danger my-4 me-3">Book movie</button>
+                    <button type="submit" name="createMovieBooking" data-bs-toggle="modal" data-bs-target="#purchase" class="btn btn-danger my-4 me-3">Book movie</button>
                     <a href="../movies.php" class="btn btn-outline-info my-4">Cancel</a>
+                </div>
+
+                <div class="modal fade" id="purchase" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" style="max-width:450px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel">Purchase Payment</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body pb-5 px-4">
+                                <div class="container d-flex">
+                                    <div class="w-100 d-flex flex-column justify-content-evenly">
+                                        <div>
+                                            <label>Email Address</label>    
+                                            <input type="email" class="form-control mb-2" id="email" name="email" placeholder="Email" required>
+                                            <div class="d-flex">
+                                                <div class="w-75">
+                                                    <label>Cardholder</label>
+                                                    <input type="text" class="form-control" id="buyerName" name="buyerName" pattern="[a-zA-Z\s]*" placeholder="Full Name" required>
+                                                </div>
+                                                <div class="w-25">
+                                                    <label>CVV</label>
+                                                    <input type="text" class="form-control" placeholder="***" pattern="[0-9]{3,4}" required>
+                                                </div>
+                                            </div>
+                                            <div class="my-2">
+                                                <label>Card Number</label>
+                                                <input type="text" class="form-control" id="cardNumber" placeholder="0000 0000 0000 0000" required>
+                                            </div>
+                                            
+                                            <label>Expiration Date</label>
+                                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                                <div class="d-flex w-50">
+                                                <select class="form-select" aria-label="Default select">
+                                                    <option value="01">January</option>
+                                                    <option value="02">February </option>
+                                                    <option value="03">March</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">May</option>
+                                                    <option value="06">June</option>
+                                                    <option value="07">July</option>
+                                                    <option value="08">August</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                                <select class="form-select" aria-label="Default select">
+                                                    <option value="23"> 2023</option>
+                                                    <option value="24"> 2024</option>
+                                                    <option value="25"> 2025</option>
+                                                    <option value="26"> 2026</option>
+                                                    <option value="27"> 2027</option>
+                                                    <option value="28"> 2028</option>
+                                                </select>
+                                                </div>
+
+                                                <div>
+                                                    <img src="../../img/visa.png">
+                                                    <img src="../../img/mastercard.png">
+                                                    <img src="../../img/amex.png">
+                                                </div>
+                                            </div>
+                                            <button type="submit" name="purchaseFnBItem" class="btn btn-danger mt-4 w-100">Confirm purchase</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
             <div class="d-flex justify-content-center flex-column align-items-center">
@@ -202,6 +270,23 @@
         const priceString = selectedOption.value.split('|')[1].trim();
         return parseFloat(priceString);
     }
+
+
+
+    // const myForm = document.getElementById("bookMovie");
+    // const submitButton = myForm.querySelector("button[type='submit']");
+
+    // submitButton.addEventListener("click", function(event) {
+    //     event.preventDefault();
+        
+    //     if (myForm.checkValidity()) {
+    //         $('#purchase').modal('show');
+    //     } else {
+    //         alert("Please fill in all required fields.");
+    //         $('#purchase').modal('dispose');
+    //     }
+    // });
+
 
 </script>
 

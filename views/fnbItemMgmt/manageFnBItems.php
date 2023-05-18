@@ -106,44 +106,35 @@
                     </div>
 
                     <div class="modal fade" id="view<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered mw-100 w-75">
+                        <div class="modal-dialog modal-dialog-centered" style="min-width:50%">
                             <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="modalLabel">View F&B Item</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body pb-4">
                                 <div class="container">
-                                    <div class="row">
-                                        <div class="col">
-                                            <dl class="row">
-                                                <dt class="col-sm-4">F&B Item ID</dt>
-                                                <dd class="col-sm-8"><?php echo $item['id']; ?></dd>
-
-                                                <dt class="col-sm-4">Name</dt>
-                                                <dd class="col-sm-8"><?php echo $item['itemName']; ?></dd>
-
-                                                <dt class="col-sm-4">Description</dt>
-                                                <dd class="col-sm-8">
-                                                    <p><?php echo $item['description']; ?></p>
-                                                </dd>
-
-                                                <dt class="col-sm-4">Price</dt>
-                                                <dd class="col-sm-8">$<?php echo $item['price']; ?></dd>
-
-                                                <dt class="col-sm-4">Category</dt>
-                                                <dd class="col-sm-8"><?php echo $item['category']; ?></dd>
-                                                
-                                                <dt class="col-sm-4">Status</dt>
-                                                <dd class="col-sm-8">
-                                                    <span class="<?php echo $item['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $item['status']; ?></span>
-                                                </dd>
+                                    <div class="d-flex justify-content-around align-items-center">
+                                        <div class="d-flex">
+                                            <div class="me-5">
+                                                <p><span class="fw-bold">F&B Item ID</span> :</p>
+                                                <p><span class="fw-bold">Name</span> :</p>
+                                                <p><span class="fw-bold">Description</span> :</p>
+                                                <p><span class="fw-bold">Price</span> :</p>
+                                                <p><span class="fw-bold">Category</span> :</p>
+                                                <p><span class="fw-bold">Status</span> :</p>
                                             </div>
-                                            <div class="col">
-                                                <div class=" d-flex justify-content-center">
-                                                    <?php echo '<img src = "data:image/png;base64,' . $item['image'] . '" style="width:auto;height:300px;"/>'; ?>
-                                                </div>
+                                            <div>
+                                                <p><?php echo $item['id']; ?></p>
+                                                <p><?php echo $item['itemName']; ?></p>
+                                                <p><?php echo $item['description']; ?></p>
+                                                <p>$<?php echo $item['price']; ?></p>
+                                                <p><?php echo $item['category']; ?></p>
+                                                <span class="<?php echo $item['status'] == 'Available' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?php echo $item['status']; ?></span>
                                             </div>
+                                        </div>
+                                        <div class=" d-flex justify-content-end">
+                                            <?php echo '<img id="posterImg" style="width:auto;height:300px;" src="data:image/png;base64,' . $item['image'] . '"/>'; ?>
                                         </div>
                                     </div>
                                 </div>

@@ -128,8 +128,10 @@
         const divs = document.querySelectorAll('.row .seat');
         const seatData = [];
         divs.forEach(div => {
-            const seat = div.dataset.seat;
-            seatData.push(seat);
+            if (div.hasAttribute('data-seat')) {
+                const seat = div.getAttribute('data-seat');
+                seatData.push(seat);
+            }
         });
 
         const seatDataInput = document.getElementById('seatData');

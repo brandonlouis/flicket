@@ -38,54 +38,44 @@
         <div class="content" style="display:grid; grid-template-columns: repeat(4, 1fr); justify-items:center;">
             <?php foreach ($fnbitems as $item) { ?>
                 <a href="#" class="text-decoration-none border-0 mb-5" style="width: 17rem;" data-bs-toggle="modal" data-bs-target="#view<?php echo $item['id']; ?>">
-                    <img src="data:image/png;base64,<?php echo $item['image']; ?>" class="card-img-top mb-3" style="height:400px; object-fit:cover;" alt="<?php echo $item['itemName'] ?>">
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <h5 class="card-title text-white mb-2"><?php echo $item['itemName'] ?></h5>
-                        <div class="d-flex justify-content-between">
-                            <p class="card-text text-white" style="font-size:12px;width: fit-content;padding: 2px 10px;background-color: #d74545;border-radius: 15px;">$<?php echo $item['price'] ?></p>
-                            <p class="card-text text-white-50" style="font-size:12px;"><?php echo $item['category'] ?></p>
-                        </div>
+                <img src="data:image/png;base64,<?php echo $item['image']; ?>" class="card-img-top mb-3" style="height:400px; object-fit:cover;" alt="<?php echo $item['itemName'] ?>">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h5 class="card-title text-white mb-2"><?php echo $item['itemName'] ?></h5>
+                    <div class="d-flex justify-content-between">
+                        <p class="card-text text-white" style="font-size:12px;width: fit-content;padding: 2px 10px;background-color: #d74545;border-radius: 15px;">$<?php echo $item['price'] ?></p>
+                        <p class="card-text text-white-50" style="font-size:12px;"><?php echo $item['category'] ?></p>
                     </div>
+                </div>
                 </a>
 
                 <div class="modal fade" id="view<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered mw-100 w-75">
+                    <div class="modal-dialog modal-dialog-centered" style="max-width:600px;">
                         <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalLabel">View F&B Item</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <dl class="row">
-                                            <dt class="col-sm-4">F&B Item ID</dt>
-                                            <dd class="col-sm-8"><?php echo $item['id']; ?></dd>
-
-                                            <dt class="col-sm-4">Name</dt>
-                                            <dd class="col-sm-8"><?php echo $item['itemName']; ?></dd>
-
-                                            <dt class="col-sm-4">Description</dt>
-                                            <dd class="col-sm-8">
-                                                <p><?php echo $item['description']; ?></p>
-                                            </dd>
-
-                                            <dt class="col-sm-4">Price</dt>
-                                            <dd class="col-sm-8">$<?php echo $item['price']; ?></dd>
-
-                                            <dt class="col-sm-4">Category</dt>
-                                            <dd class="col-sm-8"><?php echo $item['category']; ?></dd>
-
-                                            <div class="d-flex mt-5">
-                                                <a type="submit" data-bs-toggle="modal" data-bs-target="#purchase<?php echo $item['id']; ?>" class="btn btn-danger bi d-flex justify-content-center" title="Purchase F&B Item">Purchase</a>
-                                            </div>
-
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel">F&B Item Details</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body pb-4">
+                                <div class="container d-flex">
+                                    <div>
+                                        <?php echo '<img src = "data:image/png;base64,' . $item['image'] . '" style="width:auto;height:300px;"/>'; ?>
+                                    </div>
+                                    <div class="ms-5 d-flex flex-column justify-content-evenly">
+                                        <div>
+                                            <p class="card-text text-white" style="width: fit-content;padding: 2px 10px;background-color: #d74545;border-radius: 15px;">$<?php echo $item['price']; ?></p>
+                                            <h2><?php echo $item['itemName']; ?></h2>
+                                            <p><?php echo $item['description']; ?></p>
                                         </div>
-                                        <div class="col">
-                                            <div class=" d-flex justify-content-center">
-                                                <?php echo '<img src = "data:image/png;base64,' . $item['image'] . '" style="width:auto;height:300px;"/>'; ?>
+                                        <div class="d-flex align-items-end justify-content-around">
+                                            <div class="w-25">
+                                                <p class="mt-4 mb-1">Quantity:</p>
+                                                <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" required>
                                             </div>
+                                            <?php if (isset($_SESSION['email'])) {?>
+                                                <a type="submit" data-bs-toggle="modal" data-bs-target="#purchase<?php echo $item['id']; ?>" class="btn btn-danger bi d-flex justify-content-center w-50" title="Purchase F&B Item">Purchase</a>
+                                            <?php } else { ?>
+                                                <a href="login.php" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Login to purchase</a>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -95,58 +85,76 @@
                 </div>
 
                 <div class="modal fade" id="purchase<?php echo $item['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered mw-100 w-75">
-                        <form method="POST" action="../controllers/fnbitem/purchaseFnBItem_contr.php?fnbItemId=<?php echo $item['id'];?>">
-                            <div class="modal-content">
+                    <div class="modal-dialog modal-dialog-centered" style="max-width:500px;">
+                        <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">Purchase <?php echo $item['itemName'];?></h5>
+                            <h5 class="modal-title" id="modalLabel">Purchase Payment</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col">
-                                            <dl class="row">
-                                                <dt class="col-sm-4">Item Name</dt>
-                                                <dd class="col-sm-8"><?php echo $item['itemName']; ?></dd>
-
-                                                <dt class="col-sm-4">Description</dt>
-                                                <dd class="col-sm-8">
-                                                    <p><?php echo $item['description']; ?></p>
-                                                </dd>
-
-                                                <dt class="col-sm-4">Price</dt>
-                                                <dd class="col-sm-8">$<?php echo $item['price']; ?></dd>
-
-                                                <dt class="col-sm-4 mt-5">Name</dt>
-                                                <dd class="col-sm-8 mt-5">
-                                                    <input type="text" class="form-control" id="buyerName" name="buyerName" pattern="[a-zA-Z\s]*" placeholder="Full Name" required>
-                                                </dd>
-                                                <dt class="col-sm-4">Email Address</dt>
-                                                <dd class="col-sm-8">
-                                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                                                </dd>
-                                                <dt class="col-sm-4">Quantity</dt>
-                                                <dd class="col-sm-8">
-                                                    <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required>
-                                                </dd>
+                            <div class="modal-body pb-5 px-4">
+                                <div class="container d-flex">
+                                    <div class="w-100 d-flex flex-column justify-content-evenly">
+                                        <div>
+                                            <form method="POST" action="../controllers/fnbitem/purchaseFnBItem_contr.php?fnbItemId=<?php echo $item['id'];?>">
+                                                <label>Email Address</label>    
+                                                <input type="email" class="form-control mb-2" id="email" name="email" placeholder="Email" required>
                                                 <div class="d-flex">
-                                                    <button style="position:absolute;bottom:2rem;" type="submit" name="purchaseFnBItem" class="btn btn-danger mt-5">Confirm Purchase</button>
+                                                    <div class="w-75">
+                                                        <label>Cardholder</label>
+                                                        <input type="text" class="form-control" id="buyerName" name="buyerName" pattern="[a-zA-Z\s]*" placeholder="Full Name" required>
+                                                    </div>
+                                                    <div class="w-25">
+                                                        <label>CVV</label>
+                                                        <input type="text" class="form-control" placeholder="***" pattern="[0-9]{3,4}" required>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class=" d-flex justify-content-center">
-                                                    <?php echo '<img src = "data:image/png;base64,' . $item['image'] . '" style="width:auto;height:500px;"/>'; ?>
+                                                <div class="my-2">
+                                                    <label>Card Number</label>
+                                                    <input type="text" class="form-control" placeholder="0000 0000 0000 0000" required>
                                                 </div>
-                                            </div>
+                                                
+                                                <label>Expiration Date</label>
+                                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                                    <div class="d-flex w-50">
+                                                    <select class="form-select" aria-label="Default select">
+                                                        <option value="01">January</option>
+                                                        <option value="02">February </option>
+                                                        <option value="03">March</option>
+                                                        <option value="04">April</option>
+                                                        <option value="05">May</option>
+                                                        <option value="06">June</option>
+                                                        <option value="07">July</option>
+                                                        <option value="08">August</option>
+                                                        <option value="09">September</option>
+                                                        <option value="10">October</option>
+                                                        <option value="11">November</option>
+                                                        <option value="12">December</option>
+                                                    </select>
+                                                    <select class="form-select" aria-label="Default select">
+                                                        <option value="23"> 2023</option>
+                                                        <option value="24"> 2024</option>
+                                                        <option value="25"> 2025</option>
+                                                        <option value="26"> 2026</option>
+                                                        <option value="27"> 2027</option>
+                                                        <option value="28"> 2028</option>
+                                                    </select>
+                                                    </div>
+
+                                                    <div>
+                                                        <img src="../img/visa.png">
+                                                        <img src="../img/mastercard.png">
+                                                        <img src="../img/amex.png">
+                                                    </div>
+                                                </div>
+                                                <button type="submit" name="purchaseFnBItem" class="btn btn-danger mt-4 w-100">Confirm purchase</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-
             <?php } ?>
         </div>
     </div>
@@ -159,6 +167,22 @@
     <?php
         include $_SERVER['DOCUMENT_ROOT'] . '/flicket/templates/footer.php';
     ?>
+
+
+<script>
+    const quantityInputs = document.querySelectorAll("#quantity");
+
+    for (let i = 0; i < quantityInputs.length; i++) {
+        const quantityInput = quantityInputs[i];
+
+        quantityInput.addEventListener('input', function() {
+            if (quantityInput.value < 1) {
+                quantityInput.value = 1;
+            }
+        });
+    }
+</script>
+
 </body>
 
 </html>
