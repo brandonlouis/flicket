@@ -34,35 +34,32 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h1>Generate Cinema Utilization Report</h1>
             </div>
-            <form method="POST" action="../../controllers/cinemaUtil/genCinemaUtil_contr.php" class="row">
+            <form method="POST" action="../../controllers/cinemaUtil/genSessionCinemaUtil_contr.php" class="row">
                 <div class="mb-3">
-                    <input type="hidden" name="timeLevel" value="session">
-                    <label for="sessionID">Session:</label>
-                    <select class="form-select" name="sessionID" aria-label="Session for report:">             
-                        <?php foreach($sessions as $s){ ?>
-                            <option value="<?php echo $s['id'] ?>">
-                                <?php echo "sessionID: " . $s['id'] . " (movieID: " . $s['movieId'] . ", Time: " . $s['startTime'] . "-" . $s['startTime'] . ")";?>
-                            </option>
-                        <?php } ?>
-                    </select>
+                        <label for="sessionID">Select session:</label> 
+                        <select class="form-select" name="sessionID" aria-label="Session for report:" style="width:40%">             
+                            <?php foreach($sessions as $s){ ?>
+                                <option value="<?php echo $s['id'] ?>">
+                                    <?php echo "sessionID: " . $s['id'] . " (movieID: " . $s['movieId'] . ", Time: " . $s['startTime'] . "-" . $s['startTime'] . ")";?>
+                                </option>
+                            <?php } ?>
+                        </select>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width:25%">Generate Session Report</button>
+                    <button type="submit" class="btn btn-primary" style="width:25%">Generate Session Report</button>
             </form>
 
-            <form method="POST" action="../../controllers/cinemaUtil/genCinemaUtil_contr.php" class="row">
+            <form method="POST" action="../../controllers/cinemaUtil/genDailyCinemaUtil_contr.php" class="row">
                 <div class="mb-3">
-                    <input type="hidden" name="timeLevel" value="day">
-                    <label for="dayDate">Day:</label>
-                    <input type="date" class="form-control" id="dayDate" name="dayDate" placeholder="Day">  
+                    <label for="dayDate">Select day:</label>
+                    <input type="date" class="form-control" id="dayDate" name="dayDate" style="width:40%">  
                 </div>
                 <button type="submit" class="btn btn-primary" style="width:25%">Generate Daily Report</button>
             </form>
 
-            <form method="POST" action="../../controllers/cinemaUtil/genCinemaUtil_contr.php" class="row">
+            <form method="POST" action="../../controllers/cinemaUtil/genWeeklyCinemaUtil_contr.php" class="row">
                 <div class="mb-3">
-                    <input type="hidden" name="timeLevel" value="week">
-                    <label for="weekDate">Week:</label>
-                    <input type="date" class="form-control" id="weekDate" name="weekDate" placeholder="Starting Day of Week">  
+                    <label for="weekDate">Select the start of the week:</label>
+                    <input type="date" class="form-control" id="weekDate" name="weekDate" style="width:40%">  
                 </div>
                 <button type="submit" class="btn btn-primary" style="width:25%">Generate Weekly Report</button>
             </form>

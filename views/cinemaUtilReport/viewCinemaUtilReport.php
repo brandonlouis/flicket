@@ -88,8 +88,13 @@
                                 $totalCapacity = $totalCapacity + $cinemaUtil['capacity'];
                                 $totalSeatsOccupied = $totalSeatsOccupied + $cinemaUtil['COUNT(*)'];
                              }
-                            $totalUtilRate = $totalSeatsOccupied / $totalCapacity * 100;
-                            echo round($totalUtilRate,2) . "%";
+                            if ($totalCapacity == 0) { 
+                                echo "0";
+                            }
+                            else { 
+                                $totalUtilRate = $totalSeatsOccupied / $totalCapacity * 100;
+                                echo round($totalUtilRate,2) . "%";
+                            }
                             ?>
                             </td>
                         </tr>
