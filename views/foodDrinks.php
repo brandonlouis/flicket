@@ -74,7 +74,7 @@
                                             <?php if (isset($_SESSION['email'])) {?>
                                                 <a type="submit" data-bs-toggle="modal" data-bs-target="#purchase<?php echo $item['id']; ?>" class="btn btn-danger bi d-flex justify-content-center w-50" title="Purchase F&B Item">Purchase</a>
                                             <?php } else { ?>
-                                                <a href="login.php" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Login to purchase</a>
+                                                <a href="login.php" type="button" class="btn btn-danger">Login to purchase</a>
                                             <?php } ?>
                                         </div>
                                     </div>

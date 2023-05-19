@@ -116,7 +116,7 @@
                                                         <?php if (isset($_SESSION['email'])) {?>
                                                             <a href="views/movieBookingMgmt/createMovieBooking.php?movieId=<?php echo $movie['id']; ?>&hallId=" id="bookNowButton" type="button" class="btn btn-danger">Book now</a>
                                                         <?php } else { ?>
-                                                            <a href="views/login.php" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Login to make a booking</a>
+                                                            <a href="views/login.php" type="button" class="btn btn-danger">Login to make a booking</a>
                                                         <?php } ?>
                                                     </div>
                                                 </div>

@@ -90,7 +90,7 @@
                                                     <?php if (isset($_SESSION['email'])) {?>
                                                         <a href="movieBookingMgmt/createMovieBooking.php?movieId=<?php echo $movie['id']; ?>&hallId=" id="bookNowButton" type="button" class="btn btn-danger">Book now</a>
                                                     <?php } else { ?>
-                                                        <a href="login.php" style="position:absolute;bottom:3rem;right:9rem;" type="button" class="btn btn-danger">Login to book</a>
+                                                        <a href="login.php" type="button" class="btn btn-danger">Login to book</a>
                                                     <?php } ?>
                                                 </div>
                                             </div>
