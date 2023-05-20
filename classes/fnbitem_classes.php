@@ -9,8 +9,7 @@ class FnBItem extends Dbh {
     private $category;
     private $status;
     private $image;
-    private $buyerName;
-    private $email;
+    private $accountId;
     private $fnbItemID;
     private $fnbQty;
     
@@ -170,17 +169,16 @@ class FnBItem extends Dbh {
         return $fnbItems;
     }
 
-    public function purchaseFnBItem($fnbItemID, $fnbQty, $buyerName, $email) {
+    public function purchaseFnBItem($fnbItemID, $fnbQty, $accountId) {
         session_start();
         $this->fnbItemID = $fnbItemID;
         $this->fnbQty = $fnbQty;
-        $this->buyerName = $buyerName;
-        $this->email = $email;
+        $this->accountId = $accountId;
 
 
-        $sql = "INSERT INTO fnbpurchases (buyerName, email, fnbItemID, quantity) VALUES (?, ?, ?, ?);";
+        $sql = "INSERT INTO fnbpurchases (fnbItemID, quantity, accountId) VALUES (?, ?, ?);";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->buyerName, $this->email, $this->fnbItemID, $this->fnbQty]);
+        $stmt->execute([$this->fnbItemID, $this->fnbQty, $this->accountId]);
 
         $stmt = null;
         return array("Purchase made successfully! Your purchase receipt will be sent to your email address", "success");

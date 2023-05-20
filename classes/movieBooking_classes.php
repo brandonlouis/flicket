@@ -38,9 +38,9 @@ class MovieBooking extends Dbh {
         $this->hallId = $hallId;
         $this->sessionId = $sessionId;
         $this->ticketType = $ticketType;
-        $this->seatLocation = $seatLocation;
+        $this->seatLocation = is_array($seatLocation) ? $seatLocation : [$seatLocation];
 
-        foreach ($seatLocation as $seat) {
+        foreach ($this->seatLocation as $seat) {
             preg_match('/([A-Z]+)(\d+)/', $seat, $matches);
             $rowLetter = $matches[1];
             $seatNumber = $matches[2];

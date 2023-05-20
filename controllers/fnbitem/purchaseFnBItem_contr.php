@@ -4,9 +4,9 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/dbh_classes.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/fnbitem_classes.php";
 
 class PurchaseFnBItemContr {
-    public function purchaseFnBItem($fnbItemID, $fnbQty, $buyerName, $email) {
+    public function purchaseFnBItem($fnbItemID, $fnbQty, $accountId) {
         $fnb = new FnBItem();
-        $fnbitem = $fnb->purchaseFnBItem($fnbItemID, $fnbQty, $buyerName, $email);
+        $fnbitem = $fnb->purchaseFnBItem($fnbItemID, $fnbQty, $accountId);
         
         setcookie('flash_message', $fnbitem[0], time() + 3, '/');
         setcookie('flash_message_type', $fnbitem[1], time() + 3, '/');
@@ -16,10 +16,9 @@ class PurchaseFnBItemContr {
     }
 }
 
-$buyerName = $_POST['buyerName'];
-$email = $_POST['email'];
-$fnbItem = $_GET['fnbItemId'];
+$fnbItemID = $_GET['fnbItemId'];
 $fnbQty = $_POST['quantity'];
+$accountId = $_SESSION['id'];
 
 $fnbc = new PurchaseFnBItemContr();
-$fnbc->purchaseFnBItem($fnbItem, $fnbQty, $buyerName, $email);
+$fnbc->purchaseFnBItem($fnbItemID, $fnbQty, $accountId);

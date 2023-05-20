@@ -8,43 +8,6 @@ class Seat extends Dbh {
     private $seatNumber;
     private $status;
 
-    // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TO MOVE TO CINEMAHALL
-    public function retrieveAllHalls() {
-        $sql = "SELECT ch.*, COUNT(s.id) AS totalSeats
-                FROM cinemahall ch 
-                LEFT JOIN seat s ON ch.id = s.hallId 
-                GROUP BY ch.id;";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute();
-    
-        $halls = array();
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $halls[] = $row;
-        }
-    
-        $stmt = null;
-        return $halls;
-    }
-
-    public function retrieveOneHall($id) {
-        $this->id = $id;
-
-        $sql = "SELECT ch.*, COUNT(s.id) AS totalSeats
-                FROM cinemahall ch
-                LEFT JOIN seat s ON ch.id = s.hallId 
-                WHERE ch.id = ?
-                GROUP BY ch.id;";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->id]);
-
-        $hallDetails = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $stmt = null;
-        return $hallDetails;
-    }
-    // TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TEMPORARY TO MOVE TO CINEMAHALL
-
-
 
     public function retrieveAllSeats($hallId) {
         $sql = "SELECT ch.*, (SELECT COUNT(*) FROM seat s WHERE s.hallId = ch.id AND s.status = 'Available') AS seatsAvailable,

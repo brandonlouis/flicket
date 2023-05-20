@@ -96,12 +96,10 @@
                                     <div class="w-100 d-flex flex-column justify-content-evenly">
                                         <div>
                                             <form method="POST" action="../controllers/fnbitem/purchaseFnBItem_contr.php?fnbItemId=<?php echo $item['id'];?>">
-                                                <label>Email Address</label>    
-                                                <input type="email" class="form-control mb-2" id="email" name="email" placeholder="Email" required>
                                                 <div class="d-flex">
                                                     <div class="w-75">
                                                         <label>Cardholder</label>
-                                                        <input type="text" class="form-control" id="buyerName" name="buyerName" pattern="[a-zA-Z\s]*" placeholder="Full Name" required>
+                                                        <input type="text" class="form-control" pattern="[a-zA-Z\s]*" placeholder="Full Name" required>
                                                     </div>
                                                     <div class="w-25">
                                                         <label>CVV</label>

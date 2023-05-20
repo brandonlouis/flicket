@@ -89,7 +89,7 @@
                                             src="<?php echo $movie['trailerURL']; ?>">
                                         </iframe>
                                         <div class="d-flex mt-4">
-                                            <div>
+                                            <div class="w-100">
                                                 <div class="d-flex flex-row align-items-center">
                                                     <p class="card-text text-white" style="font-size:12px;width: fit-content;padding: 2px 10px;background-color: #d74545;border-radius: 15px;"><?php echo $movie['genres']; ?></p>
                                                     <p class="d-flex mx-5" style="font-size:14px;"><i class="bi bi-clock-history"></i>&nbsp;&nbsp;<?php echo $movie['runtimeMin']; ?> minutes</p>
