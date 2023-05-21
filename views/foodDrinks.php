@@ -96,6 +96,7 @@
                                     <div class="w-100 d-flex flex-column justify-content-evenly">
                                         <div>
                                             <form method="POST" action="../controllers/fnbitem/purchaseFnBItem_contr.php?fnbItemId=<?php echo $item['id'];?>">
+                                                <input type="hidden" id="hiddenQuantity" name="hiddenQuantity" value="1">
                                                 <div class="d-flex">
                                                     <div class="w-75">
                                                         <label>Cardholder</label>
@@ -169,14 +170,17 @@
 
 <script>
     const quantityInputs = document.querySelectorAll("#quantity");
+    const hiddenQtys = document.querySelectorAll("#hiddenQuantity");
 
     for (let i = 0; i < quantityInputs.length; i++) {
         const quantityInput = quantityInputs[i];
+        const hiddenQty = hiddenQtys[i];
 
         quantityInput.addEventListener('input', function() {
             if (quantityInput.value < 1) {
                 quantityInput.value = 1;
             }
+            hiddenQty.value = quantityInput.value;
         });
     }
 </script>

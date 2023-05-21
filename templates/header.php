@@ -46,15 +46,14 @@
                 } elseif ($_SESSION['userType'] == 'cinemaOwner') {
                     echo '<li><a class="dropdown-item" href="/flicket/views/ticketSalesReport/genTicketSalesReport.php">Ticket Sales Report</a></li>
                     <li><a class="dropdown-item" href="/flicket/views/cinemaUtilReport/genCinemaUtilReport.php">Cinema Utilization Report</a></li>';
-                } else {
-                    echo '<li><a class="dropdown-item" href="#">Profile</a></li>';
+                } else if ($_SESSION['userType'] == "customer") {
+                    echo '<li><a class="dropdown-item" href="/flicket/views/movieBookingMgmt/manageMovieBooking.php">Manage Bookings</a></li>';
                 }
                 // logout & suspend button
                 echo '<li><a class="dropdown-item" href="/flicket/controllers/logout_contr.php">Logout</a></li>';
 
                 if ($_SESSION['userType'] == "customer") {
-                        echo '<li><a class="dropdown-item" href="/flicket/views/movieBookingMgmt/manageMovieBooking.php">Manage Bookings</a></li>
-                            <li><a class="dropdown-item mt-3" name="deleteAccount" data-bs-toggle="modal" data-bs-target="#deleteConfirmation">Delete Account</a></li>
+                        echo '<li><a class="dropdown-item mt-3" name="deleteAccount" data-bs-toggle="modal" data-bs-target="#deleteConfirmation">Delete Account</a></li>
                         </ul>
                     </div>';
                 }

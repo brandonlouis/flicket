@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include_once $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/dbh_classes.php";
 include $_SERVER['DOCUMENT_ROOT'] . "/flicket/classes/fnbitem_classes.php";
 
@@ -17,7 +19,7 @@ class PurchaseFnBItemContr {
 }
 
 $fnbItemID = $_GET['fnbItemId'];
-$fnbQty = $_POST['quantity'];
+$fnbQty = $_POST['hiddenQuantity'];
 $accountId = $_SESSION['id'];
 
 $fnbc = new PurchaseFnBItemContr();

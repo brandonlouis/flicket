@@ -36,8 +36,8 @@
                     <tr>
                         <th>Booking ID</th>
                         <th>Title</th>
-                        <th>Cinema Name</th>
-                        <th>Hall Number</th>
+                        <th>Venue</th>
+                        <th>Seat Number</th>
                         <th>Start Time</th>
                         <th>End Time</th>
                         <th></th>
@@ -48,29 +48,34 @@
                     <tr class="clickable-row" data-bs-toggle="modal" data-bs-target="#view<?php echo $movieBooking['id']; ?>">
                         <td><?php echo $movieBooking['id']; ?></td>
                         <td title="<?php echo $movieBooking['title']; ?>"><?php echo $movieBooking['title']; ?></td>
-                        <td title="<?php echo $movieBooking['cinemaName']; ?>"><?php echo $movieBooking['cinemaName']; ?></td>
-                        <td>Hall <?php echo $movieBooking['hallNumber']; ?></td>
+                        <td><?php echo $movieBooking['cinemaName'] . ', Hall ' . $movieBooking['hallNumber']; ?></td>
+                        <td><?php echo $movieBooking['seatCode']; ?></td>
                         <td><?php echo $movieBooking['startTime']; ?></td>
                         <td><?php echo $movieBooking['endTime']; ?></td>
                         
-                        <td class="d-flex justify-content-evenly">
-                            <button type="button" href="#" class="btn btn-danger fs-5" title="Delete Movie Booking" data-bs-toggle="modal" data-bs-target="#delete<?php echo $movieBooking['id']; ?>" >Delete</button>
-                        </td>
+                        <?php if ($movieBooking['startTime'] > date('Y-m-d')) {
+                            echo '<td class="d-flex justify-content-evenly">
+                                    <button type="button" href="#" class="btn btn-danger" title="Delete Movie Booking" data-bs-toggle="modal" data-bs-target="#delete'.$movieBooking['id'].'">Cancel Booking</button>
+                                </td>';
+                        } else {
+                            echo '<td></td>';
+                        } ?>
                     </tr>
                     
                     <div class="modal fade" id="delete<?php echo $movieBooking['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">Delete Movie Booking</h5>
+                                <h5 class="modal-title" id="modalLabel">Cancel Movie Booking</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                Delete the following movie booking?
+                                Cancel the following movie booking?
                                 <br/><br/>
                                 <span>Movie Booking ID </span>: <?php echo $movieBooking['id']; ?><br/>
                                 <span>Title </span> &nbsp;: <?php echo $movieBooking['title']; ?><br/>
                                 <span>Cinema Name </span> &nbsp;: <?php echo $movieBooking['cinemaName']; ?><br/>
+                                <span>Seat Number </span> &nbsp;: <?php echo $movieBooking['seatCode']; ?><br/>
                                 <span>Hall Number </span> &nbsp;: Hall <?php echo $movieBooking['hallNumber']; ?><br/>
                                 <span>Start Time </span> &nbsp;: <?php echo $movieBooking['startTime']; ?><br/>
                                 <span>End Time </span> &nbsp;: <?php echo $movieBooking['endTime']; ?><br/>
@@ -84,42 +89,35 @@
                     </div>
 
                     <div class="modal fade" id="view<?php echo $movieBooking['id']; ?>" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered mw-100 w-75">
+                        <div class="modal-dialog modal-dialog-centered" style="min-width:50%">
                             <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">View Movie Booking</h5>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col">
-                                            <dl class="row">
-                                                <dt class="col-sm-4">Movie Booking ID</dt>
-                                                <dd class="col-sm-8"><?php echo $movieBooking['id']; ?></dd>
-
-                                                <dt class="col-sm-4">Title</dt>
-                                                <dd class="col-sm-8"><?php echo $movieBooking['title']; ?></dd>
-
-                                                <dt class="col-sm-4">Cinema Name</dt>
-                                                <dd class="col-sm-8">
-                                                    <p><?php echo $movieBooking['cinemaName']; ?></p>
-                                                </dd>
-
-                                                <dt class="col-sm-4">Hall Number</dt>
-                                                <dd class="col-sm-8">Hall <?php echo $movieBooking['hallNumber']; ?></dd>
-
-                                                <dt class="col-sm-4">Start Time</dt>
-                                                <dd class="col-sm-8"><?php echo $movieBooking['startTime']; ?></dd>
-
-                                                <dt class="col-sm-4">End Time</dt>
-                                                <dd class="col-sm-8"><?php echo $movieBooking['endTime']; ?></dd>
-
-                                            </div>
-                                            <div class="col">
-                                                <div class=" d-flex justify-content-end">
-                                                    <?php echo '<img id="posterImg" style="width:auto;height:500px;" src="data:image/png;base64,' . $movieBooking['poster'] . '" alt="Movie Poster" />'; ?>
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel">View Movie Booking</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body pb-4">
+                                    <div class="container">
+                                        <div class="d-flex justify-content-around align-items-center">
+                                            <div class="d-flex">
+                                                <div class="me-5">
+                                                    <p><span class="fw-bold">Movie Booking ID</span> :</p>
+                                                    <p><span class="fw-bold">Title</span> :</p>
+                                                    <p><span class="fw-bold">Venue</span> :</p>
+                                                    <p><span class="fw-bold">Seat Number</span> :</p>
+                                                    <p><span class="fw-bold">Start Time</span> :</p>
+                                                    <p><span class="fw-bold">End Time</span> :</p>
                                                 </div>
+                                                <div>
+                                                    <p><?php echo $movieBooking['id']; ?></p>
+                                                    <p><?php echo $movieBooking['title']; ?></p>
+                                                    <p><?php echo $movieBooking['cinemaName'] . ', Hall ' . $movieBooking['hallNumber']; ?></p>
+                                                    <p><?php echo $movieBooking['seatCode']; ?></p>
+                                                    <p><?php echo $movieBooking['startTime']; ?></p>
+                                                    <p><?php echo $movieBooking['endTime']; ?></p>
+                                                </div>
+                                            </div>
+                                            <div class=" d-flex justify-content-end">
+                                                <?php echo '<img id="posterImg" style="width:auto;height:300px;" src="data:image/png;base64,' . $movieBooking['poster'] . '" alt="Session Poster" />'; ?>
                                             </div>
                                         </div>
                                     </div>

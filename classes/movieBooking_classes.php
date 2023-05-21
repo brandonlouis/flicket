@@ -12,12 +12,14 @@ class MovieBooking extends Dbh {
     public function retrieveAllMovieBookings($id) {
         $this->id = $id;
         
-        $sql = "SELECT t.id as id, t.accountid as accountid, t.ticketType as ticketType, s.startTime as startTime, s.endTime as endTime,
-                m.title as title, m.poster as poster, ch.name as cinemaName, ch.hallNumber as hallNumber
+        $sql = "SELECT t.id AS id, t.accountid AS accountid, t.ticketType AS ticketType, s.startTime AS startTime, s.endTime AS endTime,
+                m.title AS title, m.poster AS poster, ch.name AS cinemaName, ch.hallNumber AS hallNumber,
+                CONCAT(st.rowLetter, st.seatNumber) AS seatCode
                 FROM ticket t
                 JOIN session s ON s.id = t.sessionID
                 JOIN movie m ON m.id = s.movieId
                 JOIN cinemahall ch ON ch.id = s.hallId
+                JOIN seat st ON st.id = t.seatId
                 WHERE accountid = ?
                 GROUP BY t.id
                 ORDER BY t.id ASC";
@@ -69,6 +71,13 @@ class MovieBooking extends Dbh {
 
         $sql = "DELETE FROM ticket WHERE id = ?;"; 
         $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$this->id]);
+
+        $sqlSeat = "UPDATE seat s
+                    JOIN ticket t ON t.seatId = s.id
+                    SET s.status = 'Available'
+                    WHERE t.id = ?;";
+        $stmt = $this->connect()->prepare($sqlSeat);
         $stmt->execute([$this->id]);
 
         $stmt = null;
