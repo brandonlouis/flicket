@@ -1,7 +1,7 @@
 # Setting up
 
 ## 1. Install [XAMPP](https://www.apachefriends.org/download.html)
-- Tick `MySQL`, `phpMyAdmin` and `Fake Sendmail`
+- Tick `MySQL` and `phpMyAdmin`
 
 ## 2. Starting localhost + MySQL Server
 - Open XAMPP Control Panel
