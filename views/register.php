@@ -79,7 +79,7 @@
             </div>
             <div class="rightBanner rounded-end-4 d-flex flex-column justify-content-center align-items-center" style="width:60%">
                 <img src="../img/loginRegisterBanner.png" height="70%" alt="loginRegisterBanner">
-                <p class="mt-3 fs-5 text-center w-50"><b>Is that a Kiosk in your pocket, or are you just happy to see me?</b></p>
+                <p class="mt-4 fs-5 text-center w-75"><b>Curtains up on convenience - Your one-stop destination for movie tickets and showtime satisfaction</b></p>
             </div>
         </div>
     </div>
