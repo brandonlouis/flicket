@@ -76,4 +76,4 @@ Only have to do this once:
 - Click on `import` on the top bar
 - Click `Choose File` and select the `flicketdb.sql` files in `flicket/databaseInit` folder
 
-#### Done
+<b>Done</b>
